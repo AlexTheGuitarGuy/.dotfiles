@@ -1,0 +1,29 @@
+---
+- name: Install Zsh using yay
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Update package cache
+      package_facts:
+        manager: 'pacman'
+      become: yes
+
+    - name: Install yay if not present
+      package:
+        name: yay
+        state: present
+      become: yes
+
+    - name: Install Zsh using yay
+      package:
+        name: zsh
+        state: present
+        update_cache: yes
+      become: yes
+
+    - name: Set Zsh as the default shell for the current user
+      shell:
+        cmd: chsh -s $(which zsh)
+        executable: /bin/bash
+      become: yes
+      when: "ansible_user != \"root\"\r"
