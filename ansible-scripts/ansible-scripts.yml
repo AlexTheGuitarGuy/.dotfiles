@@ -1,0 +1,7 @@
+tasks:
+  - name: Install zsh
+    apt: name=zsh
+  - name: Change shell
+    shell: csh -s `which zsh`
+  - name: Install zap
+    shell: zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
