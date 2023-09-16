@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+xmodmap ~/.Xmodmap &
+xrandr --output HDMI1 --primary --mode 2560x1440 --output eDP1 --right-of HDMI1 --mode 1920x1080 &
+
+firefox &
+slack &
+google-chrome-stable &
+discord &
+telegram-desktop &
+spotify &
