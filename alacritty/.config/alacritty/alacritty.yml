@@ -19,7 +19,7 @@ env:
 window:
   dimensions:
     columns: 82
-    lines: 24
+    lines: 94
 
   decorations: full
   startup_mode: Fullscreen
