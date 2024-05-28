@@ -8,6 +8,7 @@ eval "$(fnm env --use-on-cd)"
 plug "$HOME/.config/zsh/aliases.zsh"
 plug "$HOME/.config/zsh/exports.zsh"
 plug "$HOME/.config/zsh/plugins.zsh"
+plug "$HOME/.config/zsh/secret-exports.zsh"
 
 bindkey '^ ' autosuggest-accept
 
@@ -37,7 +38,6 @@ fi
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/mcli mcli
-# zprof
 
 # pnpm
 export PNPM_HOME="/home/alex/.local/share/pnpm"
@@ -53,3 +53,6 @@ esac
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+eval "$(starship init zsh)"
+
+# zprof
