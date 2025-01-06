@@ -33,3 +33,4 @@ export DISPLAY=$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}'):0
 export LIBGL_ALWAYS_INDIRECT=1
 
 export NODE_OPTIONS="--max-old-space-size=5120" # Increase to 5 GB
+export BROWSER=wslview

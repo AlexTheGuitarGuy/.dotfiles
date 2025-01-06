@@ -2,7 +2,6 @@
 
 [ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh"
 # zmodload zsh/zprof
-eval "$(fnm env --use-on-cd)"
 
 # imports
 plug "$HOME/.config/zsh/aliases.zsh"
@@ -16,6 +15,7 @@ bindkey '^ ' autosuggest-accept
 # Load Angular CLI autocompletion.
 # source <(ng completion script)
 
+. ~/.nix-profile/etc/profile.d/nix.sh
 
 # Caching zsh compinit for better performance
 autoload -Uz compinit
@@ -56,3 +56,14 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 eval "$(starship init zsh)"
 
 # zprof
+
+# fnm
+# FNM_PATH="/home/alex/.local/share/fnm"
+# if [ -d "$FNM_PATH" ]; then
+#   export PATH="/home/alex/.local/share/fnm:$PATH"
+#   eval "`fnm env`"
+# fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
