@@ -4,7 +4,7 @@
 selected_directory=$(zoxide query -l | fzf)
 
 # Extract the last two directories from the selected directory
-session_name=$(basename "$(dirname "$selected_directory")")_$(basename "$selected_directory")
+session_name=$(basename "$(dirname "$selected_directory")" | tr -d '.')_$(basename "$selected_directory" | tr -d '.')
 echo $session_name
 
 # Check if the session name contains any characters that might cause issues
