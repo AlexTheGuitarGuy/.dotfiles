@@ -2,21 +2,13 @@ lastupdatecheck: 0
 recentrepos:
     - /home/alex/.dotfiles
     - /home/alex/.dotfiles/snetcov/flake
-    - /home/alex/projects/monorepo/pet-project
     - /home/alex/projects/nest/DFS/dfs-recap
-    - /home/alex/projects/nest/nest-e-commerce
-    - /home/alex/projects/nest/DFS/dfs-appointment-documentation
-    - /home/alex/projects/nest/DFS/dfs-recap/worktree-1
-    - /home/alex/projects/react/DFS/dfs-appointment-documentation-web
-    - /home/alex/projects/nest/DFS/dfs-appointment
-    - /home/alex/projects/nest/DFS/dfs-snapshot
-    - /home/alex/projects/nest/DFS/dfs-coach-report
-    - /home/alex/projects/react/DFS/dfs-analysis-evaluation-fe
     - /home/alex/projects/nest/DFS/dfs-analysis-evaluation-be
-    - /home/alex/projects/nest/DFS/dfs-data-repair
-    - /home/alex/projects/nest/DFS/dfs-annotation
+    - /home/alex/projects/nest/nest-e-commerce
+    - /home/alex/projects/nest/DFS/dfs-snapshot
+    - /home/alex/projects/monorepo/pet-project
 startuppopupversion: 5
-lastversion: 0.43.1
+lastversion: 0.44.1
 customcommandshistory:
     - qa
     - ""

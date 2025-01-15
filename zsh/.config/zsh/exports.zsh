@@ -34,3 +34,53 @@ export LIBGL_ALWAYS_INDIRECT=1
 
 export NODE_OPTIONS="--max-old-space-size=5120" # Increase to 5 GB
 export BROWSER=wslview
+export PATH="$PATH:/opt/nvim-linux64/bin"
+
+
+# ===== i3 stuff =====
+export DISPLAY=:0
+export LIBGL_ALWAYS_INDIRECT=1
+export XDG_RUNTIME_DIR=/tmp/xdg
+export RUNLEVEL=3
+# ===== fix mkdir wrong perms =====
+if grep -q Microsoft /proc/version; then
+  if [ "0022" == '0000' ]; then
+    umask 0022
+  fi
+fi
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/bin/mcli mcli
+
+# pnpm
+export PNPM_HOME="/home/alex/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# bun completions
+[ -s "/home/alex/.bun/_bun" ] && source "/home/alex/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+eval "$(starship init zsh)"
+
+# zprof
+
+# fnm
+# FNM_PATH="/home/alex/.local/share/fnm"
+# if [ -d "$FNM_PATH" ]; then
+#   export PATH="/home/alex/.local/share/fnm:$PATH"
+#   eval "`fnm env`"
+# fi
+
+export NVM_DIR="$HOME/.nvm"
+ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH=$PATH:~/.npm-global/bin
+
+export MANPAGER="nvim +Man!"

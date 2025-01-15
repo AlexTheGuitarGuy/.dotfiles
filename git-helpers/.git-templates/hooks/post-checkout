@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Check if the current directory is a git repository
+if [ ! -d ".git" ]; then
+    exit 0
+fi
+
+# Create a todos file if it doesn't exist
+if [ ! -f "todos.md" ]; then
+    touch todos.md
+    echo "# TODOs" > todos.md
+fi
+
+# Create .git/info/exclude if it doesn't exist
+if [ ! -f ".git/info/exclude" ]; then
+    mkdir -p .git/info
+    touch .git/info/exclude
+fi
+
+# Add the todos file to .git/info/exclude if not already present
+if ! grep -q "todos.md" .git/info/exclude; then
+    echo "todos.md" >> .git/info/exclude
+fi
+
+echo "todos.md added to .git/info/exclude"
