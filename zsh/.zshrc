@@ -25,3 +25,6 @@ done
 compinit -C
 
 export PATH=$PATH:/home/alex/.spicetify
+
+# starship
+eval "$(starship init zsh)"

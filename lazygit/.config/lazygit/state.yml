@@ -1,12 +1,32 @@
 lastupdatecheck: 0
 recentrepos:
-    - /home/alex/.dotfiles
     - /home/alex/.dotfiles/snetcov/flake
+    - /home/alex/.dotfiles
     - /home/alex/projects/nest/DFS/dfs-recap
-    - /home/alex/projects/nest/DFS/dfs-analysis-evaluation-be
-    - /home/alex/projects/nest/nest-e-commerce
     - /home/alex/projects/nest/DFS/dfs-snapshot
+    - /home/alex/projects/pet-project-v2/backend/user
+    - /home/alex/projects/pet-project-v2/backend/notification
+    - /home/alex/projects/pet-project-v2/backend/vehicle
+    - /home/alex/projects/pet-project-v2/backend/sub-user
+    - /home/alex/projects/pet-project-v2/backend/company
+    - /home/alex/projects/pet-project-v2/backend/common
+    - /home/alex/projects/pet-project-v2/backend/auth
+    - /home/alex/projects/nest/DFS/dfs-family-approval
+    - /home/alex/projects/go/http_postgres_server
+    - /home/alex/projects/nest/DFS/dfs-coach-report
     - /home/alex/projects/monorepo/pet-project
+    - /home/alex/projects/pet-project-v2/backend/boilerplate
+    - /home/alex/projects/RenPy/Cerebral_VN_Demo
+    - /home/alex/projects/nest/nest-e-commerce
+    - /home/alex/projects/nest/DFS/dfs-appointment
+    - /home/alex/projects/nest/DFS/dfs-appointment-documentation
+    - /home/alex/projects/nest/DFS/dfs-annotation
+    - /home/alex/projects/go/chat_app
+    - /home/alex/projects/python/deepsek-test
+    - /home/alex/projects/go/todo_app
+    - /home/alex/projects/nest/DFS/dfs-annotation/worktree-1
+    - /home/alex/projects/nest/DFS/dfs-analysis-evaluation-be
+    - /home/alex/projects/configs/dotfiles.nix
 startuppopupversion: 5
 lastversion: 0.44.1
 customcommandshistory:
