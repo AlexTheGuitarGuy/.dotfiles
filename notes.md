@@ -22,7 +22,7 @@
 - android app for connecting 2 or more audio bluetooth devices to the same phone
 - SRS app like anki
 - on-screen keyboard for mobile
-- tool that would systematize CLI autocomplete/CLI that has useful autocomplete and is really fast and easy to work with (maybe has documentation on hovering on flag)
+- tool that would systematize CLI autocomplete / CLI that has useful autocomplete and is really fast and easy to work with (maybe has documentation on hovering on flag, like in Evans CLI)
 - whiteboard tool (like lucid or excalidraw)
 - grep but more beginner friendly
 - artisanal site

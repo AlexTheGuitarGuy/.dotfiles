@@ -7,8 +7,7 @@ export GEM_HOME="$(ruby -e 'puts Gem.user_dir')"
 export PATH="$PATH:$GEM_HOME/bin"
 export PATH="$PATH:/home/alex/.cargo/bin"
 
-PATH="/home/alex/perl5/bin${PATH:+:${PATH}}"
-export PATH
+export PATH="/home/alex/perl5/bin${PATH:+:${PATH}}"
 PERL5LIB="/home/alex/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"
 export PERL5LIB
 PERL_LOCAL_LIB_ROOT="/home/alex/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"
@@ -66,7 +65,6 @@ esac
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-eval "$(starship init zsh)"
 
 # zprof
 
@@ -84,3 +82,4 @@ export NVM_DIR="$HOME/.nvm"
 export PATH=$PATH:~/.npm-global/bin
 
 export MANPAGER="nvim +Man!"
+export EDITOR="nvim"
