@@ -4,3 +4,6 @@ nvim Makefile
 make stow-dotfiles
 nvim
 ls -la ~/.config/nushell/
+tgs
+nvim ~/.dotfiles/nushell/.config/nushell/
+gac "Fixed nushell config"
