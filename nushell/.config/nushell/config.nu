@@ -66,5 +66,3 @@ def guhd [file] {
 }
 alias tgs = ~/.dotfiles/scripts/tmux-session-generator.sh
 alias rbt = sudo modprobe -r btusb and sudo modprobe btusb
-
-export XDG_CONFIG_HOME=$HOME/.dotfiles/nushell/.config
