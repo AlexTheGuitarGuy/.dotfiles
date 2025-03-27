@@ -1,0 +1,6 @@
+sudo rm -rv ~/.config/nushell/
+make stow-dotfiles
+nvim Makefile
+make stow-dotfiles
+nvim
+ls -la ~/.config/nushell/
