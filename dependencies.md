@@ -7,11 +7,12 @@ This is a list of all the external packages that I install on my system after a 
 The reason why I don't use ansible or some other similar tool is because I am currently hopping from distro to distro and, to my knowledge, there is no comprehensive way to just install all of them automatically
 
 - neovim
-- zsh
-- zapzsh
+- nushell
+- carapace
+- starship
+- zoxide
 - tmux
 - tpm (don't forget to run install script inside of tpm)
-- zoxide
 - docker
 - fzf
 - btop

@@ -2,8 +2,8 @@
 
 stow-dotfiles:
 	@echo "Stowing dotfiles..."
-	@stow */ --verbose=1
-	@stow -D ansible-scripts/ scripts/ snetcov/
+	@stow --adopt */ --verbose=1
+	@stow -D ansible-scripts/ scripts/
 
 unstow-dotfiles:
 	@echo "Unstowing dotfiles..."
