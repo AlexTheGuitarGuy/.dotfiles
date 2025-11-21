@@ -59,9 +59,12 @@ M.n = {
   -- Zen mode
   ["<leader>z"] = ":ZenMode<CR>",
 
-  ["<leader>tc"] = ":TSContextToggle<CR>",
+  ["<leader>tc"] = ":TSContext<CR>3<CR><CR>",
 
   ["<leader>e"] = ":silent !explorer.exe $(wslpath -w %:p:h)<CR><CR>",
+
+  -- Convert line into branch name
+  ["<leader>c"] = "VuV:s/ /-/g<CR>:noh<CR>",
 }
 M.v = {
   -- Stay in indent mode

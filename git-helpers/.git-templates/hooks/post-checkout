@@ -6,9 +6,9 @@ if [ ! -d ".git" ]; then
 fi
 
 # Create a todos file if it doesn't exist
-if [ ! -f "todos.md" ]; then
-    touch todos.md
-    echo "# TODOs" > todos.md
+if [ ! -f "todos.txt" ]; then
+    touch todos.txt
+    echo "TODOs" > todos.txt
 fi
 
 # Create .git/info/exclude if it doesn't exist
@@ -18,8 +18,8 @@ if [ ! -f ".git/info/exclude" ]; then
 fi
 
 # Add the todos file to .git/info/exclude if not already present
-if ! grep -q "todos.md" .git/info/exclude; then
-    echo "todos.md" >> .git/info/exclude
+if ! grep -q "todos.txt" .git/info/exclude; then
+    echo "todos.txt" >> .git/info/exclude
 fi
 
-echo "todos.md added to .git/info/exclude"
+echo "todos.txt added to .git/info/exclude"

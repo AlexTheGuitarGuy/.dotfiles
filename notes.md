@@ -51,3 +51,5 @@
 - self hosted mail
 - self hosted password manager
 - minecraft clone
+- HTML to JSON parser, with option to set key tags and value tags, identifiable not just by tag name, but also by attributes etc.
+- "VIM Engine" that leverages all the hard parts of implementing vim like bindings into a web app. You just tell it the bindings and what to execute when they are activated

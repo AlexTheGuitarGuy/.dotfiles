@@ -18,9 +18,14 @@
 # them for future reference.
 
 # Configure env
-$env.PATH = ($env.PATH | split row (char esep) | append "~/.cargo/bin")
-$env.PATH = ($env.PATH | split row (char esep) | append "/usr/bin")
-$env.PATH = ($env.PATH | split row (char esep) | append "/home/alex/.spicetify")
+$env.BUN_INSTALL = "/home/alex/.bun"
+
+$env.PATH = ($env.PATH | append "/usr/bin")
+$env.PATH = ($env.PATH | append "~/.cargo/bin")
+$env.PATH = ($env.PATH | append "~/.spicetify")
+$env.PATH = ($env.PATH | append "~/.bun/bin")
+$env.PATH = ($env.PATH | append "/run/user/1000/fnm_multishells/100055_1745924017795")
+$env.PATH = ($env.PATH | append "~/go/bin")
 
 # Carapace
 $env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense' # optional

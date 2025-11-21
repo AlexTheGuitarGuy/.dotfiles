@@ -28,6 +28,12 @@ $env.config = {
   }
 }
 $env.EDITOR = "nvim"
+$env.ENV_CONVERSIONS = {
+    PATH: {
+        from_string: { |s| $s | split row ':' },
+        to_string: { |v| $v | str join ':' }
+    }
+}
 
 # Carapace
 source ~/.cache/carapace/init.nu
@@ -65,4 +71,52 @@ def guhd [file] {
     git update-index --no-skip-worktree $file
 }
 alias tgs = ~/.dotfiles/scripts/tmux-session-generator.sh
-alias rbt = sudo modprobe -r btusb and sudo modprobe btusb
+def rbt [] {
+    sudo modprobe -r btusb
+    sudo modprobe btusb
+}
+def zvim [pattern?: string] {
+  let dir = if ($pattern | is-empty) {
+      zoxide query -i | str trim
+  } else {
+      zoxide query $pattern | str trim
+  }
+  
+  if ($dir | is-empty) {
+      error make {msg: "No matching directory found"}
+      return
+  }
+  
+  nvim $dir
+}
+
+# Plugins
+# source ~/.local/share/atuin/init.nu
+
+# FNM
+# Only run if fnm is installed
+if not (which fnm | is-empty) {
+    # Load environment variables from fnm in JSON format
+    ^fnm env --json | from json | load-env
+
+    # Add Node's bin directory to PATH
+    let node_path = if $nu.os-info.name == "windows" {
+        $env.FNM_MULTISHELL_PATH
+    } else {
+        $"($env.FNM_MULTISHELL_PATH)/bin"
+    }
+    $env.PATH = ($env.PATH | prepend [ $node_path ])
+}
+
+def connect-to-dvag-vpn [] {
+  let $orig_dir = $env.PWD
+
+  cd /home/alex/Downloads/openfortivpn-webview/openfortivpn-webview-electron
+
+  $env.COOKIE = (npx electron index.js fg.zentrale.dvag:443)
+
+  cd $orig_dir
+
+  sudo openconnect --protocol=fortinet fg.zentrale.dvag:443 --cookie $env.COOKIE
+}
+source $"($nu.home-path)/.cargo/env.nu"
