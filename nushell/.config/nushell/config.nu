@@ -113,10 +113,10 @@ def connect-to-dvag-vpn [] {
 
   cd /home/alex/Downloads/openfortivpn-webview/openfortivpn-webview-electron
 
-  $env.COOKIE = (npx electron index.js fg.zentrale.dvag:443)
+  $env.DVAG_VPN_COOKIE = (npx electron index.js fg.zentrale.dvag:443)
 
   cd $orig_dir
 
-  sudo openconnect --protocol=fortinet fg.zentrale.dvag:443 --cookie $env.COOKIE
+  sudo openconnect --protocol=fortinet fg.zentrale.dvag:443 --cookie $env.DVAG_VPN_COOKIE
 }
 source $"($nu.home-path)/.cargo/env.nu"

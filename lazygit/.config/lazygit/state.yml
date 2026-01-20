@@ -1,18 +1,22 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/alex/.dotfiles
-    - /home/alex/projects/nest/DFS/dfs-recap
-    - /home/alex/projects/nest/DFS/dfs-appointment-documentation
-    - /home/alex/projects/nest/DFS/dfs-snapshot
-    - /home/alex/projects/nest/DFS/dfs-coach-report
-    - /home/alex/projects/nest/DFS/auth-lib
-    - /home/alex/projects/nest/DFS/dfs-annotation
     - /home/alex/projects/nest/DFS/dfs-consultation-service
     - /home/alex/projects/nest/DFS/dfs-analysis-evaluation-be
+    - /home/alex/projects/nest/DFS/dfs-recap
+    - /home/alex/projects/react/DFS/dfs-section-report
+    - /home/alex/projects/minecraft_mods/fabric-example-mod
+    - /home/alex/projects/minecraft_mods/skinwalker
+    - /home/alex/projects/nest/DFS/dfs-annotation
+    - /home/alex/projects/nest/DFS/dfs-notification
+    - /home/alex/projects/nest/DFS/dfs-family-approval
+    - /home/alex/projects/nest/DFS/dfs-appointment-documentation
+    - /home/alex/projects/nest/DFS/dfs-coach-report
+    - /home/alex/projects/nest/DFS/dfs-snapshot
     - /home/alex/projects/nest/DFS/dfs-appointment
+    - /home/alex/projects/nest/DFS/auth-lib
     - /home/alex/projects/nest/DFS/dfs-accounting-be
     - /home/alex/projects/nest/DFS/dfs-ki-vp
-    - /home/alex/projects/react/DFS/dfs-section-report
     - /home/alex/projects/react/DFS/dfs-customer-appointment
     - /home/alex/projects/nest/DFS/dfs-advisor-be
     - /home/alex/projects/nest/DFS/dfs-person-be
@@ -20,7 +24,6 @@ recentrepos:
     - /home/alex/projects/react/studenti/tmdb-frontend
     - /home/alex/projects/react/DFS/dfs-coach-report-fe
     - /home/alex/projects/react/DFS/dfs-orchestrator
-    - /home/alex/projects/nest/DFS/dfs-family-approval
     - /home/alex/projects/react/DFS/dfs-ui-blocks
     - /home/alex/projects/react/DFS/dfs-shopping-cart-widget
     - /home/alex/projects/react/DFS/dfs-document-upload-widget
@@ -33,7 +36,6 @@ recentrepos:
     - /home/alex/projects/react/DFS/dfs-accounting-fe
     - /home/alex/projects/DFS/dfs-request-wrapper
     - /home/alex/projects/DFS/dfs-platform-ansible
-    - /home/alex/projects/nest/DFS/dfs-notification
     - /home/alex/projects/nest/DFS/dfs-client-status-sync
     - /home/alex/projects/monorepo/pet-project
     - /home/alex/projects/monorepo/pet-project-v2

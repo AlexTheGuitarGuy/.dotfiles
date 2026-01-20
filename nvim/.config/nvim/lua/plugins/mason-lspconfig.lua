@@ -1,26 +1,22 @@
 return {
-  "williamboman/mason-lspconfig.nvim",
+  'williamboman/mason-lspconfig.nvim',
   dependencies = {
-    "williamboman/mason.nvim",
-    "neovim/nvim-lspconfig",
+    'williamboman/mason.nvim',
+    'neovim/nvim-lspconfig',
   },
-  --[[ config = function()
-    require("mason-lspconfig").setup({
-      "angularls",
-      "cssls",
-      "html",
-      "jsonls",
-      "pyright",
-      "sqlls",
-      "tsserver",
-      "rust_analyzer",
-      "yamlls",
-      "dockerls",
-      "eslint",
-      "graphql",
-      "svelte",
-      "tailwindcss",
-      "lua_ls",
+  config = function()
+    require('mason-lspconfig').setup({
+      'angularls',
+      'cssls',
+      'html',
+      'jsonls',
+      'sqlls',
+      'tsserver',
+      'yamlls',
+      'dockerls',
+      'eslint_d',
+      'graphql',
+      'lua_ls',
     })
-  end, ]]
+  end,
 }

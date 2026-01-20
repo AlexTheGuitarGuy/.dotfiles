@@ -27,6 +27,10 @@ $env.PATH = ($env.PATH | append "~/.bun/bin")
 $env.PATH = ($env.PATH | append "/run/user/1000/fnm_multishells/100055_1745924017795")
 $env.PATH = ($env.PATH | append "~/go/bin")
 
+# Temurin
+$env.PATH = ($env.PATH | append "/opt/jdk-17.0.17+10/bin")
+$env.PATH = ($env.PATH | append "/opt/jre-17.0.17+10/bin")
+
 # Carapace
 $env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense' # optional
 mkdir ~/.cache/carapace
