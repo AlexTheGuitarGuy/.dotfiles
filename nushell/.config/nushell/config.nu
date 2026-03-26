@@ -111,7 +111,7 @@ if not (which fnm | is-empty) {
 def connect-to-dvag-vpn [] {
   let $orig_dir = $env.PWD
 
-  cd /home/alex/Downloads/openfortivpn-webview/openfortivpn-webview-electron
+  cd /home/alex/Apps/openfortivpn-webview/openfortivpn-webview-electron
 
   $env.DVAG_VPN_COOKIE = (npx electron index.js fg.zentrale.dvag:443)
 

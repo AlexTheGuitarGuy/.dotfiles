@@ -10,6 +10,10 @@ local servers = {
   eslint_d = {},
   graphql = {},
   tailwindcss = {},
+  gdscript = {
+    name = 'godot',
+    cmd = vim.lsp.rpc.connect('127.0.0.1', 6005),
+  },
   -- svelte = {},
   lua_ls = {
     Lua = {
