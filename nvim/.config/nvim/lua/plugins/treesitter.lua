@@ -3,6 +3,9 @@ local config = function()
     extension = {
       prisma = 'prisma',
     },
+    pattern = {
+      ['%.env%..+'] = 'sh',
+    },
   })
 
   vim.api.nvim_create_autocmd('FileType', {

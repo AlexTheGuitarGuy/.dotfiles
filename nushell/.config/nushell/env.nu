@@ -18,6 +18,7 @@
 # them for future reference.
 
 # Configure env
+$env.LC_ALL = "en_US.UTF-8"
 $env.BUN_INSTALL = "/home/alex/.bun"
 
 $env.PATH = ($env.PATH | append "/usr/bin")

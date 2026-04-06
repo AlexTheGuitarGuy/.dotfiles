@@ -1,3 +1,4 @@
 zsh/.config/zsh/secret-exports.zsh
 nushell/.config/nushell/secrets.nu
 nushell/.config/nushell/history.txt
+lazygit/.config/lazygit
