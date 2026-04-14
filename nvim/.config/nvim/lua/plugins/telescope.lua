@@ -1,33 +1,10 @@
-local keys = function()
-  local telescope = require("telescope.builtin")
-  return {
-    {
-      "<leader>ff",
-      telescope.find_files,
-      mode = "n",
-    },
-    {
-      "<leader>fw",
-      telescope.live_grep,
-      mode = "n",
-    },
-    {
-      "<leader>fu",
-      telescope.grep_string,
-      mode = "n",
-    },
-    {
-      "<leader>gf",
-      telescope.git_files,
-      mode = "n",
-    },
-    {
-      "<leader>fr",
-      telescope.oldfiles,
-      mode = "n",
-    },
-  }
-end
+local keys = {
+  { "<leader>ff", function() require("telescope.builtin").find_files() end, mode = "n" },
+  { "<leader>fw", function() require("telescope.builtin").live_grep() end, mode = "n" },
+  { "<leader>fu", function() require("telescope.builtin").grep_string() end, mode = "n" },
+  { "<leader>gf", function() require("telescope.builtin").git_files() end, mode = "n" },
+  { "<leader>fr", function() require("telescope.builtin").oldfiles() end, mode = "n" },
+}
 
 return {
   "nvim-telescope/telescope.nvim",
