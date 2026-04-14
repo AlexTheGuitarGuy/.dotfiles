@@ -53,37 +53,28 @@ local config = function()
   lsp_zero.on_attach(function(client, bufnr)
     lsp_zero.default_keymaps({ buffer = bufnr })
 
-    lsp_zero.on_attach(function(client, bufnr)
-      lsp_zero.default_keymaps({ buffer = bufnr })
-
-      vim.keymap.set('n', 'K', function()
-        vim.lsp.buf.hover({
-          border = 'rounded',
-          title = ' Documentation ',
-          -- Perfect padding (1 space all around)
-          pad_top = 1,
-          pad_bottom = 1,
-          pad_left = 1,
-          pad_right = 1,
-          max_width = math.floor(vim.o.columns * 0.8),
-          max_height = math.floor(vim.o.lines * 0.4),
-        })
-      end, { buffer = bufnr, desc = 'Hover docs' })
-      vim.keymap.set('n', '<leader>la', function()
-        vim.lsp.buf.code_action()
-      end, opts)
-      vim.keymap.set('n', '<leader>lr', function()
-        vim.lsp.buf.rename()
-      end, opts)
-      vim.keymap.set('n', '<leader>lh', function()
-        vim.diagnostic.open_float()
-      end, opts)
-      vim.keymap.set('n', 'gr', function()
-        vim.lsp.buf.references()
-      end, opts)
-    end)
-
     local opts = { buffer = bufnr, remap = false }
+
+    vim.keymap.set('n', 'K', function()
+      vim.lsp.buf.hover({
+        border = 'rounded',
+        title = ' Documentation ',
+        max_width = math.floor(vim.o.columns * 0.8),
+        max_height = math.floor(vim.o.lines * 0.4),
+      })
+    end, { buffer = bufnr, desc = 'Hover docs' })
+    vim.keymap.set('n', '<leader>la', function()
+      vim.lsp.buf.code_action()
+    end, opts)
+    vim.keymap.set('n', '<leader>lr', function()
+      vim.lsp.buf.rename()
+    end, opts)
+    vim.keymap.set('n', '<leader>lh', function()
+      vim.diagnostic.open_float()
+    end, opts)
+    vim.keymap.set('n', 'gr', function()
+      vim.lsp.buf.references()
+    end, opts)
   end)
 
   vim.lsp.config('angularls', {
