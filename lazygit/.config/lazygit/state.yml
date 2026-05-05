@@ -1,20 +1,27 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/alex/.dotfiles
-    - /home/alex/projects/DFS/nest/dfs-appointment-documentation
-    - /home/alex/projects/DFS/nest/dfs-asset-service
     - /home/alex/projects/DFS/nest/dfs-accounting-be
+    - /home/alex/projects/DFS/react/dfs-document-upload-widget
     - /home/alex/projects/DFS/nest/dfs-recap
+    - /home/alex/projects/DFS/nest/dfs-coach-report
+    - /home/alex/projects/DFS/nest/dfs-consultation-service
+    - /home/alex/projects/monorepo/fit-flow
+    - /home/alex/projects/DFS/nest/dfs-configuration-be
+    - /home/alex/projects/DFS/nest/dfs-person-be
+    - /home/alex/projects/DFS/nest/dfs-notification
+    - /home/alex/projects/DFS/misc/dfs-constant-config
+    - /home/alex/projects/DFS/nest/dfs-advisor-be
+    - /home/alex/projects/DFS/nest/dfs-client-status-sync
+    - /home/alex/projects/DFS/nest/dfs-asset-service
+    - /home/alex/projects/DFS/nest/dfs-snapshot
+    - /home/alex/projects/DFS/nest/dfs-analysis-evaluation-be
+    - /home/alex/projects/DFS/nest/dfs-appointment
+    - /home/alex/projects/DFS/nest/dfs-appointment-documentation
     - /home/alex/projects/DFS/react/dfs-accounting-fe
     - /home/alex/projects/DFS/kotlin/haushaltsbudget-backend
-    - /home/alex/projects/DFS/nest/dfs-consultation-service
-    - /home/alex/projects/DFS/nest/dfs-snapshot
-    - /home/alex/projects/DFS/nest/dfs-coach-report
-    - /home/alex/projects/DFS/nest/dfs-analysis-evaluation-be
     - /home/alex/projects/DFS/nest/dfs-annotation
-    - /home/alex/projects/DFS/nest/dfs-appointment
     - /home/alex/projects/DFS/nest/depotservice
-    - /home/alex/projects/DFS/nest/dfs-advisor-be
     - /home/alex/projects/nest/nest-e-commerce
     - /home/alex/projects/minecraft_mods/fabric-example-mod
     - /home/alex/projects/minecraft_mods/skinwalker
