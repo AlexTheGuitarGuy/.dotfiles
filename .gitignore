@@ -2,3 +2,9 @@ zsh/.config/zsh/secret-exports.zsh
 nushell/.config/nushell/secrets.nu
 nushell/.config/nushell/history.txt
 lazygit/.config/lazygit
+i3/.local/bin/copilot
+i3/.local/bin/claude
+lazygit/.config/lazygit/state.yml
+hyprland-environment/.config-disabled/hypr/.initial_startup_done
+hyprland-environment/.config-disabled/hypr/wallpaper_effects/.wallpaper_current
+hyprland-environment/.config-disabled/hypr/wallpaper_effects/.wallpaper_modified

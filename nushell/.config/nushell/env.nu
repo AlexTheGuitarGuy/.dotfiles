@@ -45,3 +45,8 @@ zoxide init --cmd cd nushell | save -f ~/.zoxide.nu
 # Starship
 mkdir ($nu.data-dir | path join "vendor/autoload")
 starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+
+# pnpm
+$env.PNPM_HOME = "/home/alex/.local/share/pnpm"
+$env.PATH = ($env.PATH | split row (char esep) | prepend $env.PNPM_HOME )
+# pnpm end
