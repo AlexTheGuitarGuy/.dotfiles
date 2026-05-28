@@ -8,3 +8,29 @@ lazygit/.config/lazygit/state.yml
 hyprland-environment/.config-disabled/hypr/.initial_startup_done
 hyprland-environment/.config-disabled/hypr/wallpaper_effects/.wallpaper_current
 hyprland-environment/.config-disabled/hypr/wallpaper_effects/.wallpaper_modified
+opencode/.opencode/bin
+
+# claude - ignore runtime/cache, keep config
+claude/.claude/cache/
+claude/.claude/history.jsonl
+claude/.claude/shell-snapshots/
+claude/.claude/telemetry/
+claude/.claude/stats-cache.json
+claude/.claude/mcp-needs-auth-cache.json
+claude/.claude/paste-cache/
+claude/.claude/plugins/
+claude/.claude/backups/
+claude/.claude/file-history/
+claude/.claude/plans/
+claude/.claude/projects/
+claude/.claude/settings.json.bak
+
+# claude - ignore runtime/cache, keep config
+claude/.claude/.credentials.json
+
+# opencode - ignore generated files
+opencode/.config/opencode/package-lock.json
+opencode/.opencode/package-lock.json
+
+# nvim lazy-lock already untracked but just in case
+nvim/.config/nvim/lazy-lock.json
