@@ -29,6 +29,9 @@ claude/.claude/settings.json.bak
 claude/.claude/.credentials.json
 claude/.claude/.caveman-active
 claude/.claude/.last-cleanup
+claude/.claude/sessions/
+claude/.claude/downloads/
+claude/.claude/session-env/
 
 # opencode - ignore generated files
 opencode/.config/opencode/package-lock.json
