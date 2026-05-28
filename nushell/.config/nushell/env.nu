@@ -31,6 +31,7 @@ $env.PATH = ($env.PATH | append "~/go/bin")
 $env.PATH = ($env.PATH | append "/opt/jdk-17.0.17+10/bin")
 $env.PATH = ($env.PATH | append "/opt/jre-17.0.17+10/bin")
 $env.PATH = ($env.PATH | append "~/.opencode/bin")
+$env.PATH = ($env.PATH | append "/home/alex/.local/bin")
 
 $env.PATH = ($env.PATH | split row (char esep) | append '/home/linuxbrew/.linuxbrew/bin')
 

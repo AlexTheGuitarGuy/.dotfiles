@@ -27,6 +27,8 @@ claude/.claude/settings.json.bak
 
 # claude - ignore runtime/cache, keep config
 claude/.claude/.credentials.json
+claude/.claude/.caveman-active
+claude/.claude/.last-cleanup
 
 # opencode - ignore generated files
 opencode/.config/opencode/package-lock.json
