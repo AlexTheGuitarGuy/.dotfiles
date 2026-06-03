@@ -16,7 +16,6 @@ return {
     local actions = require("telescope.actions")
     require("telescope").setup({
       defaults = {
-        hidden = true,
         file_ignore_patterns = { "node_modules" },
         mappings = {
           i = {
@@ -81,6 +80,14 @@ return {
 
             ["?"] = actions.which_key,
           },
+        },
+      },
+      pickers = {
+        find_files = {
+          hidden = true,
+        },
+        live_grep = {
+          additional_args = { "--hidden" },
         },
       },
     })
