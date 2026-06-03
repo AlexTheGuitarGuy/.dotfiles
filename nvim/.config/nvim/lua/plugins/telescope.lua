@@ -16,6 +16,8 @@ return {
     local actions = require("telescope.actions")
     require("telescope").setup({
       defaults = {
+        hidden = true,
+        file_ignore_patterns = { "node_modules" },
         mappings = {
           i = {
             ["<C-n>"] = actions.cycle_history_next,
