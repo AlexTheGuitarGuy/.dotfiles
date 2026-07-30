@@ -8,7 +8,6 @@ lazygit/.config/lazygit/state.yml
 hyprland-environment/.config-disabled/hypr/.initial_startup_done
 hyprland-environment/.config-disabled/hypr/wallpaper_effects/.wallpaper_current
 hyprland-environment/.config-disabled/hypr/wallpaper_effects/.wallpaper_modified
-opencode/.opencode/bin
 
 # claude - ignore runtime/cache, keep config
 claude/.claude/cache/
@@ -32,10 +31,21 @@ claude/.claude/.last-cleanup
 claude/.claude/sessions/
 claude/.claude/downloads/
 claude/.claude/session-env/
+claude/.claude/daemon.log
+claude/.claude/daemon-auth-cooldown
+claude/.claude/daemon-auth-status.json
+claude/.claude/daemon/
+claude/.claude/.last-update-result.json
+claude/.claude/jobs/
 
 # opencode - ignore generated files
 opencode/.config/opencode/package-lock.json
-opencode/.opencode/package-lock.json
 
 # nvim lazy-lock already untracked but just in case
 nvim/.config/nvim/lazy-lock.json
+
+# btop - ignore runtime log
+btop/.config/btop/btop.log
+
+# rofi - ignore dynamic wallpaper-tracking symlink
+rofi/.config/rofi/.current_wallpaper

@@ -15,7 +15,12 @@
     },
     "apiportal": {
       "type": "local",
-      "command": ["npx", "-y", "@dvag/apiportal-mcp"],
+      "command": ["pnpm", "dlx", "@dvag/apiportal-mcp@1.1.0"],
+      "enabled": true
+    },
+    "lens": {
+      "type": "local",
+      "command": ["/opt/Lens/resources/cli/bin/lens-cli-linux-x64", "mcp-server"],
       "enabled": true
     }
   },
