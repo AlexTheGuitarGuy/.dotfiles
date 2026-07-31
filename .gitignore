@@ -49,3 +49,4 @@ btop/.config/btop/btop.log
 
 # rofi - ignore dynamic wallpaper-tracking symlink
 rofi/.config/rofi/.current_wallpaper
+npm/.npmrc
