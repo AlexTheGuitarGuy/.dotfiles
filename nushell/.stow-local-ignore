@@ -1,0 +1,8 @@
+# secrets.nu and history.txt must never be adopted or symlinked into this repo.
+# They're gitignored ("don't track"), but gitignore only stops git, not
+# `stow --adopt`, which pulled them in and replaced them with symlinks
+# anyway. That's the exact failure mode that lost claude/.claude/projects to
+# a single rm -rf: secrets.nu (real shell secrets) and history.txt (command
+# history) were physically living only inside this git working tree.
+^secrets\.nu$
+^history\.txt$

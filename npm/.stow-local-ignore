@@ -1,0 +1,6 @@
+# .npmrc holds a live registry auth token for @dvag. It was committed to
+# git by mistake (this repo is public) and stow-adopted as a symlink, the
+# same fragile pattern that lost claude/.claude/projects. Never let it back
+# into this repo: keep it untracked, ungitignored-and-forgotten, native to
+# $HOME only.
+^\.npmrc$

@@ -1,0 +1,5 @@
+# state.yml is runtime UI state (recent repos, etc.), gitignored and not
+# meant to live only inside this repo. Preventive: nothing to migrate today
+# (no state.yml present), but stop a future `stow --adopt` from pulling it
+# in the same way claude/.claude/projects was.
+^state\.yml$

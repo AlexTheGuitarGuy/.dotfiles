@@ -1,0 +1,33 @@
+# Runtime/cache data that must never be adopted or symlinked into this repo,
+# even by `stow --adopt`. These are already listed in the top-level .gitignore
+# as "don't track", but gitignore only affects git, not stow. `stow --adopt`
+# reads the raw filesystem and will happily pull these in and replace them
+# with symlinks if this file doesn't stop it, which is exactly how
+# claude/.claude/projects ended up silently living only in this repo and got
+# wiped by a single rm -rf. Keep this list in sync with .gitignore's claude
+# section.
+^cache$
+^history\.jsonl$
+^shell-snapshots$
+^telemetry$
+^stats-cache\.json$
+^mcp-needs-auth-cache\.json$
+^paste-cache$
+^plugins$
+^backups$
+^file-history$
+^plans$
+^projects$
+^settings\.json\.bak$
+^\.credentials\.json$
+^\.caveman-active$
+^\.last-cleanup$
+^sessions$
+^downloads$
+^session-env$
+^daemon\.log$
+^daemon-auth-cooldown$
+^daemon-auth-status\.json$
+^daemon$
+^\.last-update-result\.json$
+^jobs$
