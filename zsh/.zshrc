@@ -7,7 +7,13 @@
 plug "$HOME/.config/zsh/aliases.zsh"
 plug "$HOME/.config/zsh/exports.zsh"
 plug "$HOME/.config/zsh/plugins.zsh"
-plug "$HOME/.config/zsh/secret-exports.zsh"
+
+# Secrets (sops-encrypted, decrypted into env at shell start)
+if [ -f "$HOME/.config/sops/age/keys.txt" ]; then
+  while IFS= read -r line; do
+    export "${line%%: *}=${line#*: }"
+  done < <(sops -d "$HOME/.dotfiles/secrets/secrets.yaml")
+fi
 
 bindkey '^ ' autosuggest-accept
 

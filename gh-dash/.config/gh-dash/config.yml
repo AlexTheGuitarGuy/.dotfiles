@@ -76,7 +76,12 @@ defaults:
         width: 20
         hidden: true
   refetchIntervalMinutes: 30
-keybindings: {}
+keybindings:
+  prs:
+    - key: g
+      name: lazygit
+      command: >
+        cd {{.RepoPath}} && lazygit
 repoPaths: { dvag/*: ~/projects/DFS/nest/* }
 theme:
   ui:
@@ -85,7 +90,7 @@ theme:
       showSeparator: true
       compact: false
 pager:
-  diff: ""
+  diff: diffnav
 confirmQuit: false
 showAuthorIcons: true
 smartFilteringAtLaunch: true

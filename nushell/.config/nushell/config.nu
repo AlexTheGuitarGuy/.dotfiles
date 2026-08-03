@@ -41,8 +41,10 @@ source ~/.cache/carapace/init.nu
 # Zoxide
 source ~/.zoxide.nu
 
-# Secrets
-source ~/.config/nushell/secrets.nu
+# Secrets (sops-encrypted, decrypted into env at shell start)
+if ("~/.config/sops/age/keys.txt" | path expand | path exists) {
+    sops -d ~/.dotfiles/secrets/secrets.yaml | from yaml | load-env
+}
 
 # Aliases
 alias gst = git status

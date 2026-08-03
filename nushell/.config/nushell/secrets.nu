@@ -1,1 +1,0 @@
-/home/alex/.config/nushell/secrets.nu
