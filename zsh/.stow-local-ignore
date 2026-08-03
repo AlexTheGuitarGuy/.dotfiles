@@ -1,0 +1,6 @@
+# secret-exports.zsh must never be adopted or symlinked whole-directory into
+# this repo. ~/.config/zsh was already a stow-managed directory symlink, which
+# is exactly what turned a routine fix into permanently losing the only copy
+# of this file. Keep it native to $HOME; only a symlink pointing out to it
+# belongs in this repo, added deliberately, never via stow.
+^secret-exports\.zsh$
