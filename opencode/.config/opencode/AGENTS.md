@@ -65,3 +65,30 @@ repo. The file being deleted was a plain regular file, not a symlink, so a check
 the leaf alone would have missed it. `rm` ran before a copy existed anywhere else,
 permanently destroying the only copy of the file when the following `mv` failed.
 <!-- safe-delete -->
+
+<!-- verify-claims -->
+Use before claiming a change, review finding, plan, diagnosis, or test result is correct. Convert the claim into concrete evidence and record uncertainty.
+
+For each material claim, capture:
+
+- **Claim:** what is believed to be true.
+- **Evidence:** path, command output, test result, or direct observation.
+- **Scope:** what the evidence does and does not cover.
+- **Confidence:** high, medium, or low, with the reason.
+
+Prefer fresh, local evidence. A passing command is not proof beyond what it exercised. Do not turn verification into a stage or a prerequisite; emit it as evidence for later work.
+<!-- verify-claims -->
+
+<!-- systematic-debugging -->
+Use for bugs, failing tests, regressions, or surprising behavior. Build evidence before editing by separating observations, hypotheses, and discriminating checks.
+
+Use a short evidence loop:
+
+1. State the observed behavior and expected behavior.
+2. List at most three plausible causes.
+3. Run the cheapest check that distinguishes them.
+4. Record the result and update the leading hypothesis.
+5. Change code only after the evidence identifies a cause.
+
+Verify the original failure and nearby behavior after a fix. If evidence is inconclusive, report the uncertainty rather than guessing.
+<!-- systematic-debugging -->
