@@ -23,8 +23,6 @@ claude/.claude/file-history/
 claude/.claude/plans/
 claude/.claude/projects/
 claude/.claude/settings.json.bak
-
-# claude - ignore runtime/cache, keep config
 claude/.claude/.credentials.json
 claude/.claude/.caveman-active
 claude/.claude/.last-cleanup
@@ -49,4 +47,6 @@ btop/.config/btop/btop.log
 
 # rofi - ignore dynamic wallpaper-tracking symlink
 rofi/.config/rofi/.current_wallpaper
+
+# npm - registry auth token, never track
 npm/.npmrc
