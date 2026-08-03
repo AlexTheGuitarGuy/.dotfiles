@@ -6,12 +6,9 @@
   ],
   "mcp": {
     "context7": {
-      "type": "remote",
-      "url": "https://mcp.context7.com/mcp",
-      "enabled": true,
-      "headers": {
-        "CONTEXT7_API_KEY": "REPLACE_WITH_YOUR_OWN_KEY"
-      }
+      "type": "local",
+      "command": ["npx", "-y", "@upstash/context7-mcp"],
+      "enabled": true
     },
     "apiportal": {
       "type": "local",
