@@ -6,18 +6,7 @@ return {
   },
   config = function()
     require('mason-lspconfig').setup({
-      ensure_installed = {
-        'angularls',
-        'cssls',
-        'html',
-        'jsonls',
-        'sqlls',
-        'ts_ls',
-        'yamlls',
-        'dockerls',
-        'graphql',
-        'lua_ls',
-      },
+      ensure_installed = require('core.lsp_servers').mason_ensure_installed(),
     })
   end,
 }

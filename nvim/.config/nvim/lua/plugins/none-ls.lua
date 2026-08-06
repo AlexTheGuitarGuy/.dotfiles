@@ -24,16 +24,6 @@ return {
     opts = function(_, opts)
       local nls = require('null-ls')
       local augroup = vim.api.nvim_create_augroup('LspFormatting', {})
-      vim.diagnostic.config({
-        virtual_text = {
-          prefix = '●',
-          source = 'if_many',
-        },
-        signs = true,
-        underline = true,
-        update_in_insert = false, -- Disable during insert for performance
-        severity_sort = true,
-      })
       opts.sources = vim.list_extend(opts.sources or {}, {
         nls.builtins.formatting.stylua,
         nls.builtins.formatting.prettierd,
@@ -50,7 +40,7 @@ return {
             group = augroup,
             buffer = bufnr,
             callback = function()
-              Format_without_lsp()
+              require('core.utils').format_without_lsp()
             end,
           })
         end

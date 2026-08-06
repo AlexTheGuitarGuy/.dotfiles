@@ -8,12 +8,6 @@ local apply_keymaps = function(mode, keymaps)
 end
 
 M.n = {
-  -- Alpha
-  ['<leader>a'] = ':Alpha<CR>',
-
-  -- Outline
-  ['<leader>o'] = ':Outline<CR>',
-
   -- No highlight
   ['<leader>H'] = ':noh<CR>',
   -- Let J stay in place
@@ -52,15 +46,6 @@ M.n = {
   -- Open image
   ['<leader>i'] = ':silent !gwenview % >/dev/null 2>&1 &<CR>',
 
-  -- Copilot
-  --[[ ["<leader>c"] = ":Copilot disable<CR>",
-  ["<leader>C"] = ":Copilot enable<CR>", ]]
-
-  -- Zen mode
-  ['<leader>z'] = ':ZenMode<CR>',
-
-  ['<leader>t'] = ':TSContext toggle<CR>',
-
   ['<leader>e'] = ':silent !explorer.exe $(wslpath -w %:p:h)<CR><CR>',
 
   -- Convert line into branch name
@@ -96,8 +81,6 @@ M.i = {
 
 M.init = function()
   vim.keymap.set('', '<Space>', '<Nop>', options)
-  vim.g.mapleader = ' '
-  vim.g.maplocalleader = ' '
   apply_keymaps('n', M.n)
   apply_keymaps('v', M.v)
   apply_keymaps('x', M.x)

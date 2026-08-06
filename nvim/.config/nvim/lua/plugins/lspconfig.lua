@@ -1,66 +1,19 @@
-local servers = {
-  bashls = {},
-  cssls = {},
-  html = {},
-  jsonls = {},
-  ts_ls = {},
-  rust_analyzer = {},
-  yamlls = {},
-  dockerls = {},
-  eslint_d = {},
-  graphql = {},
-  tailwindcss = {},
-  gdscript = {
-    name = 'godot',
-    cmd = vim.lsp.rpc.connect('127.0.0.1', 6005),
-  },
-  -- svelte = {},
-  lua_ls = {
-    Lua = {
-      workspace = { checkThirdParty = false },
-      telemetry = { enable = false },
-    },
-  },
-  gopls = {},
-  buf_ls = {},
-  sqlls = {
-    settings = {
-      sqls = {
-        connections = {
-          {
-            driver = 'postgresql',
-            dataSourceName = 'host=127.0.0.1 port=5432 user=postgres password=postgres dbname=postgres sslmode=disable',
-          },
-        },
-      },
-    },
-  },
-
-  -- csharp_ls = {},
-
-  --[[ gopls = {},
-  groovyls = {},
-  gradle_ls = {}, ]]
-}
-
-function Format_without_lsp()
-  vim.lsp.buf.format({
-    async = true,
-    filter = function(client)
-      for key, _ in pairs(servers) do
-        if client.name == key then
-          return false
-        end
-      end
-
-      return true
-    end,
-  })
-end
+local servers = require('core.lsp_servers').servers
 
 local config = function()
   local lsp_zero = require('lsp-zero')
   lsp_zero.extend_lspconfig()
+
+  vim.diagnostic.config({
+    virtual_text = {
+      prefix = '●',
+      source = 'if_many',
+    },
+    signs = true,
+    underline = true,
+    update_in_insert = false,
+    severity_sort = true,
+  })
 
   lsp_zero.on_attach(function(client, bufnr)
     lsp_zero.default_keymaps({ buffer = bufnr })

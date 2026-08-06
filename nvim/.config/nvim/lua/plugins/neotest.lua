@@ -86,4 +86,3 @@ return {
     setup_keymaps(neotest)
   end,
 }
-
