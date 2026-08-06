@@ -43,10 +43,15 @@ M.n = {
   -- Vertical split
   ['|'] = ':vsplit<CR>',
 
-  -- Open image
-  ['<leader>i'] = ':silent !gwenview % >/dev/null 2>&1 &<CR>',
+  -- Open current file with the OS's default handler (image viewer, etc.)
+  ['<leader>i'] = function()
+    vim.ui.open(vim.fn.expand('%:p'))
+  end,
 
-  ['<leader>e'] = ':silent !explorer.exe $(wslpath -w %:p:h)<CR><CR>',
+  -- Open current file's directory in the OS's default file manager
+  ['<leader>e'] = function()
+    vim.ui.open(vim.fn.expand('%:p:h'))
+  end,
 
   -- Convert line into branch name
   ['<leader>c'] = 'VuV:s/ /-/g<CR>:noh<CR>',
@@ -64,8 +69,6 @@ M.v = {
 }
 M.x = {
   -- Move text up and down
-  -- Yank in clipboard
-  -- ["y"] = '"+y',
   ['J'] = ":m '>+1<CR>gv=gv",
   ['K'] = ":m '<-2<CR>gv=gv",
   ['<A-j>'] = ":m '>+1<CR>gv=gv",

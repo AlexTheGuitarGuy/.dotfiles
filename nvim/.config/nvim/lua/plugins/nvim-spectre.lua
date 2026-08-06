@@ -22,7 +22,7 @@ return {
       function()
         require('spectre').open_visual()
       end,
-      desc = 'Search current word',
+      desc = 'Search current selection',
       mode = 'v',
     },
     {

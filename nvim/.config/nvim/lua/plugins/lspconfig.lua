@@ -1,9 +1,7 @@
-local servers = require('core.lsp_servers').servers
+local lsp_servers = require('core.lsp_servers')
+local servers = lsp_servers.servers
 
 local config = function()
-  local lsp_zero = require('lsp-zero')
-  lsp_zero.extend_lspconfig()
-
   vim.diagnostic.config({
     virtual_text = {
       prefix = '●',
@@ -15,32 +13,57 @@ local config = function()
     severity_sort = true,
   })
 
-  lsp_zero.on_attach(function(client, bufnr)
-    lsp_zero.default_keymaps({ buffer = bufnr })
+  vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+      local bufnr = args.buf
+      local opts = { buffer = bufnr, remap = false }
 
-    local opts = { buffer = bufnr, remap = false }
-
-    vim.keymap.set('n', 'K', function()
-      vim.lsp.buf.hover({
-        border = 'rounded',
-        title = ' Documentation ',
-        max_width = math.floor(vim.o.columns * 0.8),
-        max_height = math.floor(vim.o.lines * 0.4),
-      })
-    end, { buffer = bufnr, desc = 'Hover docs' })
-    vim.keymap.set('n', '<leader>la', function()
-      vim.lsp.buf.code_action()
-    end, opts)
-    vim.keymap.set('n', '<leader>lr', function()
-      vim.lsp.buf.rename()
-    end, opts)
-    vim.keymap.set('n', '<leader>lh', function()
-      vim.diagnostic.open_float()
-    end, opts)
-    vim.keymap.set('n', 'gr', function()
-      vim.lsp.buf.references()
-    end, opts)
-  end)
+      vim.keymap.set('n', 'K', function()
+        vim.lsp.buf.hover({
+          border = 'rounded',
+          title = ' Documentation ',
+          max_width = math.floor(vim.o.columns * 0.8),
+          max_height = math.floor(vim.o.lines * 0.4),
+        })
+      end, { buffer = bufnr, desc = 'Hover docs' })
+      vim.keymap.set('n', 'gd', function()
+        vim.lsp.buf.definition()
+      end, opts)
+      vim.keymap.set('n', 'gD', function()
+        vim.lsp.buf.declaration()
+      end, opts)
+      vim.keymap.set('n', 'gi', function()
+        vim.lsp.buf.implementation()
+      end, opts)
+      vim.keymap.set('n', 'go', function()
+        vim.lsp.buf.type_definition()
+      end, opts)
+      vim.keymap.set('n', 'gs', function()
+        vim.lsp.buf.signature_help()
+      end, opts)
+      vim.keymap.set('n', 'gr', function()
+        vim.lsp.buf.references()
+      end, opts)
+      vim.keymap.set('n', '<F2>', function()
+        vim.lsp.buf.rename()
+      end, opts)
+      vim.keymap.set({ 'n', 'x' }, '<F3>', function()
+        vim.lsp.buf.format({ async = true })
+      end, opts)
+      vim.keymap.set('n', '<F4>', function()
+        vim.lsp.buf.code_action()
+      end, opts)
+      vim.keymap.set('n', '<leader>la', function()
+        vim.lsp.buf.code_action()
+      end, opts)
+      vim.keymap.set('n', '<leader>lr', function()
+        vim.lsp.buf.rename()
+      end, opts)
+      vim.keymap.set('n', '<leader>lh', function()
+        vim.diagnostic.open_float()
+      end, opts)
+    end,
+  })
 
   vim.lsp.config('angularls', {
     root_dir = vim.fs.root(0, { 'angular.json', 'project.json' }),
@@ -49,6 +72,8 @@ local config = function()
   for name, opts in pairs(servers or {}) do
     vim.lsp.config(name, opts)
   end
+
+  vim.lsp.enable(lsp_servers.enable_list())
 end
 
 return {

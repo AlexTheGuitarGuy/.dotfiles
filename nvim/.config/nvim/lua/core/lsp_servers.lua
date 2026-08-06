@@ -58,4 +58,19 @@ M.mason_ensure_installed = function()
   return list
 end
 
+-- Every server that should autostart via vim.lsp.enable(), including
+-- angularls (configured separately) and gdscript (RPC-connected, not
+-- Mason-installed, but still needs enabling to attach on gdscript filetype).
+M.enable_list = function()
+  local list = {}
+  for name in pairs(M.servers) do
+    table.insert(list, name)
+  end
+  for _, name in ipairs(M.mason_extra) do
+    table.insert(list, name)
+  end
+  table.sort(list)
+  return list
+end
+
 return M
