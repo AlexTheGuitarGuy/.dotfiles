@@ -44,8 +44,14 @@ M.n = {
   ['|'] = ':vsplit<CR>',
 
   -- Open current file with the OS's default handler (image viewer, etc.)
+  -- gio reads the same mimeapps.list as xdg-open, but skips KDE's kde-open5
+  -- detour, which doesn't always resolve the configured default silently.
   ['<leader>i'] = function()
-    vim.ui.open(vim.fn.expand('%:p'))
+    local opt = nil
+    if vim.fn.has('mac') == 0 and vim.fn.has('win32') == 0 and vim.fn.executable('gio') == 1 then
+      opt = { cmd = { 'gio', 'open' } }
+    end
+    vim.ui.open(vim.fn.expand('%:p'), opt)
   end,
 
   -- Open current file's directory in the OS's default file manager
