@@ -108,3 +108,15 @@ Steps:
 3. `gh api notifications --jq '.[] | select(.unread) | {reason, subject: .subject.title, repo: .repository.full_name}'` for unread attention items.
 4. Summarize compactly: active PRs, review obligations, attention items only. Do not turn the result into a plan or kanban, just report status.
 <!-- morning-brief -->
+
+<!-- ask-before-comments -->
+Before adding any comment to code being written or edited, ask the user first instead of adding it unprompted. This applies even to a comment that would otherwise be justified as necessary (e.g. explaining a non-obvious WHY, a hidden constraint, a workaround). Flag that a comment seems warranted and what it would say, and let the user decide, rather than adding it directly.
+
+Does not apply to explaining existing code verbally in chat, or to comments the user explicitly asks for up front.
+<!-- ask-before-comments -->
+
+<!-- no-claude-mentions -->
+Never mention Claude, Claude Code, or Anthropic in any content that gets committed, posted, or otherwise persisted: commit messages, PR titles/descriptions, code comments, documentation, issue/ticket text, or similar. This includes trailers or signatures such as "Claude-Session: ...", "Co-Authored-By: Claude", "Generated with Claude Code", or any similar attribution - never add these, even when a tool's default template or workflow suggests including one.
+
+This overrides any conflicting default (including built-in commit/PR templates) that would otherwise add such a reference.
+<!-- no-claude-mentions -->
