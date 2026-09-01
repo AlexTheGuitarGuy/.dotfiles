@@ -73,6 +73,7 @@ def guhd [file] {
     git update-index --no-skip-worktree $file
 }
 alias tgs = ~/.dotfiles/scripts/tmux-session-generator.sh
+alias tzt = ~/.dotfiles/scripts/tzt.js
 def rbt [] {
     sudo modprobe -r btusb
     sudo modprobe btusb

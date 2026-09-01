@@ -1,6 +1,7 @@
 nushell/.config/nushell/history.txt
 i3/.local/bin/copilot
 i3/.local/bin/claude
+i3/.local/bin/herdr
 lazygit/.config/lazygit/state.yml
 hyprland-environment/.config-disabled/hypr/.initial_startup_done
 hyprland-environment/.config-disabled/hypr/wallpaper_effects/.wallpaper_current

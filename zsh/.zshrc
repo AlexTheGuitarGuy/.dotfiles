@@ -8,6 +8,9 @@ plug "$HOME/.config/zsh/aliases.zsh"
 plug "$HOME/.config/zsh/exports.zsh"
 plug "$HOME/.config/zsh/plugins.zsh"
 
+# Disable XON/XOFF flow control so ctrl+s reaches apps (e.g. herdr prefix) instead of freezing the terminal
+stty -ixon
+
 # Secrets (sops-encrypted, decrypted into env at shell start)
 if [ -f "$HOME/.config/sops/age/keys.txt" ]; then
   while IFS= read -r line; do

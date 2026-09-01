@@ -1,0 +1,32 @@
+onboarding = false
+
+[keys]
+prefix = "ctrl+s"
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+switch_tab = "prefix+1..9"
+switch_workspace = "prefix+shift+1..9"
+detach = "prefix+q"
+workspace_picker = "prefix+w"
+new_tab = "prefix+c"
+close_pane = "prefix+x"
+split_vertical = "prefix+v"
+split_horizontal = "prefix+-"
+zoom = "prefix+z"
+toggle_sidebar = "prefix+b"
+
+[ui]
+mouse_capture = true
+sidebar_width = 32
+
+[ui.toast]
+delivery = "system"
+delay_seconds = 2
+
+[ui.sound]
+enabled = true
+
+[theme]
+name = "terminal"
