@@ -73,7 +73,7 @@ def guhd [file] {
     git update-index --no-skip-worktree $file
 }
 alias tgs = ~/.dotfiles/scripts/tmux-session-generator.sh
-alias tzt = ~/.dotfiles/scripts/tzt.js
+alias tzt = ~/.dotfiles/scripts/tzt
 def rbt [] {
     sudo modprobe -r btusb
     sudo modprobe btusb
@@ -123,3 +123,7 @@ def connect-to-dvag-vpn [] {
   sudo openconnect --protocol=fortinet fg.zentrale.dvag:443 --cookie $env.DVAG_VPN_COOKIE
 }
 source $"($nu.home-dir)/.cargo/env.nu"
+
+if (^tty | complete | get exit_code) == 0 {
+    ^stty -ixon
+}

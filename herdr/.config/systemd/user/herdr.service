@@ -1,0 +1,14 @@
+[Unit]
+Description=herdr headless terminal multiplexer server
+Documentation=https://herdr.dev
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/herdr server
+ExecStop=%h/.local/bin/herdr server stop
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target

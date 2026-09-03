@@ -14,6 +14,16 @@
             "statusMessage": "Loading caveman mode..."
           }
         ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash '/home/alex/.claude/hooks/herdr-agent-state.sh' session",
+            "timeout": 10
+          }
+        ]
       }
     ],
     "UserPromptSubmit": [

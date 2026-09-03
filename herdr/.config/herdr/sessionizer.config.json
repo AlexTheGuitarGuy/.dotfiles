@@ -1,0 +1,11 @@
+{
+  "template": [
+    { "tab": "term-1" },
+    { "tab": "term-2" },
+    { "tab": "term-3" },
+    { "tab": "term-4" }
+  ],
+  "git_roots_only": false,
+  "extra_dirs": [],
+  "overrides": []
+}

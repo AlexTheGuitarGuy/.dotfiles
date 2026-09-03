@@ -1,7 +1,7 @@
 onboarding = false
 
 [keys]
-prefix = "ctrl+s"
+prefix = "ctrl+a"
 focus_pane_left = "prefix+h"
 focus_pane_down = "prefix+j"
 focus_pane_up = "prefix+k"
@@ -17,9 +17,28 @@ split_horizontal = "prefix+-"
 zoom = "prefix+z"
 toggle_sidebar = "prefix+b"
 
+[keys.indexed]
+tabs = "alt"
+
+[[keys.command]]
+key = "prefix+f"
+type = "plugin_action"
+command = "sessionizer.pick"
+description = "fuzzy-switch workspace"
+
+[[keys.command]]
+key = "prefix+m"
+type = "plugin_action"
+command = "synchronize-panes.broadcast"
+description = "broadcast a command to all panes in this tab"
+
 [ui]
 mouse_capture = true
 sidebar_width = 32
+tab_bar_right = [
+  { type = "command", command = "/home/alex/.config/herdr/status.sh", interval_seconds = 900, timeout_seconds = 5 },
+  { type = "datetime", format = "%a %H:%M" },
+]
 
 [ui.toast]
 delivery = "system"
@@ -30,3 +49,6 @@ enabled = true
 
 [theme]
 name = "terminal"
+
+[experimental]
+pane_history = true

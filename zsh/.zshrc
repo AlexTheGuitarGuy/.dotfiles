@@ -8,7 +8,7 @@ plug "$HOME/.config/zsh/aliases.zsh"
 plug "$HOME/.config/zsh/exports.zsh"
 plug "$HOME/.config/zsh/plugins.zsh"
 
-# Disable XON/XOFF flow control so ctrl+s reaches apps (e.g. herdr prefix) instead of freezing the terminal
+# Disable XON/XOFF flow control so ctrl+s / ctrl+q are usable keys instead of freezing output
 stty -ixon
 
 # Secrets (sops-encrypted, decrypted into env at shell start)
