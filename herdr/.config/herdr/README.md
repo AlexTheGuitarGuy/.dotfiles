@@ -86,28 +86,18 @@ rewrites the hook on integration version bumps, so expect an occasional diff.
 
 ## Prefix key
 
-Prefix is `ctrl+a` (tmux parity). herdr 0.8.x has **no send-prefix**, so a literal
-`ctrl+a` (readline beginning-of-line) cannot be passed through cleanly. Use `Home`,
-or add:
-
-```toml
-[[keys.command]]
-key = "prefix+ctrl+a"
-type = "shell"
-command = "herdr pane send-keys $(herdr pane current --current | jq -r .result.pane.pane_id) ctrl+a"
-```
-
-(`herdr pane send-keys <pane> ctrl+a` is verified; whether a `type = "shell"`
-binding resolves `--current` to the triggering pane is not.)
+Prefix is `ctrl+a` (tmux parity). herdr has no send-prefix, so a bare `ctrl+a` at
+the shell prompt is caught by herdr, not readline; use `Home` for
+beginning-of-line.
 
 `stty -ixon` in `zsh/.zshrc` and `nushell/.config/nushell/config.nu` disables
-XON/XOFF flow control so `ctrl+s` / `ctrl+q` are usable keys. It was required when
-the prefix was `ctrl+s`; now it is just a sane default.
+XON/XOFF flow control so `ctrl+s` / `ctrl+q` are usable keys. Was required for the
+old `ctrl+s` prefix, now just a sane default.
 
 ## tmux bindings not carried over
 
 - `bind r` reload            -> `herdr server reload-config`
 - `bind c` name-on-create    -> `prefix+c` then `prefix+shift+t`
 - `M-u/i/o/p` window jump     -> `alt+1..9` (herdr has no letter-key tab bind)
-- `C-S-Left/Right` tab swap   -> dropped (use `herdr tab` CLI)
+- `C-S-Left/Right` tab swap   -> unbound; native `move_tab_previous` / `move_tab_next` in `[keys]` if wanted
 - `escape-time`, `focus-events`, `terminal-features RGB` -> native, not needed

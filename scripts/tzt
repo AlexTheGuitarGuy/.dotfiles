@@ -23,4 +23,10 @@ fi
 "$root/bin/sessionizer" "$@"
 
 [ -n "${HERDR_ENV:-}" ] && exit 0
+
+if [ -n "${TMUX:-}" ]; then
+    echo "tzt: workspace ready. run 'herdr' from a non-tmux terminal to attach." >&2
+    exit 0
+fi
+
 exec "$HERDR"
