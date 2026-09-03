@@ -124,6 +124,7 @@ def connect-to-dvag-vpn [] {
 }
 source $"($nu.home-dir)/.cargo/env.nu"
 
+# Disable XON/XOFF flow control so ctrl+s / ctrl+q are usable keys instead of freezing output
 if (^tty | complete | get exit_code) == 0 {
     ^stty -ixon
 }
