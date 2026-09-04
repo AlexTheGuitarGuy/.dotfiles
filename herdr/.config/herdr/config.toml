@@ -16,6 +16,9 @@ split_vertical = "prefix+v"
 split_horizontal = "prefix+-"
 zoom = "prefix+z"
 toggle_sidebar = "prefix+b"
+previous_agent = "prefix+ctrl+p"
+next_agent = "prefix+ctrl+n"
+focus_agent = "prefix+alt+1..9"
 
 [keys.indexed]
 tabs = "alt"
@@ -31,6 +34,12 @@ key = "prefix+m"
 type = "plugin_action"
 command = "synchronize-panes.broadcast"
 description = "broadcast a command to all panes in this tab"
+
+[[keys.command]]
+key = "prefix+a"
+type = "plugin_action"
+command = "sessionizer.agents"
+description = "jump to an agent (picker)"
 
 [ui]
 mouse_capture = true
@@ -48,7 +57,10 @@ delay_seconds = 2
 enabled = true
 
 [theme]
-name = "terminal"
+name = "catppuccin"
+auto_switch = true
+light_name = "catppuccin-latte"
+dark_name = "catppuccin"
 
 [experimental]
 pane_history = true
