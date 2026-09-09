@@ -6,6 +6,9 @@ PartOf=graphical-session.target
 
 [Service]
 Type=simple
+Environment=HERDR_LOG=herdr=warn
+IOSchedulingClass=best-effort
+IOSchedulingPriority=0
 ExecStart=%h/.local/bin/herdr server
 ExecStop=%h/.local/bin/herdr server stop
 Restart=on-failure

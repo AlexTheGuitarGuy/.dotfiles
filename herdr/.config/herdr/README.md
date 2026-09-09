@@ -67,10 +67,15 @@ command path is absolute. Replaces the old dracula/tmux weather widget.
     systemctl --user status herdr        # confirm it stays "active (running)"
     loginctl enable-linger "$USER"       # start at boot, not just first login
 
-On a server restart herdr restores workspace/tab/pane layout, cwd, and (with
-`experimental.pane_history = true`) recent scrollback. Running processes are NOT
-restored, unlike tmux-resurrect. `session.resume_agents_on_restore` (default true)
-re-resumes recognized agent conversations only.
+On a server restart herdr restores workspace/tab/pane layout and cwd. Running
+processes are NOT restored, unlike tmux-resurrect. `session.resume_agents_on_restore`
+(default true) re-resumes recognized agent conversations only.
+
+`experimental.pane_history` is off: with it on, herdr rewrites a ~800 KB
+`session-history.json` on every activity tick, which on a busy machine shows up as
+input lag while typing. The trade-off is no scrollback restore across a full server
+restart (rare, and the processes are gone anyway). `HERDR_LOG=herdr=warn` in the
+unit silences the per-event INFO log for the same reason.
 
 If `status` shows the service exiting immediately the server is daemonizing:
 change the unit `Type=simple` to `Type=exec` (or `forking`) and retry.

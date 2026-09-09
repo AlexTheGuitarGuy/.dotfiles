@@ -42,7 +42,7 @@ command = "sessionizer.agents"
 description = "jump to an agent (picker)"
 
 [ui]
-mouse_capture = true
+mouse_capture = false
 sidebar_width = 32
 tab_bar_right = [
   { type = "command", command = "/home/alex/.config/herdr/status.sh", interval_seconds = 900, timeout_seconds = 5 },
@@ -63,4 +63,7 @@ light_name = "catppuccin-latte"
 dark_name = "catppuccin"
 
 [experimental]
-pane_history = true
+pane_history = false
+
+[advanced]
+scrollback_limit_bytes = 2000000
