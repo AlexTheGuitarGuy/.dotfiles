@@ -3,7 +3,7 @@
 Replaces tmux (`tmux/.tmux.conf` + `scripts/tmux-session-generator.sh`). tmux is
 kept as a fallback and is not removed.
 
-Tested against herdr 0.8.2, stable channel (`herdr channel show`).
+Tested against herdr 0.9.0, stable channel (`herdr channel show`).
 
 ## Binary
 
