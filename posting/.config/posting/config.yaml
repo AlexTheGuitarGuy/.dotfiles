@@ -1,0 +1,10 @@
+theme: catppuccin-mocha-blue
+editor: nvim
+pager: nvim -R
+pager_json: nvim -R
+use_host_environment: true
+url_bar:
+  hide_secrets_in_value_preview: true
+watch_env_files: true
+response:
+  prettify_json: true
