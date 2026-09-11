@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Bruno
+Exec=/home/alex/.local/bin/bruno %U
+Terminal=false
+Type=Application
+Icon=bruno
+StartupWMClass=Bruno
+MimeType=x-scheme-handler/bruno;
+Comment=Opensource API Client for Exploring and Testing APIs
+Categories=Development;

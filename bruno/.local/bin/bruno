@@ -1,0 +1,10 @@
+#!/bin/bash
+# Bruno reads OAuth2 secrets straight from process.env, and GUI launches
+# (app menu, rofi, dock) don't get the sops-decrypted env that .zshrc/config.nu
+# set up for interactive shells. Decrypt here too before handing off.
+if [ -f "$HOME/.config/sops/age/keys.txt" ]; then
+  while IFS= read -r line; do
+    export "${line%%: *}=${line#*: }"
+  done < <(sops -d "$HOME/.dotfiles/secrets/secrets.yaml")
+fi
+exec /usr/bin/bruno "$@"
