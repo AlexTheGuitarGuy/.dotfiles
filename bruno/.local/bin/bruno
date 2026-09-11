@@ -4,8 +4,9 @@
 # set up for interactive shells. Decrypt here too before handing off.
 SOPS="$(command -v sops || echo /home/linuxbrew/.linuxbrew/bin/sops)"
 if [ -f "$HOME/.config/sops/age/keys.txt" ] && [ -x "$SOPS" ]; then
-  while IFS= read -r line; do
-    export "${line%%: *}=${line#*: }"
-  done < <("$SOPS" -d "$HOME/.dotfiles/secrets/secrets.yaml")
+  set -a
+  # shellcheck disable=SC1090
+  . <("$SOPS" -d --output-type dotenv "$HOME/.dotfiles/secrets/secrets.yaml")
+  set +a
 fi
 exec /usr/bin/bruno "$@"
