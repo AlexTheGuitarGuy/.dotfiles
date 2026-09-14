@@ -1,0 +1,35 @@
+#!/usr/bin/env python3
+import json
+import os
+import subprocess
+
+SOPS = subprocess.run(["which", "sops"], capture_output=True, text=True).stdout.strip() \
+    or "/home/linuxbrew/.linuxbrew/bin/sops"
+SECRETS_FILE = os.path.expanduser("~/.dotfiles/secrets/secrets.yaml")
+KEYS_DIR = os.path.expanduser("~/.ssh/keys")
+
+KEYS = {
+    "SSH_KEY_GITHUB_DVAG": "github-dvag",
+    "SSH_KEY_GITHUB_PERSONAL": "github-personal",
+    "SSH_KEY_GITLAB_PROFESSIONAL": "gitlab-professional",
+    "SSH_KEY_CODESPACES": "codespaces",
+}
+
+os.makedirs(KEYS_DIR, exist_ok=True)
+os.chmod(os.path.expanduser("~/.ssh"), 0o700)
+os.chmod(KEYS_DIR, 0o700)
+
+decrypted = subprocess.run(
+    [SOPS, "-d", "--output-type", "json", SECRETS_FILE],
+    capture_output=True, text=True, check=True,
+).stdout
+data = json.loads(decrypted)
+
+for secret_name, file_name in KEYS.items():
+    value = data.get(secret_name)
+    if not value:
+        continue
+    path = os.path.join(KEYS_DIR, file_name)
+    with open(path, "w") as f:
+        f.write(value)
+    os.chmod(path, 0o600)

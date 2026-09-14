@@ -1,0 +1,12 @@
+[Unit]
+Description=Decrypt SSH private keys from sops into ~/.ssh/keys
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=%h/.local/bin/ssh-keys-provision
+
+[Install]
+WantedBy=graphical-session.target
