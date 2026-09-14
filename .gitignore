@@ -1,10 +1,9 @@
 nushell/.config/nushell/history.txt
-i3/.local/bin/copilot
-i3/.local/bin/claude
-i3/.local/bin/herdr
-i3/.local/bin/uv
-i3/.local/bin/uvx
-i3/.local/bin/posting
+local-bin/.local/bin/claude
+herdr/.local/bin/herdr
+local-bin/.local/bin/uv
+local-bin/.local/bin/uvx
+local-bin/.local/bin/posting
 herdr/.config/herdr/plugins/
 lazygit/.config/lazygit/state.yml
 hyprland-environment/.config-disabled/hypr/.initial_startup_done
