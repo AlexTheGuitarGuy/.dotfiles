@@ -70,5 +70,48 @@
   "preferredNotifChannel": "ghostty",
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "autoMode": {
+    "environment": [
+      "### Org-wide",
+      "**Organization**: dvag (git remote github.com:dvag/dfs-asset-service.git)",
+      "**Cloud provider(s)**: Azure (Azure App Configuration, Azure Application Insights, Azure Container Registry dvagcr.azurecr.io, Workload Identity)",
+      "**Repository visibility**: private (gh API authoritative)",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: Azure App Configuration / Azure Key Vault via Workload Identity; Helm secretstore templates under helm/secrets/; CI secrets in GitHub Actions (DFS_GITHUB_APP_CERT, DFS_GITHUB_APP_CLIENT, GITHUB_TOKEN, PACKAGES_PAT, SLACK_BOT_TOKEN)",
+      "**Default / protected branches**: default branch main; main is a protected branch; active rulesets: Block Force Push, Block Repository renaming, Copilot Review, Semantic Versioning",
+      "**CI/CD deploy targets**: GitHub Actions workflows in .github/workflows; Helm charts per environment (entwicklung, integration, abnahme, produktion)",
+      "**Network posture**: None configured",
+      "**Host containment**: None configured — assume Claude Code runs on an ordinary developer machine or CI runner with open internet; instance-metadata credential paths and node/cluster credentials of the hosting layer are never task credentials unless stated",
+      "**Source control**: The trusted repo github.com:dvag/dfs-asset-service.git and its remote(s) only (no additional orgs configured)",
+      "**Trusted internal domains**: *.dvag observed in this repo — integration.api.dvag, kundenstammdaten-service.integration.dvag, vertragsservice.integration.dvag, produktkatalog.integration.dvag, integration.auth.dvag, immobilien.integration.dvag, vermoegensbilanz.integration.dvag; packages.cloud.intern.dvag",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: Azure App Configuration endpoints appcs-vpd-ent-01/prd-01/abn-01/int-01.azconfig.io; Keycloak/ZOB auth at integration.auth.dvag; Kafka + Schema Registry; RabbitMQ (ex.vpd.client-status-sync); Redis; PostgreSQL (dfs_asset_service)",
+      "**Internal package registry**: packages.cloud.intern.dvag (pnpm); container images dvagcr.azurecr.io",
+      "**Sensitive data locations & audiences**: helm/*/api-secrets.yaml (abnahme, entwicklung, integration, produktion); helm/secrets/templates/*.yaml; .env, .env.* files (.env.ent, .env.int, .env.local.temp, .env.local.temp2); customer numbers / Kundenstammdaten and advisor permission data handled by the service — personal/regulated data, share only with audiences cleared at the named+specifics bar",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries prod or production as a whole word or name segment; appcs-vpd-prd-01.azconfig.io and helm/produktion/ are production",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic; treat helm/produktion and any *-prd/*produktion namespace as protected",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; Helm charts under helm/produktion/; anything whose name or tag carries prod or production as a whole word or name segment",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development (Nx + pnpm monorepo, NestJS backend + React micro-frontends)",
+      "**Trusted repo**: github.com:dvag/dfs-asset-service.git (private) and its configured remote(s)",
+      "**Org-specific CLIs**: az (Azure CLI), kubectl; pnpm/npx for the Nx workspace",
+      "**Routine under user prefix**: none identified"
+    ],
+    "allow": [
+      "$defaults",
+      "Bash(kubectl get:*)",
+      "Bash(kubectl logs:*)",
+      "Bash(az account show:*)",
+      "Bash(az appconfig kv list:*)",
+      "Bash(pnpm nx affected:*)"
+    ],
+    "soft_deny": [
+      "$defaults",
+      "Bash(kubectl delete:*)",
+      "Bash(make destroy:*)",
+      "Bash(az appconfig kv delete:*)"
+    ]
+  }
 }
