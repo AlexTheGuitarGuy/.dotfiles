@@ -87,7 +87,7 @@
 			"hasSentFirstRequest": true
 		},
 		"general": {
-			"defaultLocation": "/home/alex/projects/api-collections",
+			"defaultLocation": "/home/alex/projects/api-collections/dvag-api-collections",
 			"defaultWorkspacePath": "/home/alex/.config/bruno/default-workspace"
 		},
 		"autoSave": {
@@ -146,7 +146,7 @@
 	"maximized": true,
 	"workspaces": {
 		"lastOpenedWorkspaces": [
-			"/home/alex/projects/api-collections"
+			"/home/alex/projects/api-collections/dvag-api-collections"
 		]
 	}
 }
