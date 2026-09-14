@@ -1,6 +1,6 @@
 [user]
 	name = AlexandruSeremetDVAG
-	email = Alexandru.Seremet.extern@dvag.com
+	email = alexandru.seremet.external@deutschefintechsolutions.de
 
 [core]
 	sshCommand = ssh -i ~/.ssh/keys/github-dvag -o IdentitiesOnly=yes

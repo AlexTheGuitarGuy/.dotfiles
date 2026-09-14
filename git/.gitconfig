@@ -5,11 +5,9 @@
 [includeIf "gitdir:~/projects/DFS/"]
 	path = ~/.gitconfig-dvag
 
-[init]
-	templatedir = ~/.git-templates
-
 [core]
 	pager = delta
+	excludesFile = ~/.gitignore_global
 
 [interactive]
 	diffFilter = delta --color-only

@@ -24,6 +24,7 @@ claude/.claude/file-history/
 claude/.claude/plans/
 claude/.claude/projects/
 claude/.claude/settings.json.bak
+**/settings.local.json
 claude/.claude/.credentials.json
 claude/.claude/.caveman-active
 claude/.claude/.last-cleanup
