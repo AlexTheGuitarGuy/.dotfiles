@@ -1,0 +1,16 @@
+[Unit]
+Description=DVAG Fortinet VPN (openconnect via SSO cookie)
+After=graphical-session.target
+PartOf=graphical-session.target
+StartLimitIntervalSec=300
+StartLimitBurst=5
+
+[Service]
+Type=simple
+Environment=DISPLAY=:0
+ExecStart=%h/.local/bin/dvag-vpn-connect
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=graphical-session.target

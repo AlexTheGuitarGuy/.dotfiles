@@ -227,6 +227,7 @@ workspace_auto_back_and_forth yes
 
 #---( startup items )---#
 
+exec_always --no-startup-id systemctl --user import-environment DISPLAY XAUTHORITY
 exec_always --no-startup-id nitrogen --restore
 exec_always --no-startup-id xmodmap -e "clear lock" #disable caps lock switch
 exec_always --no-startup-id xmodmap -e "keysym Caps_Lock = Escape" #set caps_lock as escape

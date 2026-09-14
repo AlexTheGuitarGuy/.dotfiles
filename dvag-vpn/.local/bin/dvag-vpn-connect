@@ -1,0 +1,19 @@
+#!/bin/bash
+# Direct shell port of the `connect-to-dvag-vpn` nushell function
+# (nushell/.config/nushell/config.nu), run as a systemd --user service
+# instead of a foreground terminal job so it survives locking/idle and
+# reconnects automatically. Each SVPNCOOKIE is single-use, so on any
+# disconnect systemd restarts this whole script, popping a fresh SSO
+# login window rather than retrying a dead cookie.
+set -euo pipefail
+
+cd "$HOME/Apps/openfortivpn-webview/openfortivpn-webview-electron"
+
+DVAG_VPN_COOKIE="$(npx electron index.js fg.zentrale.dvag:443)"
+
+if [ -z "$DVAG_VPN_COOKIE" ]; then
+  echo "dvag-vpn-connect: no cookie captured from openfortivpn-webview" >&2
+  exit 1
+fi
+
+exec sudo openconnect --protocol=fortinet fg.zentrale.dvag:443 --cookie "$DVAG_VPN_COOKIE"
