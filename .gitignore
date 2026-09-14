@@ -41,9 +41,6 @@ claude/.claude/jobs/
 # opencode - ignore generated files
 opencode/.config/opencode/package-lock.json
 
-# nvim lazy-lock already untracked but just in case
-nvim/.config/nvim/lazy-lock.json
-
 # btop - ignore runtime log
 btop/.config/btop/btop.log
 
