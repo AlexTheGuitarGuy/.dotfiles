@@ -6,9 +6,6 @@ local-bin/.local/bin/uvx
 local-bin/.local/bin/posting
 herdr/.config/herdr/plugins/
 lazygit/.config/lazygit/state.yml
-hyprland-environment/.config-disabled/hypr/.initial_startup_done
-hyprland-environment/.config-disabled/hypr/wallpaper_effects/.wallpaper_current
-hyprland-environment/.config-disabled/hypr/wallpaper_effects/.wallpaper_modified
 
 # claude - ignore runtime/cache, keep config
 claude/.claude/cache/
@@ -45,4 +42,3 @@ opencode/.config/opencode/package-lock.json
 btop/.config/btop/btop.log
 
 # rofi - ignore dynamic wallpaper-tracking symlink
-rofi/.config/rofi/.current_wallpaper
