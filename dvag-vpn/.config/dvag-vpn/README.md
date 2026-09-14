@@ -29,9 +29,18 @@ unfixed until confirmed with a real test.
 - `.local/bin/dvag-vpn-connect` - the wrapper script
 - `.config/systemd/user/dvag-vpn.service` - the systemd unit
   (`WantedBy=graphical-session.target`, same pattern as `herdr.service`)
-- `i3/.config/.i3/config`'s `systemctl --user import-environment DISPLAY
-  XAUTHORITY` line - without this, systemd --user units on this X11/i3
-  setup don't inherit DISPLAY, and the Electron SSO window can't render
+
+This machine runs **KDE Plasma (Kubuntu)**, not i3, see
+[[kde-plasma-not-i3]] in memory - an earlier version of this feature
+wrongly assumed i3 and added a manual `systemctl --user
+import-environment DISPLAY XAUTHORITY` to i3's config, which did nothing
+since i3 isn't the active session. Verified KDE Plasma's own systemd
+integration already imports `DISPLAY`/`XAUTHORITY` into `systemd --user`
+automatically (`systemctl --user show-environment` shows both correctly
+set with no extra glue) - so no DISPLAY-propagation workaround is needed
+here at all. A different WM/DE that lacks that integration (i3, a
+from-scratch Hyprland setup) would need its own equivalent of that
+import line, added to *that* WM's config, not assumed.
 
 **NOT tracked, must already exist on the machine:**
 - `~/Apps/openfortivpn-webview/openfortivpn-webview-electron` - the actual
@@ -46,9 +55,11 @@ unfixed until confirmed with a real test.
 - Working `node`/`npm`/`npx` on PATH (this machine gets that from
   nvm, itself set up in `zsh/.config/zsh/exports.zsh`, so partially
   portable, but nothing here runs `npm install` for the Electron app)
-- A window manager that actually fires `graphical-session.target` on
-  login (i3 does here; a from-scratch setup on a different WM would need
-  the equivalent of this repo's DISPLAY-import line adapted to it)
+- A desktop environment/WM that actually fires `graphical-session.target`
+  on login with DISPLAY/XAUTHORITY already in the systemd --user
+  environment (KDE Plasma does this natively here; a lighter WM like i3
+  or Hyprland needs a manual `systemctl --user import-environment
+  DISPLAY XAUTHORITY` added to its own startup config instead)
 
 So: the automation/service-management layer is fully portable, the actual
 VPN client app and its system-level prerequisites are not, and would need
