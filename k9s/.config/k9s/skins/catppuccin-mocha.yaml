@@ -91,7 +91,7 @@ k9s:
         toggleOffColor: '#a6adc8'
   dialog:
     fgColor: '#f9e2af'
-    bgColor: '#9399b2'
+    bgColor: '#313244'
     buttonFgColor: '#1e1e2e'
     buttonBgColor: '#7f849c'
     buttonFocusFgColor: '#1e1e2e'
