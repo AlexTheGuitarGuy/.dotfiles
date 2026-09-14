@@ -1,9 +1,9 @@
 {
 	"window-bounds": {
-		"x": 128,
-		"y": 195,
-		"width": 1280,
-		"height": 769
+		"x": 0,
+		"y": 144,
+		"width": 1536,
+		"height": 820
 	},
 	"preferences": {
 		"request": {
@@ -143,5 +143,10 @@
 	},
 	"themeMode": "system",
 	"themeBg": "#1a1a1a",
-	"maximized": true
+	"maximized": true,
+	"workspaces": {
+		"lastOpenedWorkspaces": [
+			"/home/alex/projects/api-collections"
+		]
+	}
 }
