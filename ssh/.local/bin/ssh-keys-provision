@@ -33,3 +33,4 @@ for secret_name, file_name in KEYS.items():
     with open(path, "w") as f:
         f.write(value)
     os.chmod(path, 0o600)
+    subprocess.run(["ssh-add", path])
