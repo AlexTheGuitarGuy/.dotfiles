@@ -75,8 +75,6 @@ claude mcp add --transport http --scope user context7 https://mcp.context7.com/m
 
 claude mcp add --scope user apiportal-mcp -- pnpm dlx @dvag/apiportal-mcp@1.1.0
 
-claude mcp add --scope user lens -- /opt/Lens/resources/cli/bin/lens-cli-linux-x64 mcp-server
-
 claude mcp add --transport http --scope user atlassian https://mcp.atlassian.com/v1/mcp/authv2
 ```
 
