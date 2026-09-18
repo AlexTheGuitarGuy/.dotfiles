@@ -4,3 +4,4 @@
 
 [core]
 	sshCommand = ssh -i ~/.ssh/keys/github-dvag -o IdentitiesOnly=yes
+	excludesFile = ~/.gitignore_dfs

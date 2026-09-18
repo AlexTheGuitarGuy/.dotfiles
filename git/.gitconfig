@@ -2,9 +2,6 @@
 	name = AlexSeremet
 	email = seremet.alexandru.work@gmail.com
 
-[includeIf "gitdir:~/projects/DFS/"]
-	path = ~/.gitconfig-dvag
-
 [core]
 	pager = delta
 	excludesFile = ~/.gitignore_global
@@ -20,3 +17,6 @@
 
 [pull]
 	rebase = true
+
+[includeIf "gitdir:~/projects/DFS/"]
+	path = ~/.gitconfig-dvag
