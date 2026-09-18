@@ -19,6 +19,11 @@
       "type": "local",
       "command": ["/opt/Lens/resources/cli/bin/lens-cli-linux-x64", "mcp-server"],
       "enabled": true
+    },
+    "atlassian": {
+      "type": "remote",
+      "url": "https://mcp.atlassian.com/v1/mcp/authv2",
+      "enabled": true
     }
   },
   "lsp": true

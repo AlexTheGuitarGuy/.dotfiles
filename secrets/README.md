@@ -61,6 +61,30 @@ Add a key via `sops secrets/secrets.yaml`, save. It's picked up automatically at
 next shell start since both `zsh/.zshrc` and `nushell/config.nu` decrypt and export
 every key in the file.
 
+## Claude Code MCP servers (bootstrap on a new machine)
+
+Claude Code's user-scoped MCP server config lives in `~/.claude.json`, which is
+machine-local state and not tracked in this repo. There's no settings.json key
+for it (`mcpServers` is not part of the settings schema, confirmed by testing).
+On a new machine, run these once, after the shell has picked up
+`CONTEXT7_API_KEY` from sops (open a new shell first so the variable is set):
+
+```bash
+claude mcp add --transport http --scope user context7 https://mcp.context7.com/mcp \
+  --header "CONTEXT7_API_KEY: $CONTEXT7_API_KEY"
+
+claude mcp add --scope user apiportal-mcp -- pnpm dlx @dvag/apiportal-mcp@1.1.0
+
+claude mcp add --scope user lens -- /opt/Lens/resources/cli/bin/lens-cli-linux-x64 mcp-server
+
+claude mcp add --transport http --scope user atlassian https://mcp.atlassian.com/v1/mcp/authv2
+```
+
+Verify with `claude mcp list`. Note: the `CONTEXT7_API_KEY` currently in sops
+is rejected by Context7 as invalid ("API keys should start with 'ctx7sk'
+prefix" even though it does) - get a fresh key from context7.com and
+`sops secrets/secrets.yaml` to replace it before relying on that server.
+
 ## Tools reference
 
 | Command | Purpose |
