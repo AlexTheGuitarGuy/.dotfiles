@@ -19,7 +19,17 @@ not "run the unit tests"), follow this workflow.
    - guard any write to a non-local env behind a y/N confirm; refuse prod unless an
      explicit opt-in env var is set
 
-3. WRITE `todos.txt` at the repo root. Two parts, LOCAL and DEPLOYED (ent, or d0x).
+3. BRUNO. If the affected service has a collection under
+   `~/projects/api-collections/dvag-api-collections/`, add a subfolder inside that
+   collection named after the ticket (e.g. `DFSVPD-12345/`) with one Bruno request per
+   API-testable piece of the change identified in step 1. Reuse the collection's
+   existing auth (`auth: inherit`) and shared global-environment variables (`personId`,
+   `householdId`, etc.) instead of hardcoding values, matching every other request in
+   the collection. Skip this step when nothing from the change is reachable over the
+   API (a pure internal refactor, a kafka-consumer-only change with no exposed
+   endpoint, and so on).
+
+4. WRITE `todos.txt` at the repo root. Two parts, LOCAL and DEPLOYED (ent, or d0x).
    Every step is three lines:
      DO:     the exact command or request
      EXPECT: the exact result (status code, log string, DB row)
@@ -27,7 +37,7 @@ not "run the unit tests"), follow this workflow.
    Include the negative controls (fail-fast on bad config, 403 without a token) and a
    cleanup step for any test data the run writes.
 
-4. STATE THE GAPS. This is a manual behavioural checklist, not a safety net. It does
+5. STATE THE GAPS. This is a manual behavioural checklist, not a safety net. It does
    not replace the automated suites (`pnpm test`, `test:integration`), it captures no
    before/after baseline, a passing ent run does not prove int/abn/prd, and it only
    covers the paths step 1 identified. Say this in the handoff every time.
