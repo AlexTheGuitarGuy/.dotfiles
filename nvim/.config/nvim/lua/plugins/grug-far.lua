@@ -7,7 +7,7 @@ return {
     {
       '<leader>S',
       function()
-        require('grug-far').toggle_instance()
+        require('grug-far').toggle_instance({})
       end,
       desc = 'Toggle Grug Far',
       mode = 'n',
