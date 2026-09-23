@@ -50,6 +50,7 @@ return {
           { icon = ' ', key = 'r', desc = 'Recently used files', action = function() Snacks.picker.recent() end },
           { icon = '󱎸 ', key = 't', desc = 'Find text', action = function() Snacks.picker.grep() end },
           { icon = ' ', key = 'c', desc = 'Configuration', action = ':e $MYVIMRC<CR>' },
+          { icon = '󰒲 ', key = 's', desc = 'Restore Session', section = 'session' },
           { icon = ' ', key = 'q', desc = 'Quit Neovim', action = ':qa<CR>' },
         },
       },
