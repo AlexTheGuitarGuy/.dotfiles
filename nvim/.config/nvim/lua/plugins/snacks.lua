@@ -59,6 +59,10 @@ return {
         { section = 'startup' },
       },
     },
-    zen = {},
+    zen = {
+      win = {
+        backdrop = { transparent = false, blend = 40 },
+      },
+    },
   },
 }
