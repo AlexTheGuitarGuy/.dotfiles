@@ -61,7 +61,7 @@ return {
     return {
       provider = _99.Providers.ClaudeCodeProvider,
       tmp_dir = './tmp',
-      completion = { source = 'cmp' },
+      completion = { source = 'native' },
     }
   end,
 }

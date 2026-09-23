@@ -65,6 +65,8 @@ local config = function()
     end,
   })
 
+  vim.lsp.config('*', { capabilities = require('blink.cmp').get_lsp_capabilities() })
+
   vim.lsp.config('angularls', {
     root_dir = vim.fs.root(0, { 'angular.json', 'project.json' }),
   })
@@ -79,7 +81,7 @@ end
 return {
   'neovim/nvim-lspconfig',
   dependencies = {
-    'hrsh7th/cmp-nvim-lsp',
+    'saghen/blink.cmp',
   },
   event = { 'BufReadPre', 'BufNewFile' },
   cmd = 'LspInfo',
