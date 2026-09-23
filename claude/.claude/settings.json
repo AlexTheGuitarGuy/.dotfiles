@@ -3,6 +3,7 @@
     "commit": "",
     "pr": ""
   },
+  "model": "sonnet",
   "hooks": {
     "SessionStart": [
       {
@@ -78,13 +79,20 @@
     "context7@claude-plugins-official": true,
     "explanatory-output-style@claude-plugins-official": true,
     "lua-lsp@claude-plugins-official": true,
-    "caveman@caveman": true
+    "caveman@caveman": true,
+    "ponytail@ponytail": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
       "source": {
         "source": "github",
         "repo": "JuliusBrussee/caveman"
+      }
+    },
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
       }
     }
   },
@@ -96,8 +104,21 @@
   "preferredNotifChannel": "ghostty",
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
-  "voiceEnabled": true,
   "autoMode": {
+    "allow": [
+      "$defaults",
+      "Bash(kubectl get:*)",
+      "Bash(kubectl logs:*)",
+      "Bash(az account show:*)",
+      "Bash(az appconfig kv list:*)",
+      "Bash(pnpm nx affected:*)"
+    ],
+    "soft_deny": [
+      "$defaults",
+      "Bash(kubectl delete:*)",
+      "Bash(make destroy:*)",
+      "Bash(az appconfig kv delete:*)"
+    ],
     "environment": [
       "### Org-wide",
       "**Organization**: dvag (git remote github.com:dvag/dfs-asset-service.git)",
@@ -124,20 +145,7 @@
       "**Trusted repo**: github.com:dvag/dfs-asset-service.git (private) and its configured remote(s)",
       "**Org-specific CLIs**: az (Azure CLI), kubectl; pnpm/npx for the Nx workspace",
       "**Routine under user prefix**: none identified"
-    ],
-    "allow": [
-      "$defaults",
-      "Bash(kubectl get:*)",
-      "Bash(kubectl logs:*)",
-      "Bash(az account show:*)",
-      "Bash(az appconfig kv list:*)",
-      "Bash(pnpm nx affected:*)"
-    ],
-    "soft_deny": [
-      "$defaults",
-      "Bash(kubectl delete:*)",
-      "Bash(make destroy:*)",
-      "Bash(az appconfig kv delete:*)"
     ]
-  }
+  },
+  "voiceEnabled": true
 }
