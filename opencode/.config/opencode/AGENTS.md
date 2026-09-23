@@ -142,3 +142,11 @@ When the user asks to test or verify a PR or branch end to end (a behavioural ch
 
 5. STATE THE GAPS. This is a manual behavioural checklist, not a safety net. It does not replace the automated suites (`pnpm test`, `test:integration`), it captures no before/after baseline, a passing ent run does not prove int/abn/prd, and it only covers the paths step 1 identified. Say this in the handoff every time.
 <!-- pr-testing-workflow -->
+
+<!-- tdd -->
+Use test-driven development for all code changes: write or adjust the failing test(s) for the task first, confirm they fail for the right reason, then write the minimum implementation code needed to make them pass, without modifying the tests to force a pass.
+
+Invoke the `superpowers:test-driven-development` skill (already installed) for the full red-green-refactor workflow and its rules on good tests, rather than improvising a lighter version of it.
+
+Exceptions, matching the skill's own carve-outs: throwaway prototypes, generated code, and config-only changes with no application logic to test (e.g. this dotfiles repo). Ask before skipping TDD for any other reason.
+<!-- tdd -->
