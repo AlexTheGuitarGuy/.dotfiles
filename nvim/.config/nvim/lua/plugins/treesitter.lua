@@ -22,7 +22,7 @@ local config = function()
       enable = true,
       additional_vim_regex_highlighting = false,
     },
-    ensure_installed = { 'typescript', 'lua', 'prisma', 'nu' },
+    ensure_installed = { 'typescript', 'lua', 'prisma', 'nu', 'markdown', 'markdown_inline' },
   })
 end
 
