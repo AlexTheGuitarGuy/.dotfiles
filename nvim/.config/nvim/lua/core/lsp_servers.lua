@@ -11,10 +11,6 @@ M.servers = {
   dockerls = {},
   graphql = {},
   tailwindcss = {},
-  gdscript = {
-    name = 'godot',
-    cmd = vim.lsp.rpc.connect('127.0.0.1', 6005),
-  },
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },
@@ -41,8 +37,7 @@ M.servers = {
 -- root_dir, but still needs to be in Mason's ensure_installed list.
 M.mason_extra = { 'angularls' }
 
--- gdscript connects to a running Godot editor over RPC; Mason can't install it.
-M.mason_exclude = { gdscript = true }
+M.mason_exclude = {}
 
 M.mason_ensure_installed = function()
   local list = {}
@@ -59,8 +54,7 @@ M.mason_ensure_installed = function()
 end
 
 -- Every server that should autostart via vim.lsp.enable(), including
--- angularls (configured separately) and gdscript (RPC-connected, not
--- Mason-installed, but still needs enabling to attach on gdscript filetype).
+-- angularls (configured separately).
 M.enable_list = function()
   local list = {}
   for name in pairs(M.servers) do
