@@ -1,18 +1,21 @@
 return {
-  'nvim-pack/nvim-spectre',
+  'MagicDuck/grug-far.nvim',
+  config = function()
+    require('grug-far').setup({})
+  end,
   keys = {
     {
       '<leader>S',
       function()
-        require('spectre').toggle()
+        require('grug-far').toggle_instance()
       end,
-      desc = 'Toggle Spectre',
+      desc = 'Toggle Grug Far',
       mode = 'n',
     },
     {
       '<leader>sw',
       function()
-        require('spectre').open_visual({ select_word = true })
+        require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>') } })
       end,
       desc = 'Search current word',
       mode = 'n',
@@ -20,7 +23,7 @@ return {
     {
       '<leader>sw',
       function()
-        require('spectre').open_visual()
+        require('grug-far').with_visual_selection()
       end,
       desc = 'Search current selection',
       mode = 'v',
@@ -28,7 +31,7 @@ return {
     {
       '<leader>sp',
       function()
-        require('spectre').open_file_search({ select_word = true })
+        require('grug-far').open({ prefills = { search = vim.fn.expand('<cword>'), paths = vim.fn.expand('%') } })
       end,
       desc = 'Search on current file',
       mode = 'n',
