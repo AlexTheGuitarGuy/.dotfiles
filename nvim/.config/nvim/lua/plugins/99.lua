@@ -23,14 +23,31 @@ local keys = {
   {
     '<leader>9m',
     function()
-      require('99.extensions.telescope').select_model()
+      local pickers_util = require('99.extensions.pickers')
+      pickers_util.get_models(nil, function(models, current)
+        vim.ui.select(models, {
+          prompt = '99: Select Model (current: ' .. current .. ')',
+        }, function(choice)
+          if choice then
+            pickers_util.on_model_selected(choice)
+          end
+        end)
+      end)
     end,
     mode = 'n',
   },
   {
     '<leader>9p',
     function()
-      require('99.extensions.telescope').select_provider()
+      local pickers_util = require('99.extensions.pickers')
+      local info = pickers_util.get_providers()
+      vim.ui.select(info.names, {
+        prompt = '99: Select Provider (current: ' .. info.current .. ')',
+      }, function(choice)
+        if choice then
+          pickers_util.on_provider_selected(choice, info.lookup)
+        end
+      end)
     end,
     mode = 'n',
   },
