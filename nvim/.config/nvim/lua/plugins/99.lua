@@ -60,7 +60,7 @@ return {
     local _99 = require('99')
     return {
       provider = _99.Providers.ClaudeCodeProvider,
-      tmp_dir = './tmp',
+      tmp_dir = './.99-tmp',
       completion = { source = 'native' },
     }
   end,
