@@ -15,28 +15,28 @@ local keys = {
     mode = 'n',
   },
   {
-    '<S-A-h>',
+    '<A-u>',
     function()
       require('harpoon'):list():select(1)
     end,
     mode = 'n',
   },
   {
-    '<S-A-j>',
+    '<A-i>',
     function()
       require('harpoon'):list():select(2)
     end,
     mode = 'n',
   },
   {
-    '<S-A-k>',
+    '<A-o>',
     function()
       require('harpoon'):list():select(3)
     end,
     mode = 'n',
   },
   {
-    '<S-A-l>',
+    '<A-p>',
     function()
       require('harpoon'):list():select(4)
     end,
