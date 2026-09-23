@@ -11,6 +11,7 @@ M.servers = {
   dockerls = {},
   graphql = {},
   tailwindcss = {},
+  eslint = {},
   lua_ls = {
     Lua = {
       workspace = { checkThirdParty = false },

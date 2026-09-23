@@ -19,20 +19,4 @@ function M.tabline()
   return s
 end
 
-function M.format_without_lsp()
-  local servers = require('core.lsp_servers').servers
-  vim.lsp.buf.format({
-    async = true,
-    filter = function(client)
-      for key, _ in pairs(servers) do
-        if client.name == key then
-          return false
-        end
-      end
-
-      return true
-    end,
-  })
-end
-
 return M
