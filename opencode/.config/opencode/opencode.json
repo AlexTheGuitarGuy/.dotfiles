@@ -28,7 +28,7 @@
     },
     "playwright": {
       "type": "local",
-      "command": ["npx", "@playwright/mcp@latest", "--browser", "chrome", "--user-data-dir", "/home/alex/.cache/pw-dfs", "--output-dir", "/home/alex/.cache/pw-dfs-out", "--save-session", "--caps", "devtools"],
+      "command": ["npx", "@playwright/mcp@latest", "--browser", "chrome", "--user-data-dir", "/home/alex/.cache/pw-dfs", "--output-dir", "/home/alex/.cache/pw-dfs-out", "--save-session", "--caps", "devtools", "--init-script", "/home/alex/.config/playwright/url-bar.js"],
       "enabled": true
     }
   },
