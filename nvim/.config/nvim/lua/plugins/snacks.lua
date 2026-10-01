@@ -14,6 +14,7 @@ return {
   lazy = false,
   keys = keys,
   opts = {
+    image = {},
     picker = {
       sources = {
         explorer = {
