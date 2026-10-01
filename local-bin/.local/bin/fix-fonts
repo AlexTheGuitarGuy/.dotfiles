@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Rebuild the user fontconfig cache when text disappears from the UI.
+#
+# Brave (fontconfig >=2.17) and Slack/1Password (2.16) share
+# ~/.cache/fontconfig with the host and drop backward-compat symlinks
+# (cache-8/9/10/11 -> cache-12) into it. The host fontconfig is 2.15, reads
+# format 9, follows a cache-9 symlink into a format-12 file and gets garbage:
+# every generic family resolves to a glyphless font. That blanks text in
+# Electron/Qt apps and segfaults plasmashell and kscreenlocker_greet.
+#
+# This is a temporary fix. Brave re-poisons the cache on its next start, so
+# re-run this whenever text goes missing.
+set -euo pipefail
+
+cache="${XDG_CACHE_HOME:-$HOME/.cache}/fontconfig"
+
+resolved=$(readlink -f "$cache")
+[ "$resolved" = "$cache" ] || {
+	echo "refusing: $cache resolves to $resolved" >&2
+	exit 1
+}
+
+rm -rf "$cache"
+fc-cache -f
+
+rm -rf "$HOME/.cache/plasmashell/qmlcache"
+# systemctl --user restart plasma-plasmashell.service 2>/dev/null || true
+
+fc-match sans-serif | grep -q Noto || {
+	echo "FAILED: $(fc-match sans-serif)" >&2
+	exit 1
+}
+echo "ok: $(fc-match sans-serif)"
