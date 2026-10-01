@@ -18,6 +18,8 @@ not "run the unit tests"), follow this workflow.
      `kubectl exec -i <pod> -- node -` so auth, deps and config come from the pod
    - guard any write to a non-local env behind a y/N confirm; refuse prod unless an
      explicit opt-in env var is set
+   - for DFS test data (households, persons, writes against them) do not write new scripts:
+     use `scripts/ai/` in the api-collections repo (see ai-test-data.md), no y/N needed there
 
 3. BRUNO. If the affected service has a collection under
    `~/projects/api-collections/dvag-api-collections/`, add a subfolder inside that
@@ -28,6 +30,11 @@ not "run the unit tests"), follow this workflow.
    the collection. Skip this step when nothing from the change is reachable over the
    API (a pure internal refactor, a kafka-consumer-only change with no exposed
    endpoint, and so on).
+   Every request gets a `tests {}` block asserting status and the fields the change
+   touches, so the folder passes or fails on its own. Use `{{householdId}}`/`{{personId}}`
+   rather than literal ids; `scripts/ai/run-ticket.mjs --env <e> --ticket <T>` fills them
+   with the AI's own household and runs the folder. Run it yourself and report the
+   result, do not leave it as a manual step.
 
 4. WRITE `todos.txt` at the repo root. Two parts, LOCAL and DEPLOYED (ent, or d0x).
    Every step is three lines:
