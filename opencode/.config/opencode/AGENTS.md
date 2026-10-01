@@ -215,7 +215,7 @@ printed:
 Always this exact form (it is what the auto mode allow rule matches).
 
 - `create-household.mjs --env <e> [--persons n] [--ticket T]`: creates a household with a main
-  person (and n extra persons), last names end in `AI<timestamp>`, ids are appended to the
+  person (and n extra persons), last name `Test<DD/MM/YYYY>`, ids are appended to the
   sops registry `~/.dotfiles/secrets/ai-test-data.yaml`.
 - `write.mjs --env <e> --method <M> --service <slug> --path <p> --owner-id <id> [--body f]`:
   any other write. Refuses unless `--owner-id` is in the registry for that env and appears in
@@ -230,6 +230,9 @@ Always this exact form (it is what the auto mode allow rule matches).
   mail sent to that address, with subject, recipient and date. Run it through the same sops
   form. Only for addresses the AI put on AI-owned test persons. The MailDev inbox is shared:
   never screenshot or read other mails, and never dump the inbox listing.
+
+Test data must not say or hint that it was made by AI (names, field values, email addresses);
+mark it only as test data.
 
 Ownership: modify only data listed in the registry. Data the AI did not create (a teammate's
 household, the shared `advisor_sophie` data, the default `householdId`/`personId` in the Bruno
