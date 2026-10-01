@@ -141,6 +141,7 @@ When the user asks to test or verify a PR or branch end to end (a behavioural ch
      EXPECT: the exact result (status code, log string, DB row)
      SHOT:   what to screenshot as proof
    Include the negative controls (fail-fast on bad config, 403 without a token) and a cleanup step for any test data the run writes.
+   The AI captures SHOT lines itself into `<repo>/evidence/<TICKET>/` (add `evidence/` to the repo's `.git/info/exclude`, never commit it): Bruno requests via `run-ticket.mjs --evidence evidence/<TICKET>`, UI steps via the Playwright MCP (a screenshot plus a video per step, converted to mp4 with ffmpeg), command output via `shot-text.mjs` or pasted as a code block, received mails via `mail-shot.mjs` (see ai-test-data below). After capturing, list every file and what it proves. Attaching or posting anything to the PR needs the user's approval.
 
 5. STATE THE GAPS. This is a manual behavioural checklist, not a safety net. It does not replace the automated suites (`pnpm test`, `test:integration`), it captures no before/after baseline, a passing ent run does not prove int/abn/prd, and it only covers the paths step 1 identified. Say this in the handoff every time.
 <!-- pr-testing-workflow -->
@@ -219,8 +220,16 @@ Always this exact form (it is what the auto mode allow rule matches).
 - `write.mjs --env <e> --method <M> --service <slug> --path <p> --owner-id <id> [--body f]`:
   any other write. Refuses unless `--owner-id` is in the registry for that env and appears in
   `--path`.
-- `run-ticket.mjs --env <e> --ticket <T> [--household <id>]`: runs the ticket's Bruno folder
+- `run-ticket.mjs --env <e> --ticket <T> [--household <id>] [--evidence <dir>]`: runs the ticket's Bruno folder
   against the newest AI household (or the given owned one), JSON report in the tmp dir.
+  With `--evidence <dir>` it also writes one redacted PNG per request
+  into `<dir>/bruno/`.
+- `shot-text.mjs --out <png> --title <t> -- <command...>`: runs the command and screenshots
+  its redacted output as a PNG.
+- `mail-shot.mjs --to <address> --out <png> [--since <iso>]`: screenshots the newest MailDev
+  mail sent to that address, with subject, recipient and date. Run it through the same sops
+  form. Only for addresses the AI put on AI-owned test persons. The MailDev inbox is shared:
+  never screenshot or read other mails, and never dump the inbox listing.
 
 Ownership: modify only data listed in the registry. Data the AI did not create (a teammate's
 household, the shared `advisor_sophie` data, the default `householdId`/`personId` in the Bruno
@@ -228,9 +237,15 @@ environments) is read-only unless the user names that exact id in the current co
 only then pass `--allow-foreign <id>`. Every write goes through `write.mjs` or
 `create-household.mjs`, never a raw curl or an ad hoc Bruno request with a write method.
 
+Actions in the DFS UI through the browser that write data count as writes: allowed only on
+AI-owned households (or ids the user names). Take screenshots and videos only of AI or advisor
+Sophie households, never real customer data. Never type passwords into the browser; the user
+logs in once in the Playwright profile.
+
 Advisors cannot be created through DFS APIs. Use the advisor Sophie from sops:
 `DVAG_ADVISOR_SOPHIE_USERNAME` on every env, `DVAG_ADVISOR_SOPHIE_ENTWICKLUNG_PASSWORD` on
 entwicklung and `DVAG_ADVISOR_SOPHIE_PASSWORD` on integration and d01-d05.
+The MailDev inbox uses `DVAG_MAILDEV_URL`, `DVAG_MAILDEV_USERNAME` and `DVAG_MAILDEV_PASSWORD`.
 
 Where services run: asset-service only on entwicklung, every other service only on
 integration and d01-d05; the scripts refuse other combinations. Households can only be
