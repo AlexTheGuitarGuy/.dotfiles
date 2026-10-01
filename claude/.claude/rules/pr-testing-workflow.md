@@ -43,6 +43,13 @@ not "run the unit tests"), follow this workflow.
      SHOT:   what to screenshot as proof
    Include the negative controls (fail-fast on bad config, 403 without a token) and a
    cleanup step for any test data the run writes.
+   The AI captures SHOT lines itself into `<repo>/evidence/<TICKET>/` (add `evidence/` to
+   the repo's `.git/info/exclude`, never commit it): Bruno requests via
+   `run-ticket.mjs --evidence evidence/<TICKET>`, UI steps via the Playwright MCP (a
+   screenshot plus a video per step, converted to mp4 with ffmpeg), command output via
+   `shot-text.mjs` or pasted as a code block, received mails via `mail-shot.mjs` (see ai-test-data.md). After
+   capturing, list every file and what it proves. Attaching or posting anything to the PR
+   needs the user's approval.
 
 5. STATE THE GAPS. This is a manual behavioural checklist, not a safety net. It does
    not replace the automated suites (`pnpm test`, `test:integration`), it captures no

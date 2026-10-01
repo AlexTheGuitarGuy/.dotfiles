@@ -18,8 +18,16 @@ Always this exact form (it is what the auto mode allow rule matches).
 - `write.mjs --env <e> --method <M> --service <slug> --path <p> --owner-id <id> [--body f]`:
   any other write. Refuses unless `--owner-id` is in the registry for that env and appears in
   `--path`.
-- `run-ticket.mjs --env <e> --ticket <T> [--household <id>]`: runs the ticket's Bruno folder
+- `run-ticket.mjs --env <e> --ticket <T> [--household <id>] [--evidence <dir>]`: runs the ticket's Bruno folder
   against the newest AI household (or the given owned one), JSON report in the tmp dir.
+  With `--evidence <dir>` it also writes one redacted PNG per request
+  into `<dir>/bruno/`.
+- `shot-text.mjs --out <png> --title <t> -- <command...>`: runs the command and screenshots
+  its redacted output as a PNG.
+- `mail-shot.mjs --to <address> --out <png> [--since <iso>]`: screenshots the newest MailDev
+  mail sent to that address, with subject, recipient and date. Run it through the same sops
+  form. Only for addresses the AI put on AI-owned test persons. The MailDev inbox is shared:
+  never screenshot or read other mails, and never dump the inbox listing.
 
 Ownership: modify only data listed in the registry. Data the AI did not create (a teammate's
 household, the shared `advisor_sophie` data, the default `householdId`/`personId` in the Bruno
@@ -27,9 +35,15 @@ environments) is read-only unless the user names that exact id in the current co
 only then pass `--allow-foreign <id>`. Every write goes through `write.mjs` or
 `create-household.mjs`, never a raw curl or an ad hoc Bruno request with a write method.
 
+Actions in the DFS UI through the browser that write data count as writes: allowed only on
+AI-owned households (or ids the user names). Take screenshots and videos only of AI or advisor
+Sophie households, never real customer data. Never type passwords into the browser; the user
+logs in once in the Playwright profile.
+
 Advisors cannot be created through DFS APIs. Use the advisor Sophie from sops:
 `DVAG_ADVISOR_SOPHIE_USERNAME` on every env, `DVAG_ADVISOR_SOPHIE_ENTWICKLUNG_PASSWORD` on
 entwicklung and `DVAG_ADVISOR_SOPHIE_PASSWORD` on integration and d01-d05.
+The MailDev inbox uses `DVAG_MAILDEV_URL`, `DVAG_MAILDEV_USERNAME` and `DVAG_MAILDEV_PASSWORD`.
 
 Where services run: asset-service only on entwicklung, every other service only on
 integration and d01-d05; the scripts refuse other combinations. Households can only be
