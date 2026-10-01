@@ -17,6 +17,7 @@ claude/.claude/mcp-needs-auth-cache.json
 claude/.claude/paste-cache/
 claude/.claude/plugins/
 claude/.claude/backups/
+claude/.claude/skills/synced/
 claude/.claude/file-history/
 claude/.claude/plans/
 claude/.claude/projects/
