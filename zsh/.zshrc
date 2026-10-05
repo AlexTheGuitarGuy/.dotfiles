@@ -11,12 +11,12 @@ plug "$HOME/.config/zsh/plugins.zsh"
 # Disable XON/XOFF flow control so ctrl+s / ctrl+q are usable keys instead of freezing output
 [ -t 0 ] && stty -ixon
 
-# Secrets (sops-encrypted, decrypted into env at shell start)
-if [ -f "$HOME/.config/sops/age/keys.txt" ]; then
-  while IFS= read -r line; do
-    export "${line%%: *}=${line#*: }"
-  done < <(sops -d "$HOME/.dotfiles/secrets/secrets.yaml")
-fi
+# Secrets (sops-encrypted, decrypted per command, never exported to the shell)
+_sec() { sops -d --extract "[\"$1\"]" "$HOME/.dotfiles/secrets/secrets.yaml"; }
+_with_npm_secrets() { NEXUS_USERNAME=$(_sec NEXUS_USERNAME) NEXUS_PASSWORD=$(_sec NEXUS_PASSWORD) NODE_AUTH_TOKEN=$(_sec NODE_AUTH_TOKEN) command "$@"; }
+npm()  { _with_npm_secrets npm "$@"; }
+pnpm() { _with_npm_secrets pnpm "$@"; }
+npx()  { _with_npm_secrets npx "$@"; }
 
 bindkey '^ ' autosuggest-accept
 

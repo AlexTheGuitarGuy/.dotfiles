@@ -1,10 +1,11 @@
 # Secrets Management
 
 Secrets are encrypted at rest with [sops](https://github.com/getsops/sops) and
-[age](https://github.com/FiloSottile/age), committed to git as ciphertext, and
-decrypted into the shell environment at zsh/nushell startup. See
-`zsh/.zshrc` and `nushell/.config/nushell/config.nu` for the decrypt-on-shell-start
-wiring.
+[age](https://github.com/FiloSottile/age) and committed to git as ciphertext.
+They are never exported into the shell environment, so ordinary processes
+(install scripts, dlx tools, agents) cannot read them. Each command that needs a
+secret decrypts only the keys it uses, for that one run. See `zsh/.zshrc` and
+`nushell/.config/nushell/config.nu` for the `npm`/`pnpm`/`npx` wrappers.
 
 ## Architecture
 
@@ -57,31 +58,36 @@ Opens the decrypted file in `$EDITOR`; saving re-encrypts automatically.
 
 ## Adding a new secret
 
-Add a key via `sops secrets/secrets.yaml`, save. It's picked up automatically at
-next shell start since both `zsh/.zshrc` and `nushell/config.nu` decrypt and export
-every key in the file.
+Add a key via `sops secrets/secrets.yaml` (or
+`sops set secrets/secrets.yaml '["NAME"]' '"value"'`), save. Nothing loads it
+automatically. Give it to the command that needs it, one of:
+
+- one-off: `sops exec-env secrets/secrets.yaml '<command>'`
+- a tool you run often: add a wrapper next to the `npm` one in `config.nu`
+  (`with-env (secrets NAME) { ^tool ...$rest }`) and `.zshrc`
+  (`NAME=$(_sec NAME) command tool "$@"`)
+- an MCP server: a `headersHelper` like context7's below
 
 ## Claude Code MCP servers (bootstrap on a new machine)
 
 Claude Code's user-scoped MCP server config lives in `~/.claude.json`, which is
 machine-local state and not tracked in this repo. There's no settings.json key
 for it (`mcpServers` is not part of the settings schema, confirmed by testing).
-On a new machine, run these once, after the shell has picked up
-`CONTEXT7_API_KEY` from sops (open a new shell first so the variable is set):
+On a new machine, run these once (the sops age key must be in place first):
 
 ```bash
-claude mcp add --transport http --scope user context7 https://mcp.context7.com/mcp \
-  --header "CONTEXT7_API_KEY: $CONTEXT7_API_KEY"
+claude mcp add-json --scope user context7 '{"type":"http","url":"https://mcp.context7.com/mcp","headersHelper":"sops -d --extract '\''[\"CONTEXT7_API_KEY\"]'\'' /home/alex/.dotfiles/secrets/secrets.yaml | jq -Rc '\''{CONTEXT7_API_KEY: .}'\''"}'
 
 claude mcp add --scope user apiportal-mcp -- pnpm dlx @dvag/apiportal-mcp@1.1.0
 
 claude mcp add --transport http --scope user atlassian https://mcp.atlassian.com/v1/mcp/authv2
 ```
 
-Verify with `claude mcp list`. Note: the `CONTEXT7_API_KEY` currently in sops
-is rejected by Context7 as invalid ("API keys should start with 'ctx7sk'
-prefix" even though it does) - get a fresh key from context7.com and
-`sops secrets/secrets.yaml` to replace it before relying on that server.
+Verify with `claude mcp list`. context7 uses a `headersHelper` that decrypts
+`CONTEXT7_API_KEY` from sops at connect time, so no key is stored in
+`~/.claude.json` and rotating it in sops needs no re-registration. A static
+`--header "...: ${CONTEXT7_API_KEY}"` does not work at user scope: Claude Code
+only expands `${VAR}` in project `.mcp.json`, so the literal string is sent.
 
 ## Tools reference
 

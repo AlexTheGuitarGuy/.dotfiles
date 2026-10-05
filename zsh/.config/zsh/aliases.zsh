@@ -24,5 +24,5 @@ alias ffx='firefox-developer-edition'
 alias tgs='~/.dotfiles/scripts/tmux-session-generator.sh'
 alias tzt='~/.dotfiles/scripts/tzt'
 alias d='doppler run --' 
-alias srv='echo ${NODE_AUTH_TOKEN} | sudo make serve NODE_AUTH_TOKEN=xargs'
+srv() { sudo make serve NODE_AUTH_TOKEN="$(_sec NODE_AUTH_TOKEN)"; }
 alias rbt='sudo modprobe -r btusb && sudo modprobe btusb'

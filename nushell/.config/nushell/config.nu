@@ -41,10 +41,13 @@ source ~/.cache/carapace/init.nu
 # Zoxide
 source ~/.zoxide.nu
 
-# Secrets (sops-encrypted, decrypted into env at shell start)
-if ("~/.config/sops/age/keys.txt" | path expand | path exists) {
-    sops -d ~/.dotfiles/secrets/secrets.yaml | from yaml | load-env
+# Secrets (sops-encrypted, decrypted per command, never exported to the shell)
+def secrets [...keys: string] {
+    sops -d ~/.dotfiles/secrets/secrets.yaml | from yaml | select ...$keys
 }
+def --wrapped npm [...rest] { with-env (secrets NEXUS_USERNAME NEXUS_PASSWORD NODE_AUTH_TOKEN) { ^npm ...$rest } }
+def --wrapped pnpm [...rest] { with-env (secrets NEXUS_USERNAME NEXUS_PASSWORD NODE_AUTH_TOKEN) { ^pnpm ...$rest } }
+def --wrapped npx [...rest] { with-env (secrets NEXUS_USERNAME NEXUS_PASSWORD NODE_AUTH_TOKEN) { ^npx ...$rest } }
 
 # Aliases
 alias gst = git status
