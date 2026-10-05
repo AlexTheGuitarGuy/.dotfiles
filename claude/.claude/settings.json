@@ -149,5 +149,6 @@
       "**AI test data**: creating and modifying DFS test households/persons via ~/projects/api-collections/dvag-api-collections/scripts/ai/ (asset-service on entwicklung, other services on integration and d01-d05) is authorized routine work"
     ]
   },
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "model": "opus"
 }
