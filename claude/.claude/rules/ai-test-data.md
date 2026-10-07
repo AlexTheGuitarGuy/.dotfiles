@@ -20,14 +20,10 @@ Always this exact form (it is what the auto mode allow rule matches).
   `--path`.
 - `run-ticket.mjs --env <e> --ticket <T> [--household <id>] [--evidence <dir>]`: runs the ticket's Bruno folder
   against the newest AI household (or the given owned one), JSON report in the tmp dir.
-  With `--evidence <dir>` it also writes one redacted PNG per request
-  into `<dir>/bruno/`.
-- `shot-text.mjs --out <png> --title <t> -- <command...>`: runs the command and screenshots
-  its redacted output as a PNG.
-- `mail-shot.mjs --to <address> --out <png> [--since <iso>]`: screenshots the newest MailDev
-  mail sent to that address, with subject, recipient and date. Run it through the same sops
-  form. Only for addresses the AI put on AI-owned test persons. The MailDev inbox is shared:
-  never screenshot or read other mails, and never dump the inbox listing.
+  Its `--evidence` PNGs are not proof; screenshot the Bruno app instead (proof-screenshots.md).
+- Proof screenshots (terminal, Bruno, browser, MailDev): see proof-screenshots.md.
+  `shot-text.mjs` and `mail-shot.mjs` are no longer used. MailDev is a shared inbox: open
+  only mails sent to addresses the AI put on AI-owned test persons, never the inbox listing.
 
 Test data must not say or hint that it was made by AI (names, field values, email addresses);
 mark it only as test data.

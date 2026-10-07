@@ -40,10 +40,13 @@ before treating the env as running the change.
 
 - Data: reuse the newest AI household for the env, create one with `create-household.mjs`
   only if none exists or the flow needs a fresh one.
-- Reads and writes: the ticket's Bruno folder via `run-ticket.mjs --evidence evidence/<TICKET>`
+- Reads and writes: the ticket's Bruno folder via `run-ticket.mjs`
   when one exists, otherwise `write.mjs` for writes and `bru run <request.bru> --global-env <env>`
   for reads.
 - UI paths: use the Playwright MCP (screenshot plus video per step) into `evidence/<TICKET>/`.
+- Proof screenshots into `evidence/<TICKET>/` always from the real tool (`term-shot` for CLI,
+  the Bruno app for requests, Playwright for browser and MailDev); see
+  `~/.claude/rules/proof-screenshots.md`.
 - Per item from step 1: the happy path, one invalid input, and a call without token or with
   a foreign household where the change touches authorization.
 
