@@ -1,8 +1,14 @@
 Test data on the DFS environments (households, persons and anything hanging off them) may be
 created and changed by the AI without asking, within these limits.
 
-Environments: only `d01`-`d05`, `entwicklung` and `integration`. Never write to `abnahme` or
-`produktion`, whatever the request says; the scripts refuse them too.
+Environments: only `d01`-`d05`, `entwicklung` and `integration`. Never write to `produktion`,
+whatever the request says; the scripts refuse it too.
+
+Abnahme exception: as advisor Sophie, the AI may create its own test households (and persons in
+them) on `abnahme` and write to those AI-owned households only. Everything else on abnahme stays
+read-only: no writes to any household or person the AI did not create there, no pod, DB or
+config changes. The scripts still refuse abnahme today; extend `assertEnvAllowed` for this case
+(TDD) before the first abnahme write, never bypass the scripts.
 
 Tooling lives in `~/projects/api-collections/dvag-api-collections/scripts/ai/`. Every run goes
 through sops so credentials come from `~/.dotfiles/secrets/secrets.yaml` without ever being
@@ -41,12 +47,14 @@ logs in once in the Playwright profile.
 
 Advisors cannot be created through DFS APIs. Use the advisor Sophie from sops:
 `DVAG_ADVISOR_SOPHIE_USERNAME` on every env, `DVAG_ADVISOR_SOPHIE_ENTWICKLUNG_PASSWORD` on
-entwicklung and `DVAG_ADVISOR_SOPHIE_PASSWORD` on integration and d01-d05.
+entwicklung and `DVAG_ADVISOR_SOPHIE_PASSWORD` on integration, d01-d05 and abnahme (with the
+abnahme `access_token_url` from `environments/abnahme.yml`). Reads on abnahme with these
+credentials need no extra approval.
 The MailDev inbox uses `DVAG_MAILDEV_URL`, `DVAG_MAILDEV_USERNAME` and `DVAG_MAILDEV_PASSWORD`.
 
 Where services run: asset-service only on entwicklung, every other service only on
 integration and d01-d05; the scripts refuse other combinations. Households can only be
-created on integration (and d0x). On entwicklung use the advisor Sophie household, the
+created on integration, d0x and (per the exception above) abnahme. On entwicklung use the advisor Sophie household, the
 `householdId`/`personId` from `environments/entwicklung.yml`, registered as granted by the user. If a needed key is missing, stop and ask the user to add it; never borrow another
 login.
 
