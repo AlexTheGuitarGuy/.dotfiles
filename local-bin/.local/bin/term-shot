@@ -1,0 +1,26 @@
+#!/bin/bash
+# usage: term-shot <out.png> <wait-seconds-per-command> <cmd>...
+set -u
+out=$(realpath -m "$1"); wait=$2; shift 2
+sleep 1
+before=$(xdotool search --class ghostty 2>/dev/null | sort)
+ghostty --working-directory="$PWD" -e nu >/dev/null 2>&1 &
+for _ in $(seq 1 60); do
+  for c in $(comm -13 <(echo "$before") <(xdotool search --onlyvisible --class ghostty 2>/dev/null | sort)); do
+    g=$(xdotool getwindowgeometry "$c" 2>/dev/null | awk '/Geometry/{print $2}')
+    [ -n "$g" ] && [ "${g%x*}" -gt 100 ] && w=$c
+  done
+  [ -n "${w:-}" ] && break; sleep 0.5
+done
+[ -z "${w:-}" ] && { echo "term-shot: no ghostty window" >&2; exit 1; }
+geom() { xdotool getwindowgeometry "$w" | awk '/Geometry/{print $2}'; }
+screen=$(xdpyinfo | awk '/dimensions/{print $2}')
+sleep 1; xdotool windowactivate --sync "$w"; wmctrl -i -r "$w" -b add,fullscreen; sleep 1.5
+[ "$(geom)" != "$screen" ] && { xdotool key --window "$w" ctrl+Return; sleep 1.5; }
+[ "$(geom)" != "$screen" ] && { echo "term-shot: not fullscreen ($(geom) vs $screen)" >&2; exit 1; }
+sleep 2; xdotool windowactivate --sync "$w"
+for cmd in "$@"; do
+  xdotool windowactivate --sync "$w"; xdotool type --delay 8 -- "$cmd"; xdotool key Return; sleep "$wait"
+done
+import -window "$w" "$out" && echo "$out"
+xdotool windowactivate --sync "$w"; xdotool type -- "exit"; xdotool key Return
