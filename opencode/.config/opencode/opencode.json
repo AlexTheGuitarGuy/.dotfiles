@@ -32,5 +32,6 @@
       "enabled": true
     }
   },
-  "lsp": true
+  "lsp": true,
+  "instructions": ["/home/alex/.claude/rules/*.md"]
 }
