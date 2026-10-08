@@ -50,3 +50,22 @@ customCommands:
         filter: '^(?P<number>\d+)\.\s(?P<message>.+)$'
         valueFormat: "{{ .message }}"
         labelFormat: "{{ .number }}: {{ .message | green }}"
+  - key: "<c-t>"
+    description: "Open working tree diff in diffnav"
+    command: "git diff HEAD | diffnav"
+    context: "files"
+    subprocess: true
+  - key: "<c-t>"
+    description: "Open commit diff in diffnav"
+    command: "git show --format= {{.SelectedLocalCommit.Sha}} | diffnav"
+    context: "commits"
+    subprocess: true
+  - key: "<c-t>"
+    description: "Open branch diff vs parent (PR base or default branch) in diffnav"
+    command: >-
+      b={{.SelectedLocalBranch.Name}};
+      base=$(gh pr view "$b" --json baseRefName -q .baseRefName 2>/dev/null)
+      || base=$(git symbolic-ref --short refs/remotes/origin/HEAD | sed 's@^origin/@@');
+      git diff "origin/$base...$b" | diffnav
+    context: "localBranches"
+    subprocess: true
