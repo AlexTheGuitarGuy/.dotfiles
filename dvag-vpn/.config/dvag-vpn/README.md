@@ -4,24 +4,31 @@ Runs the DVAG Fortinet VPN connect flow as a `systemd --user` service
 instead of a foreground terminal job, so it survives locking/idle/terminal
 close and restarts itself on disconnect.
 
-## Known limitation (deferred, not fixed)
+## Known limitation: every tunnel drop means a new SSO login
 
-`Restart=on-failure` reruns the **entire** `dvag-vpn-connect` script on any
-disconnect, including the interactive SSO login window (Electron webview),
-not just the `openconnect` reconnect. This was a deliberate choice, not an
-oversight: each `SVPNCOOKIE` from the SSO step is treated as single-use, so
-retrying `openconnect` with the same stale cookie after a drop would just
-fail forever. Re-running the whole flow means you get a fresh cookie (and a
-fresh popup to click through) on every reconnect.
+The SSO cookie is not single-use, the gateway accepts it again after a drop.
+What kills it is the client's own logout:
 
-**This single-use assumption was never actually verified against a real
-disconnect/reconnect cycle** (inferred from the Fortinet SSO cookie
-mechanics, not observed). If it turns out the same cookie *can* be reused
-across multiple `openconnect` invocations, this should change to: cache the
-cookie after the first successful auth, have the systemd unit try
-reconnecting with the cached cookie first, and only fall back to the
-interactive SSO popup once that cached cookie actually fails. Left
-unfixed until confirmed with a real test.
+- openconnect detects a dead peer, reconnects with the same cookie, the
+  gateway accepts it but hands out a different IP. openconnect refuses that
+  (`Reconnect gave different Legacy IP address`), sends `GET /remote/logout`
+  and exits. systemd reruns the script, so a new SSO popup.
+- openfortivpn `--persistent` was tried (2026-10-07) and is worse: on a drop
+  it also logs out, then loops forever on `Could not get VPN configuration`
+  with the dead cookie and never exits, so systemd never restarts it.
+
+The gateway also reports "reconnect-after-drop is allowed within 30 seconds,
+but only from the same source IP address".
+
+Most drops were the laptop suspending (anything over 30s ends the session)
+or wifi roaming between access points. The unit wraps the script in
+`systemd-inhibit --what=idle`, so Plasma's idle suspend is blocked while the
+VPN runs. Lid close and manual suspend still work and still need a new
+login. Prefer ethernet: a wifi flap or a switch between interfaces changes
+the source IP.
+
+The cookie is passed with `--cookie-on-stdin` so sudo does not write it into
+the system journal.
 
 ## Portability: what's in dotfiles vs. machine-local
 

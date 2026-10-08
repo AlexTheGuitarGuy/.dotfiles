@@ -123,7 +123,7 @@ def connect-to-dvag-vpn [] {
 
   cd $orig_dir
 
-  sudo openconnect --protocol=fortinet fg.zentrale.dvag:443 --cookie $env.DVAG_VPN_COOKIE
+  $env.DVAG_VPN_COOKIE | sudo openconnect --protocol=fortinet fg.zentrale.dvag:443 --cookie-on-stdin
 }
 source $"($nu.home-dir)/.cargo/env.nu"
 

@@ -8,7 +8,7 @@ StartLimitBurst=5
 [Service]
 Type=simple
 Environment=DISPLAY=:0
-ExecStart=%h/.local/bin/dvag-vpn-connect
+ExecStart=/usr/bin/systemd-inhibit --what=idle --who=dvag-vpn --why="DVAG VPN connected" %h/.local/bin/dvag-vpn-connect
 Restart=on-failure
 RestartSec=10
 
