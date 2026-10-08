@@ -14,10 +14,17 @@ for _ in $(seq 1 60); do
 done
 [ -z "${w:-}" ] && { echo "term-shot: no ghostty window" >&2; exit 1; }
 geom() { xdotool getwindowgeometry "$w" | awk '/Geometry/{print $2}'; }
-screen=$(xdpyinfo | awk '/dimensions/{print $2}')
+screen() {
+  local x y
+  read -r x y < <(xdotool getwindowgeometry "$w" | awk -F'[ ,]+' '/Position/{print $3, $4}')
+  xrandr --listmonitors | awk -v x="$x" -v y="$y" 'NR > 1 {
+    split($3, p, /[\/x+]/)
+    if (x >= p[5] && x < p[5] + p[1] && y >= p[6] && y < p[6] + p[3]) { print p[1] "x" p[3]; exit }
+  }'
+}
 sleep 1; xdotool windowactivate --sync "$w"; wmctrl -i -r "$w" -b add,fullscreen; sleep 1.5
-[ "$(geom)" != "$screen" ] && { xdotool key --window "$w" ctrl+Return; sleep 1.5; }
-[ "$(geom)" != "$screen" ] && { echo "term-shot: not fullscreen ($(geom) vs $screen)" >&2; exit 1; }
+[ "$(geom)" != "$(screen)" ] && { xdotool key --window "$w" ctrl+Return; sleep 1.5; }
+[ "$(geom)" != "$(screen)" ] && { echo "term-shot: not fullscreen ($(geom) vs $(screen))" >&2; exit 1; }
 sleep 2; xdotool windowactivate --sync "$w"
 for cmd in "$@"; do
   xdotool windowactivate --sync "$w"; xdotool type --delay 8 -- "$cmd"; xdotool key Return; sleep "$wait"
