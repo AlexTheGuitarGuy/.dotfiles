@@ -12,11 +12,14 @@ plug "$HOME/.config/zsh/plugins.zsh"
 [ -t 0 ] && stty -ixon
 
 # Secrets (sops-encrypted, decrypted per command, never exported to the shell)
-_sec() { sops -d --extract "[\"$1\"]" "$HOME/.dotfiles/secrets/secrets.yaml"; }
-_with_npm_secrets() { NEXUS_USERNAME=$(_sec NEXUS_USERNAME) NEXUS_PASSWORD=$(_sec NEXUS_PASSWORD) NODE_AUTH_TOKEN=$(_sec NODE_AUTH_TOKEN) command "$@"; }
-npm()  { _with_npm_secrets npm "$@"; }
-pnpm() { _with_npm_secrets pnpm "$@"; }
-npx()  { _with_npm_secrets npx "$@"; }
+_sec() {
+  local f
+  for f in "$HOME/.dotfiles/secrets/secrets.yaml" "$HOME"/.config/secrets.d/*.yaml; do
+    [ -e "$f" ] && sops -d --extract "[\"$1\"]" "$f" 2>/dev/null && return
+  done
+  return 1
+}
+[ -f "$HOME/.zshrc.private" ] && source "$HOME/.zshrc.private"
 
 bindkey '^ ' autosuggest-accept
 

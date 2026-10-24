@@ -43,11 +43,18 @@ source ~/.zoxide.nu
 
 # Secrets (sops-encrypted, decrypted per command, never exported to the shell)
 def secrets [...keys: string] {
-    sops -d ~/.dotfiles/secrets/secrets.yaml | from yaml | select ...$keys
+    [~/.dotfiles/secrets/secrets.yaml] ++ (glob ~/.config/secrets.d/*.yaml)
+    | path expand
+    | where { path exists }
+    | each {|f| sops -d $f | from yaml }
+    | reduce {|it, acc| $acc | merge $it }
+    | select ...$keys
 }
-def --wrapped npm [...rest] { with-env (secrets NEXUS_USERNAME NEXUS_PASSWORD NODE_AUTH_TOKEN) { ^npm ...$rest } }
-def --wrapped pnpm [...rest] { with-env (secrets NEXUS_USERNAME NEXUS_PASSWORD NODE_AUTH_TOKEN) { ^pnpm ...$rest } }
-def --wrapped npx [...rest] { with-env (secrets NEXUS_USERNAME NEXUS_PASSWORD NODE_AUTH_TOKEN) { ^npx ...$rest } }
+def --wrapped lazygit [...rest] {
+  let main = ($env.PWD | path join main)
+  if ($env.PWD | path join .bare | path exists) and ($main | path exists) { cd $main }
+  ^lazygit ...$rest
+}
 
 # Aliases
 alias gst = git status
@@ -114,17 +121,8 @@ if not (which fnm | is-empty) {
     $env.PATH = ($env.PATH | prepend [ $node_path ])
 }
 
-def connect-to-dvag-vpn [] {
-  let $orig_dir = $env.PWD
-
-  cd /home/alex/Apps/openfortivpn-webview/openfortivpn-webview-electron
-
-  $env.DVAG_VPN_COOKIE = (npx electron index.js fg.zentrale.dvag:443)
-
-  cd $orig_dir
-
-  $env.DVAG_VPN_COOKIE | sudo openconnect --protocol=fortinet fg.zentrale.dvag:443 --cookie-on-stdin
-}
+const private_nu = ($nu.default-config-dir | path join private.nu)
+source (if ($private_nu | path exists) { $private_nu } else { null })
 source $"($nu.home-dir)/.cargo/env.nu"
 
 # Disable XON/XOFF flow control so ctrl+s / ctrl+q are usable keys instead of freezing output

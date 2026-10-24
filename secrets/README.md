@@ -63,8 +63,8 @@ Add a key via `sops secrets/secrets.yaml` (or
 automatically. Give it to the command that needs it, one of:
 
 - one-off: `sops exec-env secrets/secrets.yaml '<command>'`
-- a tool you run often: add a wrapper next to the `npm` one in `config.nu`
-  (`with-env (secrets NAME) { ^tool ...$rest }`) and `.zshrc`
+- a tool you run often: add a wrapper in `config.nu`
+  (`def --wrapped tool [...rest] { with-env (secrets NAME) { ^tool ...$rest } }`) and `.zshrc`
   (`NAME=$(_sec NAME) command tool "$@"`)
 - an MCP server: a `headersHelper` like context7's below
 
@@ -77,8 +77,6 @@ On a new machine, run these once (the sops age key must be in place first):
 
 ```bash
 claude mcp add-json --scope user context7 '{"type":"http","url":"https://mcp.context7.com/mcp","headersHelper":"sops -d --extract '\''[\"CONTEXT7_API_KEY\"]'\'' /home/alex/.dotfiles/secrets/secrets.yaml | jq -Rc '\''{CONTEXT7_API_KEY: .}'\''"}'
-
-claude mcp add --scope user apiportal-mcp -- pnpm dlx @dvag/apiportal-mcp@1.1.0
 
 claude mcp add --transport http --scope user atlassian https://mcp.atlassian.com/v1/mcp/authv2
 ```
