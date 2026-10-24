@@ -22,7 +22,7 @@ case "${1:-}" in
     path="$(field worktree_path)"
     keep="$(git -C "$path" status --ignored --porcelain | sed -n 's/^!! //p' | while read -r f; do
       f="${f%/}"
-      case "$(basename "$f")" in node_modules|dist|build|coverage|.nx|.turbo|.gitnexus|*.tsbuildinfo) continue;; esac
+      case "$(basename "$f")" in node_modules|dist|build|coverage|.nx|.turbo|.gitnexus|.gitnexusrc|*.tsbuildinfo) continue;; esac
       [ "$(basename "$f")" = .env ] && [ -L "$path/$f" ] && continue
       if [ "$f" = .excluded ]; then
         find "$path/.excluded" -type f | while read -r x; do
