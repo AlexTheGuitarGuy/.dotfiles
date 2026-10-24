@@ -50,11 +50,11 @@ start_in_herdr() {
 focus_terminal() {
   local win=""
   for _ in $(seq 20); do
-    win="$(xdotool search --onlyvisible --class ghostty --name "$1" 2>/dev/null | tail -1)"
+    win="$(xdotool search --onlyvisible --class ghostty --name "$1" 2>/dev/null | tail -1 || true)"
     [ -n "$win" ] && break
     sleep 0.2
   done
-  [ -n "$win" ] || win="$(xdotool search --onlyvisible --class ghostty 2>/dev/null | tail -1)"
+  [ -n "$win" ] || win="$(xdotool search --onlyvisible --class ghostty 2>/dev/null | tail -1 || true)"
   [ -n "$win" ] && xdotool windowactivate "$win" 2>/dev/null || true
 }
 
