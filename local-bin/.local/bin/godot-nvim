@@ -48,20 +48,18 @@ start_in_herdr() {
 }
 
 focus_terminal() {
-  local win="" w
+  local win="" w host
+  host="$(hostname)"
   for _ in $(seq 20); do
     for w in $(xdotool search --onlyvisible --class ghostty 2>/dev/null || true); do
-      case "$(xdotool getwindowname "$w" 2>/dev/null)" in *"$1"*) win="$w" ;; esac
+      case "$(xdotool getwindowname "$w" 2>/dev/null || true)" in "$host: "*) win="$w" ;; esac
     done
     [ -n "$win" ] && break
+    [ -n "$1" ] || break
     sleep 0.2
   done
   [ -n "$win" ] || win="$(xdotool search --onlyvisible --class ghostty 2>/dev/null | tail -1 || true)"
-  [ -n "$win" ] || return 0
-  for _ in $(seq 8); do
-    [ "$(xdotool getactivewindow 2>/dev/null || true)" = "$win" ] || xdotool windowactivate "$win" 2>/dev/null || true
-    sleep 0.25
-  done
+  [ -n "$win" ] && xdotool windowactivate "$win" 2>/dev/null || true
 }
 
 open_file() {
@@ -87,12 +85,11 @@ open_file() {
   fi
   nvim --server "$pipe" --remote "$file"
   nvim --server "$pipe" --remote-send "<C-\\><C-N>:call cursor($line, $col)<CR>"
-  setsid "$0" focus "$(basename "$project")" >/dev/null 2>&1 < /dev/null &
+  focus_terminal "$herdr_up"
 }
 
 case "${1:-}" in
   setup) setup ;;
   open) shift; open_file "$@" ;;
-  focus) focus_terminal "$2" ;;
   *) echo "usage: godot-nvim setup | open <project> <file> [line] [col]" >&2; exit 2 ;;
 esac
