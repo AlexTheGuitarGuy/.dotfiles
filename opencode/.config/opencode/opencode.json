@@ -8,12 +8,11 @@
   "mcp": {
     "context7": {
       "type": "local",
-      "command": ["npx", "-y", "@upstash/context7-mcp"],
-      "enabled": true
-    },
-    "apiportal": {
-      "type": "local",
-      "command": ["pnpm", "dlx", "@dvag/apiportal-mcp@1.1.0"],
+      "command": [
+        "npx",
+        "-y",
+        "@upstash/context7-mcp"
+      ],
       "enabled": true
     },
     "atlassian": {
@@ -23,15 +22,34 @@
     },
     "gitnexus": {
       "type": "local",
-      "command": ["gitnexus", "mcp"],
+      "command": [
+        "gitnexus",
+        "mcp"
+      ],
       "enabled": true
     },
     "playwright": {
       "type": "local",
-      "command": ["npx", "@playwright/mcp@latest", "--browser", "chrome", "--user-data-dir", "/home/alex/.cache/pw-dfs", "--output-dir", "/home/alex/.cache/pw-dfs-out", "--save-session", "--caps", "devtools", "--init-script", "/home/alex/.config/playwright/url-bar.js"],
+      "command": [
+        "npx",
+        "@playwright/mcp@latest",
+        "--browser",
+        "chrome",
+        "--user-data-dir",
+        "/home/alex/.cache/playwright-mcp",
+        "--output-dir",
+        "/home/alex/.cache/playwright-mcp-out",
+        "--save-session",
+        "--caps",
+        "devtools",
+        "--init-script",
+        "/home/alex/.config/playwright/url-bar.js"
+      ],
       "enabled": true
     }
   },
   "lsp": true,
-  "instructions": ["/home/alex/.claude/rules/*.md"]
+  "instructions": [
+    "/home/alex/.claude/rules/*.md"
+  ]
 }

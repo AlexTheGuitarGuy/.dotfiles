@@ -18,5 +18,5 @@
 [pull]
 	rebase = true
 
-[includeIf "gitdir:~/projects/DFS/"]
-	path = ~/.gitconfig-dvag
+[include]
+	path = ~/.gitconfig.private

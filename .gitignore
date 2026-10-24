@@ -43,3 +43,8 @@ opencode/.config/opencode/package-lock.json
 btop/.config/btop/btop.log
 
 # rofi - ignore dynamic wallpaper-tracking symlink
+
+claude/.claude/rules/private
+claude/.claude/skills/review-live
+claude/.claude/skills/deployed-api-debugging
+gh/.config/gh/hosts.yml

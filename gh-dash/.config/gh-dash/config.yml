@@ -85,7 +85,6 @@ keybindings:
     - key: T
       name: enhance
       command: gh enhance -R {{.RepoName}} {{.PrNumber}}
-repoPaths: { dvag/*: ~/projects/DFS/nest/* }
 theme:
   ui:
     sectionsShowCount: true

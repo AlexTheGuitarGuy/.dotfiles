@@ -1,7 +1,0 @@
-[user]
-	name = AlexandruSeremetDVAG
-	email = Alexandru.Seremet.extern@dvag.com
-
-[core]
-	sshCommand = ssh -i ~/.ssh/keys/github-dvag -o IdentitiesOnly=yes
-	excludesFile = ~/.gitignore_dfs
