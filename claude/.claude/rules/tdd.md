@@ -9,3 +9,7 @@ version of it.
 Exceptions, matching the skill's own carve-outs: throwaway prototypes, generated code, and
 config-only changes with no application logic to test (e.g. this dotfiles repo). Ask before
 skipping TDD for any other reason.
+
+Coverage: every change keeps the touched projects at 100% coverage (statements, branches,
+functions, lines). Code copied from another repo comes with its tests, adapted, so copied code is
+never left uncovered.

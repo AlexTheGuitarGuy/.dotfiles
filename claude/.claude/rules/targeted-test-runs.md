@@ -19,5 +19,11 @@ to the files the change touches.
 If a broad run genuinely looks necessary (a wide refactor, a merge touching many areas, a
 pre-release check), ask first and say why instead of starting it.
 
+`nx run-many` over several projects or targets, with or without `--skip-nx-cache`, counts as a
+broad run too: nx runs tasks in parallel and it froze the machine with four projects. Run one
+project and one target at a time with `--parallel=1`, and only when the change touched that
+project's code. A rebase or merge that only brings in other people's commits needs no test run:
+compare trees instead (`git merge-tree --write-tree`), and leave the rest to CI.
+
 Why: full suites on these monorepos exhaust CPU and memory and freeze the machine. CI runs the
 full suite anyway, so a local full run buys nothing and costs the working session.
