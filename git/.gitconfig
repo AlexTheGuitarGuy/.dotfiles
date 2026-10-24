@@ -18,5 +18,9 @@
 [pull]
 	rebase = true
 
+[hook "gitnexus-worktree"]
+	event = post-checkout
+	command = ~/.local/bin/worktree-gitnexus
+
 [include]
 	path = ~/.gitconfig.private

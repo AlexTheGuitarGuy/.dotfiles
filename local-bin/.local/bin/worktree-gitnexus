@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+[ "${1:-}" = 0000000000000000000000000000000000000000 ] || exit 0
+command -v gitnexus >/dev/null || exit 0
+
+here="$(git rev-parse --show-toplevel)"
+[ -e "$here/.gitnexus" ] && exit 0
+
+source=""
+while read -r key path; do
+  [ "$key" = worktree ] && [ "$path" != "$here" ] && [ -f "$path/.gitnexus/meta.json" ] && { source="$path"; break; }
+done < <(git worktree list --porcelain)
+[ -n "$source" ] || exit 0
+
+cp -a --reflink=auto "$source/.gitnexus" "$here/.gitnexus"
+rm -rf "$here/.gitnexus/.hook-locks"
+for f in meta.json gitnexus.json; do
+  [ -f "$here/.gitnexus/$f" ] || continue
+  jq --arg p "$here" '.repoPath = $p | .storagePath = ($p + "/.gitnexus")' "$here/.gitnexus/$f" > "$here/.gitnexus/$f.tmp"
+  mv "$here/.gitnexus/$f.tmp" "$here/.gitnexus/$f"
+done
+(cd "$here" && gitnexus index . >/dev/null 2>&1) || echo "worktree-gitnexus: copied the index from $source but could not register it" >&2
+echo "worktree-gitnexus: copied the GitNexus index from $source (stale until gitnexus analyze)"
