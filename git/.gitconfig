@@ -18,6 +18,10 @@
 [pull]
 	rebase = true
 
+[hook "todos"]
+	event = post-checkout
+	command = ~/.local/bin/git-todos
+
 [hook "gitnexus-worktree"]
 	event = post-checkout
 	command = ~/.local/bin/worktree-gitnexus

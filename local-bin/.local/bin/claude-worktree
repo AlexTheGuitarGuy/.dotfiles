@@ -27,6 +27,7 @@ case "${1:-}" in
       if [ "$f" = .excluded ]; then
         find "$path/.excluded" -type f | while read -r x; do
           [ "$x" = "$path/.excluded/todos.txt" ] && [ "$(cat "$x")" = TODOs ] && continue
+          [ "$x" = "$path/.excluded/todos.md" ] && [ "$(cat "$x")" = "# TODOs" ] && continue
           echo "${x#"$path/"}"
         done
         continue
