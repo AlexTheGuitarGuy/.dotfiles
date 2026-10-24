@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+input="$(cat)"
+field() { jq -r --arg k "$1" '.[$k] // empty' <<<"$input"; }
+
+case "${1:-}" in
+  create)
+    name="$(field name)"
+    cwd="$(field cwd)"
+    common="$(git -C "$cwd" rev-parse --path-format=absolute --git-common-dir)"
+    if [ "$(basename "$common")" = .bare ]; then
+      path="$(dirname "$common")/$name"
+    else
+      path="$(git -C "$cwd" rev-parse --show-toplevel)/.claude/worktrees/$name"
+    fi
+    base="$(git -C "$cwd" symbolic-ref --quiet --short refs/remotes/origin/HEAD || echo HEAD)"
+    git -C "$cwd" worktree add -b "worktree-$name" "$path" "$base" >&2
+    echo "$path"
+    ;;
+  remove)
+    path="$(field worktree_path)"
+    branch="$(git -C "$path" branch --show-current 2>/dev/null || true)"
+    git -C "$path" worktree remove "$path" >&2
+    case "$branch" in worktree-*) git -C "$(field cwd)" branch -d "$branch" >&2 || true;; esac
+    ;;
+  *)
+    echo "usage: claude-worktree create|remove < hook-input.json" >&2
+    exit 2
+    ;;
+esac
