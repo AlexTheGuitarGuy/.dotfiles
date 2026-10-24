@@ -47,6 +47,17 @@ start_in_herdr() {
   pgrep -f '^herdr( |$)' >/dev/null || setsid ghostty -e herdr >/dev/null 2>&1 &
 }
 
+focus_terminal() {
+  local win=""
+  for _ in $(seq 20); do
+    win="$(xdotool search --onlyvisible --class ghostty --name "$1" 2>/dev/null | tail -1)"
+    [ -n "$win" ] && break
+    sleep 0.2
+  done
+  [ -n "$win" ] || win="$(xdotool search --onlyvisible --class ghostty 2>/dev/null | tail -1)"
+  [ -n "$win" ] && xdotool windowactivate "$win" 2>/dev/null || true
+}
+
 open_file() {
   local project="$1" file="$2" line="${3:-1}" col="${4:-1}" herdr_up=""
   command -v herdr >/dev/null && herdr status server 2>/dev/null | grep -q 'status: running' && herdr_up=1
@@ -70,6 +81,7 @@ open_file() {
   fi
   nvim --server "$pipe" --remote "$file"
   nvim --server "$pipe" --remote-send "<C-\\><C-N>:call cursor($line, $col)<CR>"
+  focus_terminal "$(basename "$project")"
 }
 
 case "${1:-}" in
