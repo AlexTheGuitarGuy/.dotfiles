@@ -30,7 +30,7 @@ Use real dependencies, not alphabetical file order. Group cycles into a single s
 
 Default to Markdown in the conversation (see the last paragraph). Use the viewer only when the user asks for it.
 
-Viewer mode: write the walkthrough to `.evidence/investigations/walkthrough-<short-slug>/` at the repository root, and add `.evidence/` to `.git/info/exclude` if it is not there. Write only the walkthrough artifacts there. Create `manifest.json` in this shape (fields are top-level, not nested under `payload`):
+Viewer mode: write the walkthrough to `.excluded/investigations/walkthrough-<short-slug>/` at the worktree root (see `excluded-dir.md`). Write only the walkthrough artifacts there. Create `manifest.json` in this shape (fields are top-level, not nested under `payload`):
 
 ```json
 {

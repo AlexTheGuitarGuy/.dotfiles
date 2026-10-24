@@ -22,8 +22,15 @@ case "${1:-}" in
     path="$(field worktree_path)"
     keep="$(git -C "$path" status --ignored --porcelain | sed -n 's/^!! //p' | while read -r f; do
       f="${f%/}"
-      case "$(basename "$f")" in node_modules|dist|build|coverage|.nx|.turbo|*.tsbuildinfo) continue;; esac
+      case "$(basename "$f")" in node_modules|dist|build|coverage|.nx|.turbo|.gitnexus|*.tsbuildinfo) continue;; esac
       [ "$(basename "$f")" = .env ] && [ -L "$path/$f" ] && continue
+      if [ "$f" = .excluded ]; then
+        find "$path/.excluded" -type f | while read -r x; do
+          [ "$x" = "$path/.excluded/todos.txt" ] && [ "$(cat "$x")" = TODOs ] && continue
+          echo "${x#"$path/"}"
+        done
+        continue
+      fi
       echo "$f"
     done)"
     if [ -n "$keep" ]; then
@@ -32,6 +39,7 @@ case "${1:-}" in
     fi
     branch="$(git -C "$path" branch --show-current 2>/dev/null || true)"
     git -C "$path" worktree remove "$path" >&2
+    command -v gitnexus >/dev/null && gitnexus remove --force "$path" >/dev/null 2>&1 || true
     case "$branch" in worktree-*) git -C "$(field cwd)" branch -d "$branch" >&2 || true;; esac
     ;;
   *)
