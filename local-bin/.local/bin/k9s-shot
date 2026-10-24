@@ -1,0 +1,55 @@
+#!/bin/bash
+# usage: k9s-shot <k9s args...> -- <action>...
+#   actions: key:<key> | type:<text> | sleep:<sec> | shot:<out.png>
+#   key: slash, Return, Escape or a tmux key name (d, l, 6, C-c)
+# k9s runs in a private tmux inside a fullscreen Ghostty; keys go through tmux send-keys,
+# so nothing depends on window focus and no keystroke can land in another window.
+set -u
+args=(); while [ "$1" != "--" ]; do args+=("$1"); shift; done; shift
+cfg=$(mktemp -d); sock="k9s-shot-$$"
+trap 'tmux -L "$sock" kill-server 2>/dev/null; rm -rf "$cfg"; for _ in $(seq 1 20); do xwininfo -id "${w:-0}" >/dev/null 2>&1 || break; sleep 0.25; done' EXIT
+cp -rL "${K9S_CONFIG_DIR:-$HOME/.config/k9s}/." "$cfg/"
+sed -i -E 's/^(\s*tail:\s*)[0-9]+/\150000/; s/^(\s*buffer:\s*)[0-9]+/\150000/; s/^(\s*skipLatestRevCheck:\s*).*/\1true/' "$cfg/config.yaml"
+cat > "$cfg/tmux.conf" <<'EOF'
+set -g status off
+set -g escape-time 0
+set -g default-terminal "tmux-256color"
+set -ga terminal-overrides ",*:RGB"
+EOF
+t() { tmux -L "$sock" "$@"; }
+ghostty -e tmux -L "$sock" -f "$cfg/tmux.conf" new-session -s shot \
+  "env K9S_CONFIG_DIR=$(printf %q "$cfg") k9s --readonly $(printf '%q ' "${args[@]}") 2>$(printf %q "$cfg/k9s.err")" >/dev/null 2>&1 &
+gp=$!
+for _ in $(seq 1 60); do
+  for c in $(xdotool search --onlyvisible --pid "$gp" 2>/dev/null); do
+    g=$(xdotool getwindowgeometry "$c" 2>/dev/null | awk '/Geometry/{print $2}')
+    [ -n "$g" ] && [ "${g%x*}" -gt 100 ] && w=$c
+  done
+  [ -n "${w:-}" ] && break; sleep 0.5
+done
+[ -z "${w:-}" ] && { echo "k9s-shot: no ghostty window" >&2; exit 1; }
+sleep 1
+for _ in $(seq 1 10); do
+  xdotool windowactivate --sync "$w" 2>/dev/null; wmctrl -i -r "$w" -b add,fullscreen; wmctrl -i -r "$w" -b add,above; sleep 1
+  xprop -id "$w" _NET_WM_STATE | grep -q _NET_WM_STATE_FULLSCREEN && break
+done
+xprop -id "$w" _NET_WM_STATE | grep -q _NET_WM_STATE_FULLSCREEN || { echo "k9s-shot: not fullscreen" >&2; exit 1; }
+sleep 6
+for a in "$@"; do
+  t has-session -t shot 2>/dev/null || { echo "k9s-shot: k9s exited before '$a'" >&2; cp "$cfg/k9s.err" "${XDG_CACHE_HOME:-$HOME/.cache}/k9s-shot.err"; grep -m3 -iE "panic|error|fatal" "$cfg/k9s.err" >&2; exit 1; }
+  case "$a" in
+    key:*) k=${a#key:}; case "$k" in slash) k=/ ;; Return) k=Enter ;; esac
+           t send-keys -t shot "$k"; sleep 0.8 ;;
+    type:*) t send-keys -t shot -l -- "${a#type:}"; sleep 0.8 ;;
+    sleep:*) sleep "${a#sleep:}" ;;
+    shot:*) for _ in $(seq 1 10); do
+              xdotool windowraise "$w"; xdotool windowactivate --sync "$w" 2>/dev/null; sleep 0.5
+              [ "$(xdotool getactivewindow 2>/dev/null)" = "$w" ] && break
+            done
+            [ "$(xdotool getactivewindow 2>/dev/null)" = "$w" ] || { echo "k9s-shot: window not on top, no shot" >&2; exit 1; }
+            [ "$(xdotool getwindowpid "$w" 2>/dev/null)" = "$gp" ] || { echo "k9s-shot: window is not ours, no shot" >&2; exit 1; }
+            import -window "$w" "$(realpath -m "${a#shot:}")"
+            [ "$(xdotool getactivewindow 2>/dev/null)" = "$w" ] || { rm -f "$(realpath -m "${a#shot:}")"; echo "k9s-shot: window lost focus during shot, discarded" >&2; exit 1; }
+            echo "${a#shot:}" ;;
+  esac
+done
