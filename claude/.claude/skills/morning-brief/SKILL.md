@@ -11,8 +11,7 @@ a plan, not a kanban, just status.
 ## Steps
 
 1. `gh pr list --author=@me --state=open` for PRs the user has open, scoped to
-   `dvag/*` orgs by default (matches the repo mapping already in
-   `gh-dash/.config/gh-dash/config.yml`'s `repoPaths`), or a different scope if
+   the work org by default (ask once if it is unclear), or a different scope if
    the user names one explicitly.
 2. `gh search prs --review-requested=@me --state=open` for PRs awaiting the
    user's review.
