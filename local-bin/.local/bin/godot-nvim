@@ -30,12 +30,39 @@ EOF
   echo "godot-nvim: external editor set in $settings"
 }
 
+herdr_workspace() {
+  herdr pane list 2>/dev/null | jq -r --arg p "$1" \
+    '[.result.panes[] | select(.cwd == $p or (.cwd | startswith($p + "/")))][0].workspace_id // empty'
+}
+
+start_in_herdr() {
+  local project="$1" ws out
+  ws="$(herdr_workspace "$project")"
+  if [ -n "$ws" ]; then
+    out="$(herdr tab create --workspace "$ws" --cwd "$project" --label nvim --focus)"
+  else
+    out="$(herdr workspace create --cwd "$project" --label "$(basename "$project")" --focus)"
+  fi
+  herdr pane run "$(jq -r '.result.root_pane.pane_id' <<<"$out")" "nvim --listen $pipe" >/dev/null
+  pgrep -f '^herdr( |$)' >/dev/null || setsid ghostty -e herdr >/dev/null 2>&1 &
+}
+
 open_file() {
-  local project="$1" file="$2" line="${3:-1}" col="${4:-1}"
-  if ! nvim --server "$pipe" --remote-expr 1 >/dev/null 2>&1; then
+  local project="$1" file="$2" line="${3:-1}" col="${4:-1}" herdr_up=""
+  command -v herdr >/dev/null && herdr status server 2>/dev/null | grep -q 'status: running' && herdr_up=1
+  if nvim --server "$pipe" --remote-expr 1 >/dev/null 2>&1; then
+    if [ -n "$herdr_up" ]; then
+      ws="$(herdr_workspace "$project")"
+      [ -n "$ws" ] && herdr workspace focus "$ws" >/dev/null
+    fi
+  else
     rm -f "$pipe"
     cd "$project"
-    setsid ghostty -e nvim --listen "$pipe" >/dev/null 2>&1 &
+    if [ -n "$herdr_up" ]; then
+      start_in_herdr "$project"
+    else
+      setsid ghostty -e nvim --listen "$pipe" >/dev/null 2>&1 &
+    fi
     for _ in $(seq 50); do
       nvim --server "$pipe" --remote-expr 1 >/dev/null 2>&1 && break
       sleep 0.2
