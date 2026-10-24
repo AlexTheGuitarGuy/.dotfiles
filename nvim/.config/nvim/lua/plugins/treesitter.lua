@@ -15,14 +15,13 @@ local config = function()
     end,
   })
 
-  require('nvim-treesitter.config').setup({
-    indent = { enable = true },
-    autotag = { enable = true },
-    highlight = {
-      enable = true,
-      additional_vim_regex_highlighting = false,
-    },
-    ensure_installed = { 'typescript', 'lua', 'prisma', 'nu', 'markdown', 'markdown_inline' },
+  require('nvim-treesitter').install({
+    'typescript',
+    'lua',
+    'prisma',
+    'nu',
+    'markdown',
+    'markdown_inline',
   })
 end
 

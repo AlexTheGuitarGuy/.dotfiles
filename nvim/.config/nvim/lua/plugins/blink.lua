@@ -7,6 +7,7 @@ return {
     keymap = {
       preset = 'default',
       ['<CR>'] = { 'accept', 'fallback' },
+      ['<C-n>'] = { 'select_next', 'show' },
       ['<C-j>'] = { 'select_next', 'fallback' },
       ['<C-k>'] = { 'select_prev', 'fallback' },
     },
