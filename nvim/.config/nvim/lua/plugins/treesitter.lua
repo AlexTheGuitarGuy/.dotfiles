@@ -22,6 +22,9 @@ local config = function()
     'nu',
     'markdown',
     'markdown_inline',
+    'gdscript',
+    'godot_resource',
+    'gdshader',
   })
 end
 

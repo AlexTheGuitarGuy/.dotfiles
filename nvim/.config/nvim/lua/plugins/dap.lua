@@ -61,6 +61,10 @@ local function config()
 
   dap.adapters['pwa-node'] = js_debug_adapter()
   dap.adapters['pwa-chrome'] = js_debug_adapter()
+  dap.adapters.godot = { type = 'server', host = '127.0.0.1', port = 6006 }
+  dap.configurations.gdscript = {
+    { type = 'godot', request = 'launch', name = 'Launch main scene', project = '${workspaceFolder}' },
+  }
 
   for _, language in ipairs({ 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' }) do
     dap.configurations[language] = {

@@ -19,6 +19,7 @@ M.servers = {
     },
   },
   gopls = {},
+  gdscript = {},
   buf_ls = {},
   sqlls = {
     settings = {
@@ -38,7 +39,7 @@ M.servers = {
 -- root_dir, but still needs to be in Mason's ensure_installed list.
 M.mason_extra = { 'angularls' }
 
-M.mason_exclude = {}
+M.mason_exclude = { gdscript = true }
 
 M.mason_ensure_installed = function()
   local list = {}
