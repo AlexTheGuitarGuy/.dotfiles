@@ -12,8 +12,4 @@ Get-ChildItem (Join-Path $env:APPDATA "librewolf\Profiles") -Directory | ForEach
     New-Item -ItemType Directory -Force -Path $chrome | Out-Null
     Copy-Item (Join-Path $src "chrome\*") $chrome -Force
     Write-Host "copied chrome to $chrome"
-    if ($_.Name -like "*.dev") {
-        Copy-Item (Join-Path $src "dev-user.js") (Join-Path $_.FullName "user.js") -Force
-        Write-Host "copied dev user.js to $($_.FullName)"
-    }
 }

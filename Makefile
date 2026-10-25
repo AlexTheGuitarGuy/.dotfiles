@@ -20,13 +20,8 @@ unstow-dotfiles:
 	@stow -D */ --verbose=1
 
 librewolf-profiles:
-	@for p in $(LW)/*.default-release $(LW)/*.dev; do \
+	@for p in $(LW)/*.default-release; do \
 		[ -d "$$p" ] || continue; \
 		if [ -e "$$p/chrome" ] && [ ! -L "$$p/chrome" ]; then echo "$$p/chrome is a real directory, move it first"; exit 1; fi; \
 		ln -sfn $(LW)/chrome "$$p/chrome" && echo "linked $$p/chrome"; \
-	done
-	@for p in $(LW)/*.dev; do \
-		[ -d "$$p" ] || continue; \
-		if [ -e "$$p/user.js" ] && [ ! -L "$$p/user.js" ]; then echo "$$p/user.js is a real file, move it first"; exit 1; fi; \
-		ln -sfn $(LW)/dev-user.js "$$p/user.js" && echo "linked $$p/user.js"; \
 	done
