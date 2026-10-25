@@ -1,4 +1,6 @@
-.PHONY: stow-dotfiles unstow-dotfiles check
+.PHONY: stow-dotfiles unstow-dotfiles check librewolf-profiles
+
+LW := $(HOME)/.config/librewolf/librewolf
 
 check:
 	@echo "=== Dry-run: what stow --adopt would do ==="
@@ -9,9 +11,22 @@ check:
 stow-dotfiles: check
 	@read -p "Proceed with stow --adopt? [y/N] " ans; [ "$$ans" = "y" ] || [ "$$ans" = "Y" ] || (echo "Aborted."; exit 1)
 	@echo "Stowing dotfiles..."
+	@mkdir -p $(LW)
 	@stow --adopt */ --verbose=1
 	@stow -D ansible-scripts/ scripts/
 
 unstow-dotfiles:
 	@echo "Unstowing dotfiles..."
 	@stow -D */ --verbose=1
+
+librewolf-profiles:
+	@for p in $(LW)/*.default-release $(LW)/*.dev; do \
+		[ -d "$$p" ] || continue; \
+		if [ -e "$$p/chrome" ] && [ ! -L "$$p/chrome" ]; then echo "$$p/chrome is a real directory, move it first"; exit 1; fi; \
+		ln -sfn $(LW)/chrome "$$p/chrome" && echo "linked $$p/chrome"; \
+	done
+	@for p in $(LW)/*.dev; do \
+		[ -d "$$p" ] || continue; \
+		if [ -e "$$p/user.js" ] && [ ! -L "$$p/user.js" ]; then echo "$$p/user.js is a real file, move it first"; exit 1; fi; \
+		ln -sfn $(LW)/dev-user.js "$$p/user.js" && echo "linked $$p/user.js"; \
+	done

@@ -1,0 +1,8 @@
+sanitise tridactyllocal tridactylsync
+
+colourscheme catppuccin
+
+bind J tabnext
+bind K tabprev
+
+unbind <C-f>
