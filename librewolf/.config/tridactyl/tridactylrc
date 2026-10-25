@@ -6,3 +6,7 @@ bind J tabnext
 bind K tabprev
 
 unbind <C-f>
+
+blacklistadd ^https?://([a-z0-9-]+\.)*google\.[a-z.]+/
+blacklistadd ^https?://([a-z0-9-]+\.)*youtube\.com/
+blacklistadd ^https?://youtu\.be/
