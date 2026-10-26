@@ -31,7 +31,7 @@ powershell -ExecutionPolicy Bypass -File $HOME\.dotfiles\scripts\librewolf-windo
 
 It copies:
 
-- `librewolf.overrides.cfg` to `%USERPROFILE%\.librewolf\` (stay logged in, sync on, session restore, title bar, fonts, cookie banners, work site exemptions)
+- `librewolf.overrides.cfg` to `%USERPROFILE%\.librewolf\` (stay logged in, sync on, session restore, title bar, fonts, cookie banners, faster loading)
 - `tridactylrc` and the Catppuccin theme to `%USERPROFILE%\.config\tridactyl\`
 - the CSS (square corners, hidden tab bar, `about:` pages, Sidebery styling) into every profile's `chrome` folder
 
@@ -86,6 +86,6 @@ Restart LibreWolf once (Ctrl+Q, then start it) and check:
 | Problem | Fix |
 |---|---|
 | QR codes or maps look striped | Click the canvas icon in the address bar, allow, reload |
-| Wrong timezone or odd layout on a site | Add the site to `privacy.resistFingerprinting.exemptedDomains` in `librewolf.overrides.cfg` |
+| Wrong timezone or odd layout on a site | Add the site to `privacy.resistFingerprinting.exemptedDomains` in the profile's `user.js` (kept outside this repo) |
 | Sites ignore dark mode | Dark Reader |
 | A site breaks because something is blocked | Shield icon next to the address bar, turn off tracking protection for that site |
