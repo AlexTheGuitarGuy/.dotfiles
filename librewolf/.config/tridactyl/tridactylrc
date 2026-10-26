@@ -7,6 +7,8 @@ bind K tabprev
 bind <C-A-d> tabduplicate
 
 unbind <C-f>
+unbind <C-e>
+unbind --mode=ex <C-e>
 
 blacklistadd ^https?://([a-z0-9-]+\.)*google\.[a-z.]+/
 blacklistadd ^https?://([a-z0-9-]+\.)*youtube\.com/
