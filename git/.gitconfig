@@ -26,5 +26,14 @@
 	event = post-checkout
 	command = ~/.local/bin/worktree-gitnexus
 
+[hook "gitnexus-push"]
+	event = pre-push
+	command = ~/.local/bin/gitnexus-reindex push
+
+[hook "gitnexus-pull"]
+	event = post-merge
+	event = post-rewrite
+	command = ~/.local/bin/gitnexus-reindex pull
+
 [include]
 	path = ~/.gitconfig.private
