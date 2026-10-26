@@ -22,15 +22,15 @@ $env.LC_ALL = "en_US.UTF-8"
 $env.BUN_INSTALL = "/home/alex/.bun"
 
 $env.PATH = ($env.PATH | append "/usr/bin")
-$env.PATH = ($env.PATH | append "~/.cargo/bin")
-$env.PATH = ($env.PATH | append "~/.spicetify")
-$env.PATH = ($env.PATH | append "~/.bun/bin")
+$env.PATH = ($env.PATH | append ("~/.cargo/bin" | path expand))
+$env.PATH = ($env.PATH | append ("~/.spicetify" | path expand))
+$env.PATH = ($env.PATH | append ("~/.bun/bin" | path expand))
 $env.PATH = ($env.PATH | append "/run/user/1000/fnm_multishells/100055_1745924017795")
-$env.PATH = ($env.PATH | append "~/go/bin")
+$env.PATH = ($env.PATH | append ("~/go/bin" | path expand))
 
 $env.PATH = ($env.PATH | append "/opt/jdk-17.0.17+10/bin")
 $env.PATH = ($env.PATH | append "/opt/jre-17.0.17+10/bin")
-$env.PATH = ($env.PATH | append "~/.opencode/bin")
+$env.PATH = ($env.PATH | append ("~/.opencode/bin" | path expand))
 $env.PATH = ($env.PATH | append "/home/alex/.local/bin")
 
 $env.PATH = ($env.PATH | split row (char esep) | append '/home/linuxbrew/.linuxbrew/bin')
