@@ -18,12 +18,23 @@ if [ -n "${HERDR_SOCKET_PATH:-}" ] && command -v herdr >/dev/null; then
     | jq -r '.result.worktrees[] | select(.open_workspace_id != null) | .path' || true)
 fi
 
+has_local_files() {
+  local dir="$1/.excluded" f
+  [ -d "$dir" ] || return 1
+  while IFS= read -r -d '' f; do
+    [ "$f" = "$dir/todos.md" ] && printf '# TODOs\n' | cmp -s - "$f" && continue
+    return 0
+  done < <(find "$dir" -type f -print0)
+  return 1
+}
+
 verdict() {
   local path=$1 branch=$2 head remote merge remote_branch default
   [ -n "$branch" ] || { echo "keep: detached"; return; }
   [ "$path" != "$here" ] || { echo "keep: current worktree"; return; }
   if grep -qxF "$path" <<<"$herdr_open"; then echo "keep: open in herdr"; return; fi
   [ -z "$(git -C "$path" status --porcelain)" ] || { echo "keep: uncommitted changes"; return; }
+  if has_local_files "$path"; then echo "keep: files in .excluded"; return; fi
 
   remote=$(git -C "$path" config --get "branch.$branch.remote" || true)
   merge=$(git -C "$path" config --get "branch.$branch.merge" || true)
