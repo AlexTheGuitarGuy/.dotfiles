@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() { echo "usage: git wt-clean [--yes]" >&2; exit 2; }
+yes=0
+case "${1:-}" in
+  "") ;;
+  --yes) yes=1 ;;
+  *) usage ;;
+esac
+
+export GIT_TERMINAL_PROMPT=0
+here=$(git rev-parse --show-toplevel 2>/dev/null || pwd -P)
+
+herdr_open=""
+if [ -n "${HERDR_SOCKET_PATH:-}" ] && command -v herdr >/dev/null; then
+  herdr_open=$(herdr worktree list --cwd "$here" 2>/dev/null \
+    | jq -r '.result.worktrees[] | select(.open_workspace_id != null) | .path' || true)
+fi
+
+verdict() {
+  local path=$1 branch=$2 head remote merge remote_branch default
+  [ -n "$branch" ] || { echo "keep: detached"; return; }
+  [ "$path" != "$here" ] || { echo "keep: current worktree"; return; }
+  if grep -qxF "$path" <<<"$herdr_open"; then echo "keep: open in herdr"; return; fi
+  [ -z "$(git -C "$path" status --porcelain)" ] || { echo "keep: uncommitted changes"; return; }
+
+  remote=$(git -C "$path" config --get "branch.$branch.remote" || true)
+  merge=$(git -C "$path" config --get "branch.$branch.merge" || true)
+  if [ -z "$remote" ] || [ "$remote" = . ] || [[ $merge != refs/heads/?* ]]; then
+    echo "keep: no upstream"; return
+  fi
+  remote_branch=${merge#refs/heads/}
+
+  default=$(git -C "$path" ls-remote --symref "$remote" HEAD | awk '/^ref:/ {print $2}') \
+    || { echo "keep: remote unreachable"; return; }
+  [ -n "$default" ] || { echo "keep: remote default branch unknown"; return; }
+  [ "$merge" != "$default" ] || { echo "keep: default branch"; return; }
+  [ -z "$(git -C "$path" ls-remote --heads "$remote" "$merge")" ] || { echo "keep: still on remote"; return; }
+
+  head=$(git -C "$path" rev-parse HEAD)
+  if command -v gh >/dev/null \
+    && (cd "$path" && gh pr list --head "$remote_branch" --state merged --json headRefOid --jq '.[].headRefOid' 2>/dev/null) \
+      | grep -qx "$head"; then
+    echo "remove: PR merged"; return
+  fi
+  git -C "$path" fetch --quiet --no-tags "$remote" "$default" 2>/dev/null \
+    && git -C "$path" merge-base --is-ancestor "$head" FETCH_HEAD \
+    && { echo "remove: contained in ${default#refs/heads/}"; return; }
+  echo "keep: not merged"
+}
+
+removed=0
+while IFS=$'\t' read -r path branch; do
+  v=$(verdict "$path" "$branch")
+  printf '%-60s %-40s %s\n' "$path" "${branch:-(detached)}" "$v"
+  [[ $v == remove:* ]] && [ "$yes" = 1 ] || continue
+  git worktree remove "$path"
+  git branch -D "$branch" >/dev/null
+  removed=$((removed + 1))
+done < <(git worktree list --porcelain | awk '
+  /^worktree / { path = substr($0, 10); branch = ""; bare = 0 }
+  /^bare$/ { bare = 1 }
+  /^branch / { branch = substr($0, 8); sub("^refs/heads/", "", branch) }
+  /^$/ { if (!bare) print path "\t" branch }
+  END { if (path != "" && !bare) print path "\t" branch }
+' | awk -F'\t' '!seen[$1]++')
+
+if [ "$yes" = 1 ]; then
+  echo "removed $removed worktree(s)"
+else
+  echo "dry run, rerun with --yes to remove the ones marked remove"
+fi
