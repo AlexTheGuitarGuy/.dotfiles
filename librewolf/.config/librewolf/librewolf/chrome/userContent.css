@@ -51,7 +51,7 @@
 	}
 
 	.Tab[data-active="true"] .body {
-		border: 2px solid #cba6f7 !important;
+		border: 2px solid rgba(203, 166, 247, 0.45) !important;
 	}
 
 	.NavigationBar .main-items .nav-item[data-class="panel"] .name-box {
@@ -63,6 +63,6 @@
 	}
 
 	.NavigationBar .nav-item[data-active="true"] {
-		border: 1px solid #cba6f7 !important;
+		border: 1px solid rgba(203, 166, 247, 0.45) !important;
 	}
 }

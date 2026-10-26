@@ -4,3 +4,5 @@
 
 * { border-radius: 0px !important; }
 * { font-family: "JetBrainsMono Nerd Font", monospace !important; }
+:root { --chrome-content-separator-color: #181825 !important; }
+:root { --sidebar-border-color: #45475a !important; }
