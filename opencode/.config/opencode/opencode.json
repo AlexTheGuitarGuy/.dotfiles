@@ -50,7 +50,6 @@
   },
   "lsp": true,
   "instructions": [
-    "/home/alex/.claude/rules/*.md",
-    "/home/alex/.claude/rules/private/*.md"
+    "/home/alex/.claude/rules/*.md"
   ]
 }
