@@ -1,8 +1,7 @@
 git:
-  paging:
-    colorArg: always
-    pager: delta --paging=never
-
+  diffRenderers:
+    - colorArg: always
+      command: delta --paging=never
 gui:
   theme:
     activeBorderColor:
@@ -30,42 +29,38 @@ gui:
       - '#f38ba8'
     defaultFgColor:
       - '#cdd6f4'
-authorColors:
-  '*': '#b4befe'
-
 os:
   editPreset: nvim
-
+keybinding:
+  universal:
+    suspendApp: <disabled>
 customCommands:
   - key: "<c-z>"
     description: "Pick AI commit"
-    command: 'echo "{{.Form.Msg}}" > .git/COMMIT_EDITMSG && nvim .git/COMMIT_EDITMSG && [ -s .git/COMMIT_EDITMSG ] && git commit -F .git/COMMIT_EDITMSG || echo "Commit message is empty, commit aborted."'
+    command: 'f=$(git rev-parse --git-path COMMIT_EDITMSG) && echo "{{.Form.Msg}}" > "$f" && nvim "$f" && [ -s "$f" ] && git commit -F "$f" || echo "Commit message is empty, commit aborted."'
     context: "files"
-    subprocess: true
     prompts:
       - type: "menuFromCommand"
         title: "AI Commits"
         key: "Msg"
-        command: "bun x @m7medvision/lazycommit@latest"
+        command: "ai-commit-msgs"
         filter: '^(?P<number>\d+)\.\s(?P<message>.+)$'
         valueFormat: "{{ .message }}"
         labelFormat: "{{ .number }}: {{ .message | green }}"
+    output: terminal
   - key: "<c-t>"
     description: "Open working tree diff in diffnav"
     command: "git diff HEAD | diffnav"
     context: "files"
-    subprocess: true
+    output: terminal
   - key: "<c-t>"
     description: "Open commit diff in diffnav"
-    command: "git show --format= {{.SelectedLocalCommit.Sha}} | diffnav"
+    command: "git show --format= {{.SelectedCommit.Hash}} | diffnav"
     context: "commits"
-    subprocess: true
+    output: terminal
   - key: "<c-t>"
     description: "Open branch diff vs parent (PR base or default branch) in diffnav"
     command: >-
-      b={{.SelectedLocalBranch.Name}};
-      base=$(gh pr view "$b" --json baseRefName -q .baseRefName 2>/dev/null)
-      || base=$(git symbolic-ref --short refs/remotes/origin/HEAD | sed 's@^origin/@@');
-      git diff "origin/$base...$b" | diffnav
+      b={{.SelectedLocalBranch.Name}}; base=$(gh pr view "$b" --json baseRefName -q .baseRefName 2>/dev/null) || base=$(git symbolic-ref --short refs/remotes/origin/HEAD | sed 's@^origin/@@'); git diff "origin/$base...$b" | diffnav
     context: "localBranches"
-    subprocess: true
+    output: terminal

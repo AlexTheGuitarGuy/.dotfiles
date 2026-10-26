@@ -1,0 +1,11 @@
+#!/bin/bash
+set -euo pipefail
+diff=$(git diff --cached)
+[ -n "$diff" ] || { echo "Nothing staged." >&2; exit 1; }
+printf '%s\n' "$diff" | claude -p --model haiku --tools "" --setting-sources "" \
+  --strict-mcp-config --no-session-persistence \
+  --system-prompt "You write git commit messages. Output only the requested list, no other text." \
+  "Suggest 10 commit messages for the staged diff on stdin, covering different angles of the change.
+Format: <type>(<scope>): <subject>, scope optional, each line at most 100 characters.
+Allowed types: feat, fix, docs, style, refactor, perf, ci, test, chore.
+Prefer simple words. Number them as '1. <message>' through '10. <message>'."
