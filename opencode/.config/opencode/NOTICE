@@ -1,0 +1,17 @@
+The following files are modified versions of files licensed under the
+Apache License, Version 2.0 (see LICENSE-APACHE-2.0 in this directory):
+
+  agents/code-reviewer.md
+  agents/code-simplifier.md
+  agents/comment-analyzer.md
+  agents/pr-test-analyzer.md
+  agents/silent-failure-hunter.md
+  agents/type-design-analyzer.md
+  commands/code-review.md
+  commands/review-pr.md
+
+Changes: converted to the opencode agent and command format (frontmatter,
+subagent mode, edit permissions, model ids), renamed guideline file
+references to AGENTS.md, replaced model-specific subagents with explore and
+general, and changed code-review to draft its pull request comment for
+approval instead of posting it.
