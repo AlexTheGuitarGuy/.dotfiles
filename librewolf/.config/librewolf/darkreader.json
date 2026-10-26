@@ -2,8 +2,8 @@
     "enabled": true,
     "theme": {
         "mode": 1,
-        "brightness": 105,
-        "contrast": 125,
+        "brightness": 140,
+        "contrast": 115,
         "grayscale": 0,
         "sepia": 0,
         "useFont": false,
