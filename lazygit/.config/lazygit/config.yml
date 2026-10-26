@@ -31,6 +31,8 @@ gui:
       - '#cdd6f4'
 os:
   editPreset: nvim
+  open: xdg-open {{filename}}
+  openLink: xdg-open {{link}}
 keybinding:
   universal:
     suspendApp: <disabled>
