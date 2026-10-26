@@ -1,5 +1,10 @@
 {
-  "template": [{ "tab": "1" }, { "tab": "2" }, { "tab": "3" }, { "tab": "4" }],
+  "template": [
+    { "tab": "nvim", "command": "nvim ." },
+    { "tab": "lazygit", "command": "lazygit" },
+    { "tab": "agent", "command": "claude" },
+    { "tab": "shell" }
+  ],
   "git_roots_only": false,
   "extra_dirs": [],
   "overrides": []
