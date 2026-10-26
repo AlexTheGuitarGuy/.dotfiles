@@ -2,10 +2,12 @@ $repo = Split-Path -Parent $PSScriptRoot
 $src = Join-Path $repo "librewolf\.config\librewolf\librewolf"
 $lw = Join-Path $env:USERPROFILE ".librewolf"
 $tri = Join-Path $env:USERPROFILE ".config\tridactyl"
+$triThemes = Join-Path $tri "themes"
 
-New-Item -ItemType Directory -Force -Path $lw, $tri | Out-Null
+New-Item -ItemType Directory -Force -Path $lw, $tri, $triThemes | Out-Null
 Copy-Item (Join-Path $src "librewolf.overrides.cfg") $lw -Force
 Copy-Item (Join-Path $repo "librewolf\.config\tridactyl\tridactylrc") $tri -Force
+Copy-Item (Join-Path $repo "librewolf\.config\tridactyl\themes\*") $triThemes -Force
 
 Get-ChildItem (Join-Path $env:APPDATA "librewolf\Profiles") -Directory | ForEach-Object {
     $chrome = Join-Path $_.FullName "chrome"

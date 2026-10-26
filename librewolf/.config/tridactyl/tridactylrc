@@ -4,6 +4,7 @@ colourscheme catppuccin
 
 bind J tabnext
 bind K tabprev
+bind <C-A-d> tabduplicate
 
 unbind <C-f>
 
