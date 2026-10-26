@@ -25,10 +25,11 @@ and `~/.config/systemd/user/herdr.service` are symlinks into this repo. Edit her
 then `herdr server reload-config`. No copying.
 
 The one thing stow cannot place: the sessionizer plugin reads its config from its
-own (gitignored) plugin dir, so after install/changes:
+own (gitignored) plugin dir, so link it there once after install:
 
-    cp ~/.config/herdr/sessionizer.config.json "$(herdr plugin config-dir sessionizer)/config.json"
-    herdr server reload-config
+    ln -sfn ~/.dotfiles/herdr/.config/herdr/sessionizer.config.json "$(herdr plugin config-dir sessionizer)/config.json"
+
+Edits to the repo file then apply on the next picker run, no copy or reload.
 
 ## Plugins
 
@@ -38,12 +39,13 @@ machine:
 
     herdr plugin install salkhalil/herdr-sessionizer -y
     herdr plugin install furuhashin/herdr-synchronize-panes -y
-    cp ~/.config/herdr/sessionizer.config.json "$(herdr plugin config-dir sessionizer)/config.json"
+    ln -sfn ~/.dotfiles/herdr/.config/herdr/sessionizer.config.json "$(herdr plugin config-dir sessionizer)/config.json"
     herdr server reload-config
 
 - **sessionizer** (`salkhalil/herdr-sessionizer`): tgs-equivalent. `prefix+f`
   opens an fzf picker over open workspaces + zoxide dirs; picking a dir creates a
-  workspace with the template tabs from `sessionizer.config.json` (4 plain tabs).
+  workspace with the template tabs from `sessionizer.config.json` (nvim, lazygit,
+  agent, shell). `prefix+g` (`herdr-worktree`) reuses the same tabs for worktrees.
   Needs `fzf >= 0.45`, `jq`, `bash >= 4`, `zoxide`.
 - **synchronize-panes** (`furuhashin/herdr-synchronize-panes`): `prefix+m`
   broadcast overlay, one command into every pane of the current tab (old tmux

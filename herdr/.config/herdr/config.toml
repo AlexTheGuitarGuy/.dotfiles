@@ -19,8 +19,6 @@ toggle_sidebar = "prefix+b"
 previous_agent = "prefix+ctrl+p"
 next_agent = "prefix+ctrl+n"
 focus_agent = "prefix+alt+1..9"
-previous_workspace = "prefix+["
-next_workspace = "prefix+]"
 last_pane = "prefix+tab"
 
 [keys.indexed]
