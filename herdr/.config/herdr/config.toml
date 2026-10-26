@@ -20,6 +20,9 @@ previous_agent = "prefix+ctrl+p"
 next_agent = "prefix+ctrl+n"
 focus_agent = "prefix+alt+1..9"
 last_pane = "prefix+tab"
+copy_mode = "prefix+{"
+previous_workspace = "prefix+["
+next_workspace = "prefix+]"
 
 [keys.indexed]
 tabs = "alt"
