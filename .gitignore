@@ -47,4 +47,6 @@ btop/.config/btop/btop.log
 claude/.claude/rules/private
 claude/.claude/skills/review-live
 claude/.claude/skills/deployed-api-debugging
+claude/.claude/skills/pr-ticket-review
+opencode/.config/opencode/agents/ci-*-lens.md
 gh/.config/gh/hosts.yml
