@@ -55,5 +55,12 @@ pkgs.testers.runNixOSTest {
     for tool in ["lua-language-server", "typescript-language-server", "vscode-eslint-language-server", "sqls", "ngserver", "prettierd", "stylua", "js-debug", "rg", "fd", "tree-sitter", "cc", "gio"]:
         path = nu(f"^nvim --headless --clean -c 'lua io.write(vim.fn.exepath(\"{tool}\"))' -c q")
         assert path.startswith("/nix/store/"), f"{tool} not on nvim PATH: {path!r}"
+
+    for cmd in ["btop --version", "fastfetch --version", "gh --version", "gh dash --help", "ghostty --version", "k9s version --short", "lazygit --version", "posting --help"]:
+        nu(f"^{cmd} | complete | if $in.exit_code != 0 {{ error make {{msg: $in.stderr}} }}")
+    font = machine.succeed("su -s /bin/sh alex -c 'fc-match \"JetBrainsMono Nerd Font\" file'")
+    assert "JetBrainsMonoNerdFont" in font, font
+    assert nu("^readlink -m ~/.config/btop") == "/home/alex/.dotfiles/modules/home-manager/btop/config"
+    assert nu("^readlink -m ~/.config/gh/config.yml") == "/home/alex/.dotfiles/modules/home-manager/gh/config.yml"
   '';
 }

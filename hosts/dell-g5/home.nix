@@ -4,9 +4,17 @@
   home.stateVersion = "26.05";
 
   dotfiles = {
+    btop.enable = true;
+    fastfetch.enable = true;
+    gh.enable = true;
+    gh-dash.enable = true;
+    ghostty.enable = true;
     git.enable = true;
+    k9s.enable = true;
+    lazygit.enable = true;
     nushell.enable = true;
     nvim.enable = true;
+    posting.enable = true;
     starship.enable = true;
   };
 }

@@ -24,5 +24,7 @@
     };
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
+    fonts.packages = [pkgs.nerd-fonts.jetbrains-mono];
   };
 }

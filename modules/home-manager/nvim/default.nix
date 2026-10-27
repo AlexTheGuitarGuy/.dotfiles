@@ -10,7 +10,7 @@ in {
     enable = lib.mkEnableOption "Neovim";
     configSource = lib.mkOption {
       type = lib.types.path;
-      default = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/.dotfiles/modules/home-manager/nvim/config";
+      default = config.lib.file.mkOutOfStoreSymlink "${config.dotfiles.repo}/modules/home-manager/nvim/config";
       description = "Neovim config directory, linked to ~/.config/nvim. Defaults to the live repo checkout so edits and lazy-lock.json updates land in git.";
     };
   };
