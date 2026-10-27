@@ -5,8 +5,10 @@ In this pnpm / nx / jest / vitest workspace that means: do not run `pnpm test`, 
 `pnpm test:fe`, `pnpm test:libs`, `pnpm build`, a bare `jest`, or a bare `vitest run`. Run the
 narrowest thing that proves the change instead:
 
-- `pnpm exec jest <path/to/file.spec.ts>`, or `--roots <dir>` for one area
-- `pnpm exec jest <path> -t "<test name>"` for a single test
+- `pnpm exec jest --roots <dir> --testPathPatterns <file-name>` for one spec file (Jest 30
+  renamed `--testPathPattern`); a bare path finds nothing when the root config's `roots` does
+  not include it, so check `roots` in `jest.config.*` first if "No tests found"
+- add `-t "<test name>"` for a single test
 - `pnpm exec vitest run <path/to/file.test.tsx>` for the frontend
 - `pnpm exec tsc --noEmit -p <project tsconfig>` when only a typecheck is wanted
 
