@@ -10,6 +10,7 @@ pkgs.testers.runNixOSTest {
   nodes.machine = {
     imports = hostModules;
     users.users.alex.initialPassword = "test";
+    home-manager.users.alex.dotfiles.nvim.configSource = ../modules/home-manager/nvim/config;
     virtualisation = {
       memorySize = 2048;
       qemu.options = ["-vga none" "-device virtio-vga"];
@@ -47,5 +48,12 @@ pkgs.testers.runNixOSTest {
     assert nu("which zvim | get type.0") == "custom"
     assert nu("which cd | get definition.0") == "__zoxide_z"
     assert nu("$env.STARSHIP_SHELL") == "nu"
+
+    assert nu("$env.EDITOR") == "nvim"
+    machine.succeed("test -f /home/alex/.config/nvim/lua/plugins/lspconfig.lua")
+    machine.fail("test -e /home/alex/.config/nvim/lua/plugins/mason.lua")
+    for tool in ["lua-language-server", "typescript-language-server", "vscode-eslint-language-server", "sqls", "ngserver", "prettierd", "stylua", "js-debug", "rg", "fd", "tree-sitter", "cc", "gio"]:
+        path = nu(f"^nvim --headless --clean -c 'lua io.write(vim.fn.exepath(\"{tool}\"))' -c q")
+        assert path.startswith("/nix/store/"), f"{tool} not on nvim PATH: {path!r}"
   '';
 }

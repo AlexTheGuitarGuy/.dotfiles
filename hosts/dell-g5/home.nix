@@ -6,6 +6,7 @@
   dotfiles = {
     git.enable = true;
     nushell.enable = true;
+    nvim.enable = true;
     starship.enable = true;
   };
 }
