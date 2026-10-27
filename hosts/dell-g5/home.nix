@@ -16,6 +16,7 @@
     lazygit.enable = true;
     nushell.enable = true;
     nvim.enable = true;
+    opencode.enable = true;
     posting.enable = true;
     secrets.enable = true;
     shots.enable = true;

@@ -17,6 +17,7 @@
     ./lazygit
     ./nushell
     ./nvim
+    ./opencode
     ./posting
     ./secrets
     ./shots

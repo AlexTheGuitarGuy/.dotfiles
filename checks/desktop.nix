@@ -105,6 +105,13 @@ pkgs.testers.runNixOSTest {
     assert nu("open ~/.claude/settings.json | get model") == "sonnet"
     assert nu("open ~/.claude.json | get mcpServers | columns | sort | str join ,") == "context7,gitnexus,mine,playwright"
 
+    assert nu("^opencode --version").startswith("opencode v2.")
+    machine.succeed("test -d /home/alex/.config/opencode && test ! -L /home/alex/.config/opencode")
+    assert nu("^readlink -m ~/.config/opencode/opencode.json") == "/home/alex/.dotfiles/modules/home-manager/opencode/config/opencode.json"
+    assert nu("^readlink -m ~/.config/opencode/agents/executor.md") == "/home/alex/.dotfiles/modules/home-manager/opencode/config/agents/executor.md"
+    assert nu("^readlink -m ~/.config/opencode/plugins/herdr-agent-state.js") == "/home/alex/.dotfiles/modules/home-manager/opencode/config/plugins/herdr-agent-state.js"
+    assert nu("which npx | get path.0").startswith("/etc/profiles/per-user/alex/bin")
+
     machine.wait_for_unit("herdr.service", "alex")
     plugins = nu("^herdr plugin list --json | from json | get result.plugins | each {|p| $\"($p.plugin_id) ($p.plugin_root)\" } | str join (char nl)")
     assert "sessionizer /nix/store/" in plugins and "synchronize-panes /nix/store/" in plugins, plugins

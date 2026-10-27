@@ -1,0 +1,55 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "caveman-opencode-plugin",
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "@dietrichgebert/ponytail"
+  ],
+  "mcp": {
+    "context7": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "enabled": true
+    },
+    "atlassian": {
+      "type": "remote",
+      "url": "https://mcp.atlassian.com/v1/mcp/authv2",
+      "enabled": false
+    },
+    "gitnexus": {
+      "type": "local",
+      "command": [
+        "gitnexus",
+        "mcp"
+      ],
+      "enabled": true
+    },
+    "playwright": {
+      "type": "local",
+      "command": [
+        "npx",
+        "@playwright/mcp@latest",
+        "--browser",
+        "chrome",
+        "--user-data-dir",
+        "/home/alex/.cache/playwright-mcp",
+        "--output-dir",
+        "/home/alex/.cache/playwright-mcp-out",
+        "--save-session",
+        "--caps",
+        "devtools",
+        "--init-script",
+        "/home/alex/.config/playwright/url-bar.js"
+      ],
+      "enabled": true
+    }
+  },
+  "lsp": true,
+  "instructions": [
+    "/home/alex/.claude/rules/*.md"
+  ]
+}
