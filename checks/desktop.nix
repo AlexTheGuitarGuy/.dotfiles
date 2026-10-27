@@ -88,6 +88,16 @@ pkgs.testers.runNixOSTest {
     assert "identitiesonly yes" in nu("^ssh -G gitlab.com")
     machine.succeed("test -f /home/alex/.ssh/pubkeys/github-personal.pub")
 
+    machine.wait_for_unit("herdr.service", "alex")
+    plugins = nu("^herdr plugin list --json | from json | get result.plugins | each {|p| $\"($p.plugin_id) ($p.plugin_root)\" } | str join (char nl)")
+    assert "sessionizer /nix/store/" in plugins and "synchronize-panes /nix/store/" in plugins, plugins
+    assert nu("^readlink -m ((^herdr plugin config-dir sessionizer) + /config.json)") == "/home/alex/.dotfiles/modules/home-manager/herdr/sessionizer.config.json"
+    machine.succeed("su -s /bin/sh alex -c 'mkdir -p ~/.dotfiles/modules/home-manager/herdr ~/proj && cp ${../modules/home-manager/herdr/sessionizer.config.json} ~/.dotfiles/modules/home-manager/herdr/sessionizer.config.json'")
+    nu("cd ~/proj; with-env {HERDR_ENV: 1} { ^tzt /home/alex/proj }")
+    tabs = nu("^herdr pane list | from json | get result.panes | where cwd == /home/alex/proj | length")
+    assert int(tabs) == 4, tabs
+    nu("run-external (open ~/.config/herdr/config.toml | get ui.tab_bar_right.0.command)")
+
     def wl(cmd):
         env = "export XDG_RUNTIME_DIR=/run/user/1000 WAYLAND_DISPLAY=wayland-1 HYPRLAND_INSTANCE_SIGNATURE=$(ls /run/user/1000/hypr); "
         return machine.succeed("su -s /bin/sh alex -c " + shlex.quote(env + "cd /tmp && timeout 120 " + cmd)).strip()

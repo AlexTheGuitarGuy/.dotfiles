@@ -8,6 +8,7 @@
     ./fastfetch
     ./gh
     ./gh-dash
+    ./herdr
     ./ghostty
     ./git
     ./hyprland

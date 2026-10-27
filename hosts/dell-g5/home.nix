@@ -8,6 +8,7 @@
     fastfetch.enable = true;
     gh.enable = true;
     gh-dash.enable = true;
+    herdr.enable = true;
     ghostty.enable = true;
     git.enable = true;
     k9s.enable = true;
