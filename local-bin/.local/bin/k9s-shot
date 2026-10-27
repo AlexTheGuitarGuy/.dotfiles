@@ -11,6 +11,7 @@ trap 'tmux -L "$sock" kill-server 2>/dev/null; rm -rf "$cfg"; for _ in $(seq 1 2
 cp -rL "${K9S_CONFIG_DIR:-$HOME/.config/k9s}/." "$cfg/"
 sed -i -E 's/^(\s*tail:\s*)[0-9]+/\150000/; s/^(\s*buffer:\s*)[0-9]+/\150000/; s/^(\s*skipLatestRevCheck:\s*).*/\1true/' "$cfg/config.yaml"
 cat > "$cfg/tmux.conf" <<'EOF'
+set -g default-shell /bin/bash
 set -g status off
 set -g escape-time 0
 set -g default-terminal "tmux-256color"
