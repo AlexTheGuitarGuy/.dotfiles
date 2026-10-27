@@ -62,5 +62,10 @@ pkgs.testers.runNixOSTest {
     assert "JetBrainsMonoNerdFont" in font, font
     assert nu("^readlink -m ~/.config/btop") == "/home/alex/.dotfiles/modules/home-manager/btop/config"
     assert nu("^readlink -m ~/.config/gh/config.yml") == "/home/alex/.dotfiles/modules/home-manager/gh/config.yml"
+
+    nu("mkdir ~/.config/sops/age ~/.config/secrets.d; ^age-keygen -o ~/.config/sops/age/keys.txt")
+    nu("{TEST_KEY: hello, OTHER: x} | to yaml | ^sops -e --age (^age-keygen -y ~/.config/sops/age/keys.txt) --input-type yaml --output-type yaml /dev/stdin | save ~/.config/secrets.d/test.yaml")
+    machine.fail("grep -q hello /home/alex/.config/secrets.d/test.yaml")
+    assert nu("secrets TEST_KEY | to nuon") == "{TEST_KEY: hello}"
   '';
 }

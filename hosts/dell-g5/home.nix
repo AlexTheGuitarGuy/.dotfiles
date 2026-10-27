@@ -15,6 +15,7 @@
     nushell.enable = true;
     nvim.enable = true;
     posting.enable = true;
+    secrets.enable = true;
     starship.enable = true;
   };
 }

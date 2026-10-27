@@ -16,6 +16,7 @@
     ./nushell
     ./nvim
     ./posting
+    ./secrets
     ./starship
   ];
 
