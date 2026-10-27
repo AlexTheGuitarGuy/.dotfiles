@@ -31,6 +31,8 @@
 
     nixosConfigurations.dell-g5 = inputs.self.lib.mkHost {hostName = "dell-g5";};
 
+    packages.x86_64-linux.gitnexus = pkgs.callPackage ./packages/gitnexus {};
+
     checks.x86_64-linux.desktop = import ./checks/desktop.nix {
       inherit pkgs;
       hostModules = inputs.self.lib.hostModules {hostName = "dell-g5";};

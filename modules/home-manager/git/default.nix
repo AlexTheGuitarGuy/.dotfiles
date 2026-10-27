@@ -53,7 +53,7 @@ in {
       };
     };
 
-    home.packages = [git-wt-clean];
+    home.packages = [git-wt-clean pkgs.gitnexus];
 
     programs.delta = {
       enable = true;

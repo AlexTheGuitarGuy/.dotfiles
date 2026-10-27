@@ -10,6 +10,7 @@ in
     {
       nixpkgs.overlays = [
         (final: prev: {
+          gitnexus = final.callPackage ../packages/gitnexus {};
           unstable = import inputs.nixpkgs-unstable {
             inherit (prev.stdenv.hostPlatform) system;
             inherit (prev) config;

@@ -96,9 +96,14 @@ pkgs.testers.runNixOSTest {
     assert nu("^readlink -m ~/.claude/skills/verify-claims") == "/home/alex/.dotfiles/modules/home-manager/claude/skills/verify-claims"
     assert nu("^readlink -m ~/.claude/hooks") == "/home/alex/.dotfiles/modules/home-manager/claude/hooks"
     nu("which ai-commit-msgs claude-settings-build | length")
+    assert nu("open ~/.claude.json | get mcpServers | columns | sort | str join ,") == "context7,gitnexus,playwright"
+    assert nu("open ~/.claude/settings.json | get env.GITNEXUS_HOOK_CLI_PATH | path exists") == "true"
+    assert nu("^gitnexus --version") == "1.6.12"
+    nu("open ~/.claude.json | upsert mcpServers.mine {type: stdio, command: mine} | to json | save -f ~/.claude.json")
     nu("open ~/.claude/settings.json | upsert model sonnet | to json | save -f ~/.claude/settings.json")
     machine.succeed("systemctl restart home-manager-alex.service")
     assert nu("open ~/.claude/settings.json | get model") == "sonnet"
+    assert nu("open ~/.claude.json | get mcpServers | columns | sort | str join ,") == "context7,gitnexus,mine,playwright"
 
     machine.wait_for_unit("herdr.service", "alex")
     plugins = nu("^herdr plugin list --json | from json | get result.plugins | each {|p| $\"($p.plugin_id) ($p.plugin_root)\" } | str join (char nl)")

@@ -68,24 +68,17 @@ automatically. Give it to the command that needs it, one of:
   (`NAME=$(_sec NAME) command tool "$@"`)
 - an MCP server: a `headersHelper` like context7's below
 
-## Claude Code MCP servers (bootstrap on a new machine)
+## Claude Code MCP servers
 
-Claude Code's user-scoped MCP server config lives in `~/.claude.json`, which is
-machine-local state and not tracked in this repo. There's no settings.json key
-for it (`mcpServers` is not part of the settings schema, confirmed by testing).
-On a new machine, run these once (the sops age key must be in place first):
+The user-scope MCP servers are declared in `dotfiles.claude.mcpServers`
+(`modules/home-manager/claude/default.nix`, work servers in the dvag repo) and merged
+into `~/.claude.json` on every switch. Verify with `claude mcp list`.
 
-```bash
-claude mcp add-json --scope user context7 '{"type":"http","url":"https://mcp.context7.com/mcp","headersHelper":"sops -d --extract '\''[\"CONTEXT7_API_KEY\"]'\'' /home/alex/.dotfiles/secrets/secrets.yaml | jq -Rc '\''{CONTEXT7_API_KEY: .}'\''"}'
-
-claude mcp add --transport http --scope user atlassian https://mcp.atlassian.com/v1/mcp/authv2
-```
-
-Verify with `claude mcp list`. context7 uses a `headersHelper` that decrypts
-`CONTEXT7_API_KEY` from sops at connect time, so no key is stored in
-`~/.claude.json` and rotating it in sops needs no re-registration. A static
-`--header "...: ${CONTEXT7_API_KEY}"` does not work at user scope: Claude Code
-only expands `${VAR}` in project `.mcp.json`, so the literal string is sent.
+context7 uses a `headersHelper` that decrypts `CONTEXT7_API_KEY` from sops at
+connect time, so no key is stored in `~/.claude.json` and rotating it in sops needs
+no re-registration. A static `--header "...: ${CONTEXT7_API_KEY}"` does not work at
+user scope: Claude Code only expands `${VAR}` in project `.mcp.json`, so the literal
+string is sent.
 
 ## Tools reference
 
