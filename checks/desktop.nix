@@ -10,7 +10,16 @@ pkgs.testers.runNixOSTest {
   nodes.machine = {
     imports = hostModules;
     users.users.alex.initialPassword = "test";
-    home-manager.users.alex.dotfiles.nvim.configSource = ../modules/home-manager/nvim/config;
+    home-manager.users.alex = {
+      dotfiles.nvim.configSource = ../modules/home-manager/nvim/config;
+      sops.defaultSopsFile = pkgs.lib.mkForce ./test-secrets.yaml;
+    };
+    systemd.tmpfiles.rules = [
+      "d /home/alex/.config 0755 alex users"
+      "d /home/alex/.config/sops 0700 alex users"
+      "d /home/alex/.config/sops/age 0700 alex users"
+      "C /home/alex/.config/sops/age/keys.txt 0600 alex users - ${./test-age-key.txt}"
+    ];
     virtualisation = {
       memorySize = 2048;
       qemu.options = ["-vga none" "-device virtio-vga"];
@@ -63,9 +72,16 @@ pkgs.testers.runNixOSTest {
     assert nu("^readlink -m ~/.config/btop") == "/home/alex/.dotfiles/modules/home-manager/btop/config"
     assert nu("^readlink -m ~/.config/gh/config.yml") == "/home/alex/.dotfiles/modules/home-manager/gh/config.yml"
 
-    nu("mkdir ~/.config/sops/age ~/.config/secrets.d; ^age-keygen -o ~/.config/sops/age/keys.txt")
+    nu("mkdir ~/.config/secrets.d")
     nu("{TEST_KEY: hello, OTHER: x} | to yaml | ^sops -e --age (^age-keygen -y ~/.config/sops/age/keys.txt) --input-type yaml --output-type yaml /dev/stdin | save ~/.config/secrets.d/test.yaml")
     machine.fail("grep -q hello /home/alex/.config/secrets.d/test.yaml")
     assert nu("secrets TEST_KEY | to nuon") == "{TEST_KEY: hello}"
+
+    assert nu("open ~/.ssh/keys/github-personal") == "test-github-personal"
+    assert nu("open ~/.ssh/keys/gitlab-professional") == "test-gitlab-professional"
+    assert nu("^stat -L -c %a ~/.ssh/keys/github-personal") == "400"
+    assert "identityfile /home/alex/.ssh/keys/github-personal" in nu("^ssh -G github.com")
+    assert "identitiesonly yes" in nu("^ssh -G gitlab.com")
+    machine.succeed("test -f /home/alex/.ssh/pubkeys/github-personal.pub")
   '';
 }

@@ -16,6 +16,7 @@
     nvim.enable = true;
     posting.enable = true;
     secrets.enable = true;
+    ssh.enable = true;
     starship.enable = true;
   };
 }
