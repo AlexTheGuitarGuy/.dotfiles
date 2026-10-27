@@ -7,6 +7,16 @@ inputs: {
 in
   [
     {_module.args = {inherit inputs user;};}
+    {
+      nixpkgs.overlays = [
+        (final: prev: {
+          unstable = import inputs.nixpkgs-unstable {
+            inherit (prev.stdenv.hostPlatform) system;
+            inherit (prev) config;
+          };
+        })
+      ];
+    }
     inputs.home-manager.nixosModules.home-manager
     {
       home-manager = {

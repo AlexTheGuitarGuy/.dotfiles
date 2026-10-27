@@ -88,6 +88,18 @@ pkgs.testers.runNixOSTest {
     assert "identitiesonly yes" in nu("^ssh -G gitlab.com")
     machine.succeed("test -f /home/alex/.ssh/pubkeys/github-personal.pub")
 
+    assert "Claude Code" in nu("^claude --version")
+    machine.succeed("test -f /home/alex/.claude/settings.json && test ! -L /home/alex/.claude/settings.json && test ! -L /home/alex/.claude/skills")
+    assert nu("open ~/.claude/settings.json | get model") == "opus"
+    assert "claude-worktree" in nu("open ~/.claude/settings.json | get hooks.WorktreeCreate.0.hooks.0.command")
+    assert nu("^readlink -m ~/.claude/rules/tdd.md") == "/home/alex/.dotfiles/modules/home-manager/claude/rules/tdd.md"
+    assert nu("^readlink -m ~/.claude/skills/verify-claims") == "/home/alex/.dotfiles/modules/home-manager/claude/skills/verify-claims"
+    assert nu("^readlink -m ~/.claude/hooks") == "/home/alex/.dotfiles/modules/home-manager/claude/hooks"
+    nu("which ai-commit-msgs claude-settings-build | length")
+    nu("open ~/.claude/settings.json | upsert model sonnet | to json | save -f ~/.claude/settings.json")
+    machine.succeed("systemctl restart home-manager-alex.service")
+    assert nu("open ~/.claude/settings.json | get model") == "sonnet"
+
     machine.wait_for_unit("herdr.service", "alex")
     plugins = nu("^herdr plugin list --json | from json | get result.plugins | each {|p| $\"($p.plugin_id) ($p.plugin_root)\" } | str join (char nl)")
     assert "sessionizer /nix/store/" in plugins and "synchronize-panes /nix/store/" in plugins, plugins

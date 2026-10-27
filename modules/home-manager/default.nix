@@ -5,6 +5,7 @@
 }: {
   imports = [
     ./btop
+    ./claude
     ./fastfetch
     ./gh
     ./gh-dash
