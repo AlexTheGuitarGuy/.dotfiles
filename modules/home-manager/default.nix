@@ -18,6 +18,7 @@
     ./nushell
     ./nvim
     ./opencode
+    ./playwright
     ./posting
     ./secrets
     ./shots

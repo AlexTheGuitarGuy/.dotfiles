@@ -112,6 +112,11 @@ pkgs.testers.runNixOSTest {
     assert nu("^readlink -m ~/.config/opencode/plugins/herdr-agent-state.js") == "/home/alex/.dotfiles/modules/home-manager/opencode/config/plugins/herdr-agent-state.js"
     assert nu("which npx | get path.0").startswith("/etc/profiles/per-user/alex/bin")
 
+    assert nu("^readlink -m ~/.config/playwright/url-bar.js") == "/home/alex/.dotfiles/modules/home-manager/playwright/config/url-bar.js"
+    assert nu("open ~/.claude.json | get mcpServers.playwright.command") == "playwright-mcp"
+    assert "google-chrome" in nu("open (which playwright-mcp | get path.0) --raw")
+    nu("^(open (which playwright-mcp | get path.0) --raw | parse -r '--executable-path (?<p>\\S+)' | get p.0) --version")
+
     machine.wait_for_unit("herdr.service", "alex")
     plugins = nu("^herdr plugin list --json | from json | get result.plugins | each {|p| $\"($p.plugin_id) ($p.plugin_root)\" } | str join (char nl)")
     assert "sessionizer /nix/store/" in plugins and "synchronize-panes /nix/store/" in plugins, plugins

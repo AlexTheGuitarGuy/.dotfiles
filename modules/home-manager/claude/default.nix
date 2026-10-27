@@ -163,15 +163,12 @@ in {
       };
       playwright = {
         type = "stdio";
-        command = "${pkgs.nodejs}/bin/npx";
+        command = "playwright-mcp";
         args = [
-          "@playwright/mcp@latest"
-          "--browser"
-          "chrome"
           "--user-data-dir"
-          "${config.home.homeDirectory}/.cache/pw-dfs"
+          "${config.home.homeDirectory}/.cache/playwright-mcp"
           "--output-dir"
-          "${config.home.homeDirectory}/.cache/pw-dfs-out"
+          "${config.home.homeDirectory}/.cache/playwright-mcp-out"
           "--save-session"
           "--caps"
           "devtools"

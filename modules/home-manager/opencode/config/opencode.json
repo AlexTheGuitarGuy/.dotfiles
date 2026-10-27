@@ -31,10 +31,7 @@
     "playwright": {
       "type": "local",
       "command": [
-        "npx",
-        "@playwright/mcp@latest",
-        "--browser",
-        "chrome",
+        "playwright-mcp",
         "--user-data-dir",
         "/home/alex/.cache/playwright-mcp",
         "--output-dir",

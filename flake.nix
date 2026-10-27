@@ -33,6 +33,11 @@
 
     packages.x86_64-linux.gitnexus = pkgs.callPackage ./packages/gitnexus {};
 
+    checks.x86_64-linux.url-bar = pkgs.runCommand "url-bar-test" {nativeBuildInputs = [pkgs.nodejs];} ''
+      node --test ${./modules/home-manager/playwright/config}/url-bar.test.mjs
+      touch $out
+    '';
+
     checks.x86_64-linux.desktop = import ./checks/desktop.nix {
       inherit pkgs;
       hostModules = inputs.self.lib.hostModules {hostName = "dell-g5";};

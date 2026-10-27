@@ -17,6 +17,7 @@
     nushell.enable = true;
     nvim.enable = true;
     opencode.enable = true;
+    playwright.enable = true;
     posting.enable = true;
     secrets.enable = true;
     shots.enable = true;
