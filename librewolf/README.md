@@ -48,7 +48,7 @@ Start LibreWolf, open the menu, choose Sign in and use the Mozilla account (pass
 
 ### 5. Install what sync can't
 
-1. No new tab Tridactyl: open https://tridactyl.cmcaine.co.uk/betas/nonewtab/tridactyl_no_new_tab_beta-latest.xpi and click Add. If sync also installed the regular Tridactyl, remove that one in `about:addons`.
+1. No new tab Tridactyl: open https://tridactyl.cmcaine.co.uk/betas/nonewtab/tridactyl_no_new_tab_beta-latest.xpi and click Add. If sync also installed the regular Tridactyl, remove that one in `about:addons`. Then open Tridactyl in `about:addons` and set Allow automatic updates to Off: the beta updates from the author's server instead of addons.mozilla.org, and with the helper below it can run commands on the machine. To update, read the changes on the Tridactyl GitHub first, then install the new `.xpi` from the link above.
 2. Tridactyl helper: type `:nativeinstall`, run the PowerShell command it shows, then check with `:native` and load the config with `:source`. If `:native` reports it missing, LibreWolf on Windows may look in its own registry location instead of Firefox's.
 
 ### 6. Per-extension settings
