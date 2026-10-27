@@ -2,7 +2,7 @@
   "template": [
     { "tab": "nvim", "command": "nvim ." },
     { "tab": "lazygit", "command": "lazygit" },
-    { "tab": "agent", "command": "claude" },
+    { "tab": "agent", "command": "opencode" },
     { "tab": "shell" }
   ],
   "git_roots_only": false,
