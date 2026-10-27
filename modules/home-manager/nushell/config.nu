@@ -37,6 +37,7 @@ def zvim [pattern?: string] {
     nvim $dir
 }
 
+# Disable XON/XOFF flow control so ctrl+s / ctrl+q are usable keys instead of freezing output
 if (^tty | complete | get exit_code) == 0 {
     ^stty -ixon
 }
