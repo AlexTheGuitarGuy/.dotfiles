@@ -52,6 +52,10 @@ pkgs.testers.runNixOSTest {
     assert nu("git config user.name") == "AlexSeremet"
     assert "delta" in nu("git config pager.diff")
     assert ".excluded/" in nu("open ~/.config/git/ignore")
+    machine.succeed("su -s /bin/sh alex -c 'mkdir -p ~/hooktest && cd ~/hooktest && git init -q && git commit -q --allow-empty -m init && git worktree add -q ../hooktest-wt'")
+    todos = machine.succeed("cat /home/alex/hooktest-wt/.excluded/todos.md")
+    assert todos == "# TODOs\n", repr(todos)
+    assert "dry run" in nu("cd ~/hooktest; ^git wt-clean")
     assert nu("$env.config.edit_mode") == "vi"
     assert nu("which gst | get type.0") == "alias"
     assert nu("which zvim | get type.0") == "custom"
