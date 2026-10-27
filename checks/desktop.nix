@@ -34,5 +34,18 @@ pkgs.testers.runNixOSTest {
     machine.wait_until_succeeds(hyprctl % "clients | grep -iq class:.*ghostty", timeout=60)
     machine.sleep(3)
     machine.screenshot("ghostty")
+
+    import shlex
+    def nu(code):
+        return machine.succeed("su -s /bin/sh alex -c " + shlex.quote("nu -l -c " + shlex.quote(code))).strip()
+
+    assert nu("git config user.name") == "AlexSeremet"
+    assert "delta" in nu("git config pager.diff")
+    assert ".excluded/" in nu("open ~/.config/git/ignore")
+    assert nu("$env.config.edit_mode") == "vi"
+    assert nu("which gst | get type.0") == "alias"
+    assert nu("which zvim | get type.0") == "custom"
+    assert nu("which cd | get definition.0") == "__zoxide_z"
+    assert nu("$env.STARSHIP_SHELL") == "nu"
   '';
 }
