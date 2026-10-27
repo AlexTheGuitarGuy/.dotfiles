@@ -17,6 +17,7 @@
     ./nvim
     ./posting
     ./secrets
+    ./shots
     ./ssh
     ./starship
   ];

@@ -87,5 +87,18 @@ pkgs.testers.runNixOSTest {
     assert "identityfile /home/alex/.ssh/keys/github-personal" in nu("^ssh -G github.com")
     assert "identitiesonly yes" in nu("^ssh -G gitlab.com")
     machine.succeed("test -f /home/alex/.ssh/pubkeys/github-personal.pub")
+
+    def wl(cmd):
+        env = "export XDG_RUNTIME_DIR=/run/user/1000 WAYLAND_DISPLAY=wayland-1 HYPRLAND_INSTANCE_SIGNATURE=$(ls /run/user/1000/hypr); "
+        return machine.succeed("su -s /bin/sh alex -c " + shlex.quote(env + "cd /tmp && timeout 120 " + cmd)).strip()
+
+    assert wl("term-shot term.png 2 'echo hello-shot'") == "/tmp/term.png"
+    assert nu("open --raw /tmp/term.png | bytes at 16..23 | encode hex") == "0000050000000320"
+    machine.copy_from_vm("/tmp/term.png")
+
+    machine.succeed("su -s /bin/sh alex -c 'printf \"apiVersion: v1\\nkind: Config\\nclusters: [{name: c, cluster: {server: \\\"https://127.0.0.1:1\\\"}}]\\nusers: [{name: u, user: {}}]\\ncontexts: [{name: fake, context: {cluster: c, user: u}}]\\ncurrent-context: fake\\n\" > /tmp/kubeconfig'")
+    assert wl("env KUBECONFIG=/tmp/kubeconfig k9s-shot --context fake -- sleep:2 shot:k9s.png") == "k9s.png"
+    assert nu("open --raw /tmp/k9s.png | bytes at 16..23 | encode hex") == "0000050000000320"
+    machine.copy_from_vm("/tmp/k9s.png")
   '';
 }
