@@ -152,7 +152,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [pkgs.unstable.claude-code ai-commit-msgs claude-settings-build];
+    home.packages = [pkgs.unstable.claude-code ai-commit-msgs claude-settings-build pkgs.evidence];
 
     dotfiles.claude.mcpServers = {
       gitnexus = {

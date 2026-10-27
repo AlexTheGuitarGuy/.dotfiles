@@ -99,6 +99,7 @@ pkgs.testers.runNixOSTest {
     assert nu("open ~/.claude.json | get mcpServers | columns | sort | str join ,") == "context7,gitnexus,playwright"
     assert nu("open ~/.claude/settings.json | get env.GITNEXUS_HOOK_CLI_PATH | path exists") == "true"
     assert nu("^gitnexus --version") == "1.6.12"
+    assert "usage:" in nu("^evidence | complete | get stderr")
     nu("open ~/.claude.json | upsert mcpServers.mine {type: stdio, command: mine} | to json | save -f ~/.claude.json")
     nu("open ~/.claude/settings.json | upsert model sonnet | to json | save -f ~/.claude/settings.json")
     machine.succeed("systemctl restart home-manager-alex.service")
