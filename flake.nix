@@ -13,6 +13,6 @@
   outputs = inputs: {
     lib.mkHost = import ./hosts/mk-host.nix inputs;
 
-    nixosConfigurations.laptop = inputs.self.lib.mkHost {hostName = "laptop";};
+    nixosConfigurations.dell-g5 = inputs.self.lib.mkHost {hostName = "dell-g5";};
   };
 }

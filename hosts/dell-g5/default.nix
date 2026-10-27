@@ -7,7 +7,7 @@
 
   dotfiles.hyprland.enable = true;
 
-  networking.hostName = "laptop";
+  networking.hostName = "dell-g5";
   networking.networkmanager.enable = true;
 
   boot.loader.systemd-boot.enable = true;
