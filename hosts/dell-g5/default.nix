@@ -7,6 +7,7 @@
 
   dotfiles.hyprland.enable = true;
   dotfiles.apps.enable = true;
+  dotfiles.docker.enable = true;
 
   networking.hostName = "dell-g5";
   networking.networkmanager.enable = true;
