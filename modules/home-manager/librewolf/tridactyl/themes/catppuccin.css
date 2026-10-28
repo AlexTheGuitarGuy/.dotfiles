@@ -1,0 +1,44 @@
+:root {
+    --tridactyl-font-family: "JetBrainsMono Nerd Font", monospace;
+    --tridactyl-font-family-sans: "JetBrainsMono Nerd Font", sans-serif;
+    --tridactyl-cmdl-font-family: "JetBrainsMono Nerd Font", monospace;
+    --tridactyl-cmplt-font-family: "JetBrainsMono Nerd Font", monospace;
+    --tridactyl-status-font-family: "JetBrainsMono Nerd Font", monospace;
+    --tridactyl-hintspan-font-family: "JetBrainsMono Nerd Font", monospace;
+    --tridactyl-vs-font-family: "JetBrainsMono Nerd Font", monospace;
+
+    --tridactyl-bg: #1e1e2e;
+    --tridactyl-fg: #cdd6f4;
+    --tridactyl-cmdl-bg: #181825;
+    --tridactyl-cmdl-fg: #cdd6f4;
+    --tridactyl-cmplt-bg: #1e1e2e;
+    --tridactyl-cmplt-fg: #cdd6f4;
+    --tridactyl-status-bg: #181825;
+    --tridactyl-status-fg: #cdd6f4;
+    --tridactyl-status-border: 1px solid #45475a;
+    --tridactyl-status-border-radius: 0px;
+    --tridactyl-header-first-bg: #313244;
+    --tridactyl-header-second-bg: #313244;
+    --tridactyl-header-third-bg: #313244;
+    --tridactyl-url-fg: #89b4fa;
+    --tridactyl-url-bg: #1e1e2e;
+    --tridactyl-of-fg: #1e1e2e;
+    --tridactyl-of-bg: #cba6f7;
+    --tridactyl-highlight-box-bg: #45475a;
+    --tridactyl-highlight-box-fg: #cdd6f4;
+    --tridactyl-scrollbar-color: #45475a #181825;
+
+    --tridactyl-hintspan-fg: #1e1e2e;
+    --tridactyl-hintspan-bg: #cba6f7;
+    --tridactyl-hintspan-border-color: #11111b;
+    --tridactyl-hintspan-border-width: 1px;
+    --tridactyl-hintspan-active-fg: #1e1e2e;
+    --tridactyl-hintspan-active-bg: #fab387;
+    --tridactyl-hint-bg: rgba(203, 166, 247, 0.2);
+    --tridactyl-hint-outline: 1px solid #cba6f7;
+    --tridactyl-hint-active-bg: rgba(250, 179, 135, 0.3);
+    --tridactyl-hint-active-outline: 1px solid #fab387;
+
+    --tridactyl-search-highlight-color: #f9e2af;
+    --tridactyl-search-highlight-active-color: #fab387;
+}

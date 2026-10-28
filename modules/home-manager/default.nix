@@ -11,11 +11,13 @@
     ./gh
     ./gh-dash
     ./herdr
+    ./journal
     ./ghostty
     ./git
     ./hyprland
     ./k9s
     ./lazygit
+    ./librewolf
     ./nushell
     ./nvim
     ./opencode

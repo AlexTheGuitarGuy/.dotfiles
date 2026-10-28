@@ -28,6 +28,11 @@
       enable = true;
       polkitPolicyOwners = [user];
     };
+    # 1Password only talks to browsers it knows; LibreWolf is not on its built-in list.
+    environment.etc."1password/custom_allowed_browsers" = {
+      text = "librewolf\n";
+      mode = "0755";
+    };
 
     # Smart card daemon for MoldSign's eToken.
     services.pcscd.enable = true;

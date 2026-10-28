@@ -57,7 +57,7 @@ in {
         renpy
         anki
         prismlauncher
-        wineWowPackages.stable
+        wineWow64Packages.stable
 
         libreoffice-fresh
         qbittorrent

@@ -1,0 +1,8 @@
+#TabsToolbar { display: none !important; }
+#sidebar-panel-header { display: none !important; }
+#sidebar-box { padding-inline-start: 0px !important; }
+
+* { border-radius: 0px !important; }
+* { font-family: "JetBrainsMono Nerd Font", monospace !important; }
+:root { --chrome-content-separator-color: #181825 !important; }
+:root { --sidebar-border-color: #45475a !important; }

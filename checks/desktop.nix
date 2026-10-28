@@ -119,6 +119,17 @@ pkgs.testers.runNixOSTest {
     assert "google-chrome" in nu("open (which playwright-mcp | get path.0) --raw")
     nu("^(open (which playwright-mcp | get path.0) --raw | parse -r '--executable-path (?<p>\\S+)' | get p.0) --version")
 
+    lw = "/home/alex/.config/librewolf/librewolf"
+    assert nu("^readlink -m ~/.config/librewolf/librewolf/default/chrome") == "/home/alex/.dotfiles/modules/home-manager/librewolf/config/chrome"
+    assert nu("^readlink -m ~/.config/librewolf/librewolf/librewolf.overrides.cfg") == "/home/alex/.dotfiles/modules/home-manager/librewolf/config/librewolf.overrides.cfg"
+    assert nu("^readlink -m ~/.config/tridactyl") == "/home/alex/.dotfiles/modules/home-manager/librewolf/tridactyl"
+    hosts = nu("ls ~/.config/librewolf/native-messaging-hosts/ | get name | path basename | sort | str join ,")
+    assert hosts == "com.1password.1password.json,tridactyl.json", hosts
+    machine.succeed(f"grep -q 'Path=default' {lw}/profiles.ini")
+    machine.execute("su -s /bin/sh alex -c 'timeout 40 librewolf --headless about:blank' >/dev/null 2>&1")
+    machine.succeed(f"test -f {lw}/default/prefs.js")
+    assert "Started session" in nu("^journal start demo")
+
     machine.wait_for_unit("herdr.service", "alex")
     plugins = nu("^herdr plugin list --json | from json | get result.plugins | each {|p| $\"($p.plugin_id) ($p.plugin_root)\" } | str join (char nl)")
     assert "sessionizer /nix/store/" in plugins and "synchronize-panes /nix/store/" in plugins, plugins

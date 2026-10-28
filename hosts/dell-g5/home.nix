@@ -10,10 +10,12 @@
     gh.enable = true;
     gh-dash.enable = true;
     herdr.enable = true;
+    journal.enable = true;
     ghostty.enable = true;
     git.enable = true;
     k9s.enable = true;
     lazygit.enable = true;
+    librewolf.enable = true;
     nushell.enable = true;
     nvim.enable = true;
     opencode.enable = true;
