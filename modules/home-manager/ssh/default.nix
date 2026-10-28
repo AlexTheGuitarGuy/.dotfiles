@@ -11,16 +11,16 @@ in {
     programs.ssh = {
       enable = true;
       enableDefaultConfig = false;
-      matchBlocks = {
+      settings = {
         "github.com" = {
-          hostname = "github.com";
-          identityFile = "${keys}/github-personal";
-          identitiesOnly = true;
+          HostName = "github.com";
+          IdentityFile = "${keys}/github-personal";
+          IdentitiesOnly = true;
         };
         "gitlab.com" = {
-          hostname = "gitlab.com";
-          identityFile = "${keys}/gitlab-professional";
-          identitiesOnly = true;
+          HostName = "gitlab.com";
+          IdentityFile = "${keys}/gitlab-professional";
+          IdentitiesOnly = true;
         };
       };
     };
