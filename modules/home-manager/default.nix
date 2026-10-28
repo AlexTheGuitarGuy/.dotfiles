@@ -6,6 +6,7 @@
   imports = [
     ./apps
     ./btop
+    ./bruno
     ./claude
     ./fastfetch
     ./gh

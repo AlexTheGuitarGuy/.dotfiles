@@ -152,5 +152,10 @@ pkgs.testers.runNixOSTest {
     assert wl("env KUBECONFIG=/tmp/kubeconfig k9s-shot --context fake -- sleep:2 shot:k9s.png") == "k9s.png"
     assert nu("open --raw /tmp/k9s.png | bytes at 16..23 | encode hex") == "0000050000000320"
     machine.copy_from_vm("/tmp/k9s.png")
+
+    assert "run" in nu("^bru --help")
+    assert "bin/bruno %U" in nu("open /etc/profiles/per-user/alex/share/applications/bruno.desktop")
+    machine.execute("su -s /bin/sh alex -c " + shlex.quote("export XDG_RUNTIME_DIR=/run/user/1000 WAYLAND_DISPLAY=wayland-1 HYPRLAND_INSTANCE_SIGNATURE=$(ls /run/user/1000/hypr); setsid bruno >/dev/null 2>&1 &"))
+    machine.wait_until_succeeds(hyprctl % "clients | grep -iq class:.*bruno", timeout=90)
   '';
 }

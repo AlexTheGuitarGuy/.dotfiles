@@ -5,6 +5,7 @@
 
   dotfiles = {
     btop.enable = true;
+    bruno.enable = true;
     claude.enable = true;
     fastfetch.enable = true;
     gh.enable = true;
