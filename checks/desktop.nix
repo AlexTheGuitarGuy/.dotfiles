@@ -9,6 +9,7 @@ pkgs.testers.runNixOSTest {
 
   nodes.machine = {
     imports = hostModules;
+    dotfiles.apps.enable = pkgs.lib.mkForce false;
     users.users.alex.initialPassword = "test";
     home-manager.users.alex = {
       dotfiles.nvim.configSource = ../modules/home-manager/nvim/config;

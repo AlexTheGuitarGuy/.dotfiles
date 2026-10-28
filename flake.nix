@@ -39,6 +39,12 @@
       touch $out
     '';
 
+    # Every desktop app; heavy (about 20 GB), so run on demand rather than with the desktop check.
+    checks.x86_64-linux.apps = import ./checks/apps.nix {
+      inherit pkgs;
+      hostModules = inputs.self.lib.hostModules {hostName = "dell-g5";};
+    };
+
     checks.x86_64-linux.desktop = import ./checks/desktop.nix {
       inherit pkgs;
       hostModules = inputs.self.lib.hostModules {hostName = "dell-g5";};

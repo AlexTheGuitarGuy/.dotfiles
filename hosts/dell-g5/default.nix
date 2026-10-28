@@ -6,6 +6,7 @@
   imports = [./hardware-configuration.nix];
 
   dotfiles.hyprland.enable = true;
+  dotfiles.apps.enable = true;
 
   networking.hostName = "dell-g5";
   networking.networkmanager.enable = true;
