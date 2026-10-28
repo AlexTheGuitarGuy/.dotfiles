@@ -12,14 +12,12 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 local options = require('core.options')
 local keymaps = require('core.keymaps')
 local lazy = require('core.lazy')
-local neovide = require('core.neovide')
 local godot = require('core.godot')
 
 M.init = function()
   options.init()
   keymaps.init()
   lazy.init()
-  neovide.init()
   godot.init()
 end
 

@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: {
   options.dotfiles.fastfetch.enable = lib.mkEnableOption "fastfetch";
@@ -135,7 +136,7 @@
       "fastfetch/config-compact.jsonc".source = ./config-compact.jsonc;
       "fastfetch/config-pokemon.jsonc".source = ./config-pokemon.jsonc;
       "fastfetch/config-v2.jsonc".source = ./config-v2.jsonc;
-      "fastfetch/ubuntu.png".source = ./ubuntu.png;
+      "fastfetch/nixos.png".source = "${pkgs.nixos-icons}/share/icons/hicolor/256x256/apps/nix-snowflake.png";
     };
   };
 }

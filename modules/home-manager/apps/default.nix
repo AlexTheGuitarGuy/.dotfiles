@@ -29,9 +29,15 @@
   moldsign = pkgs.buildFHSEnv {
     name = "moldsign";
     targetPkgs = p:
-      (with p; [pcsclite zlib freetype fontconfig alsa-lib])
-      ++ (with p.xorg; [libX11 libXext libXrender libXtst libXi]);
+      with p; [pcsclite zlib freetype fontconfig alsa-lib libx11 libxext libxrender libxtst libxi];
     runScript = "sh ${config.home.homeDirectory}/Apps/MoldSign/MoldSign-Desk.sh";
+  };
+
+  godot-nvim = pkgs.writeShellApplication {
+    name = "godot-nvim";
+    runtimeInputs = with pkgs; [jq python3 procps hostname];
+    runtimeEnv.GODOT_NVIM_EXEC = "${config.home.profileDirectory}/bin/godot-nvim";
+    text = builtins.readFile ./godot-nvim.sh;
   };
 in {
   options.dotfiles.apps.enable = lib.mkEnableOption "desktop apps";
@@ -73,7 +79,7 @@ in {
         jetbrains.datagrip
         mongodb-compass
       ])
-      ++ [apps2samsung tizenbrew-device-manager tizenbrew-installer moldsign];
+      ++ [apps2samsung tizenbrew-device-manager tizenbrew-installer moldsign godot-nvim];
 
     programs.yazi.enable = true;
   };

@@ -74,6 +74,10 @@ pkgs.testers.runNixOSTest {
         nu(f"^{cmd} | complete | if $in.exit_code != 0 {{ error make {{msg: $in.stderr}} }}")
     font = machine.succeed("su -s /bin/sh alex -c 'fc-match \"JetBrainsMono Nerd Font\" file'")
     assert "JetBrainsMonoNerdFont" in font, font
+    emoji = machine.succeed("su -s /bin/sh alex -c 'fc-match emoji family'")
+    assert "Noto Color Emoji" in emoji, emoji
+    machine.succeed("head -c 4 /home/alex/.config/fastfetch/nixos.png | grep -q PNG")
+    nu("^fastfetch -c ~/.config/fastfetch/config-compact.jsonc --pipe | complete | if $in.exit_code != 0 { error make {msg: $in.stderr} }")
     assert nu("^readlink -m ~/.config/btop") == "/home/alex/.dotfiles/modules/home-manager/btop/config"
     assert nu("^readlink -m ~/.config/gh/config.yml") == "/home/alex/.dotfiles/modules/home-manager/gh/config.yml"
 
