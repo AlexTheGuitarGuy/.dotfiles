@@ -33,8 +33,12 @@
   networking.hostName = "dell-g5";
   networking.networkmanager.enable = true;
 
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot = {
+    enable = true;
+    configurationLimit = 10;
+  };
   boot.loader.efi.canTouchEfiVariables = true;
+  zramSwap.enable = true;
 
   time.timeZone = "Europe/Chisinau";
   i18n.defaultLocale = "en_US.UTF-8";
