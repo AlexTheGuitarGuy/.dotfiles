@@ -9,6 +9,27 @@
   dotfiles.apps.enable = true;
   dotfiles.docker.enable = true;
 
+  # Intel UHD 630 drives the desktop and the laptop screen; the RTX 2060 (external HDMI/DP ports)
+  # runs apps started with `nvidia-offload`.
+  services.xserver.videoDrivers = ["modesetting" "nvidia"];
+  hardware.graphics.enable = true;
+  hardware.nvidia = {
+    open = true;
+    modesetting.enable = true;
+    powerManagement = {
+      enable = true;
+      finegrained = true;
+    };
+    prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      intelBusId = "PCI:0@0:2:0";
+      nvidiaBusId = "PCI:1@0:0:0";
+    };
+  };
+
   networking.hostName = "dell-g5";
   networking.networkmanager.enable = true;
 
