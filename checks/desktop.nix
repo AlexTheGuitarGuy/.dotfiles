@@ -50,6 +50,30 @@ pkgs.testers.runNixOSTest {
     def nu(code):
         return machine.succeed("su -s /bin/sh alex -c " + shlex.quote("nu -l -c " + shlex.quote(code))).strip()
 
+    def wl(cmd):
+        env = "export XDG_RUNTIME_DIR=/run/user/1000 WAYLAND_DISPLAY=wayland-1 HYPRLAND_INSTANCE_SIGNATURE=$(ls /run/user/1000/hypr); "
+        return machine.succeed("su -s /bin/sh alex -c " + shlex.quote(env + "cd /tmp && timeout 120 " + cmd)).strip()
+
+    for unit in ["caelestia.service", "hyprsunset.service", "cliphist.service"]:
+        machine.wait_for_unit(unit, "alex", timeout=120)
+    machine.sleep(15)
+    assert wl("systemctl --user show -p NRestarts --value caelestia") == "0"
+    machine.screenshot("caelestia")
+    errors = wl("hyprctl configerrors")
+    assert errors == "", errors
+    assert wl("dconf read /org/gnome/desktop/interface/color-scheme") == "'prefer-dark'"
+    assert "us,ru,ro" in wl("hyprctl getoption input:kb_layout")
+    assert "89b4fa" in wl("hyprctl getoption general:col.active_border")
+    machine.send_key("meta_l-semicolon")
+    machine.wait_until_succeeds(hyprctl % "activeworkspace | grep -q 'workspace ID 8 '", timeout=10)
+    machine.send_key("meta_l-a")
+    machine.wait_until_succeeds(hyprctl % "activeworkspace | grep -q 'workspace ID 1 '", timeout=10)
+    for cmd in ["anyrun --help", "hyprshot --help", "cliphist version", "yazi --version"]:
+        nu(f"^{cmd} | complete | if $in.exit_code != 0 {{ error make {{msg: $in.stderr}} }}")
+    assert nu("which pavucontrol | length") == "1"
+    machine.succeed("grep -qi 1e1e2e /home/alex/.config/gtk-3.0/gtk.css")
+    machine.succeed("test -f /home/alex/.config/caelestia/shell.json && test ! -L /home/alex/.config/caelestia/shell.json")
+
     assert nu("git config user.name") == "AlexSeremet"
     assert "delta" in nu("git config pager.diff")
     assert ".excluded/" in nu("open ~/.config/git/ignore")
@@ -146,10 +170,6 @@ pkgs.testers.runNixOSTest {
     tabs = nu("^herdr pane list | from json | get result.panes | where cwd == /home/alex/proj | length")
     assert int(tabs) == 4, tabs
     nu("run-external (open ~/.config/herdr/config.toml | get ui.tab_bar_right.0.command)")
-
-    def wl(cmd):
-        env = "export XDG_RUNTIME_DIR=/run/user/1000 WAYLAND_DISPLAY=wayland-1 HYPRLAND_INSTANCE_SIGNATURE=$(ls /run/user/1000/hypr); "
-        return machine.succeed("su -s /bin/sh alex -c " + shlex.quote(env + "cd /tmp && timeout 120 " + cmd)).strip()
 
     assert wl("term-shot term.png 2 'echo hello-shot'") == "/tmp/term.png"
     assert nu("open --raw /tmp/term.png | bytes at 16..23 | encode hex") == "0000050000000320"

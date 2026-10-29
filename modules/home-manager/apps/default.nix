@@ -80,7 +80,5 @@ in {
         mongodb-compass
       ])
       ++ [apps2samsung tizenbrew-device-manager tizenbrew-installer moldsign godot-nvim];
-
-    programs.yazi.enable = true;
   };
 }
