@@ -164,7 +164,7 @@ in {
         Type = "simple";
         Environment = [
           "HERDR_LOG=herdr=warn"
-          "PATH=${lib.makeBinPath pluginDeps}:${config.home.profileDirectory}/bin:/run/current-system/sw/bin"
+          "PATH=/run/wrappers/bin:${lib.makeBinPath pluginDeps}:${config.home.profileDirectory}/bin:/run/current-system/sw/bin"
         ];
         IOSchedulingClass = "best-effort";
         IOSchedulingPriority = 0;
