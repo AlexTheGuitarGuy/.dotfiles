@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   user,
   ...
 }: {
@@ -17,5 +18,6 @@
       ];
     };
     users.users.${user}.extraGroups = ["docker"];
+    environment.systemPackages = [pkgs.lazydocker];
   };
 }
