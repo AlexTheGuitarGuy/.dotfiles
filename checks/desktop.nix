@@ -155,7 +155,7 @@ pkgs.testers.runNixOSTest {
     assert nu("^readlink -m ~/.config/librewolf/librewolf/librewolf.overrides.cfg") == "/home/alex/.dotfiles/modules/home-manager/librewolf/config/librewolf.overrides.cfg"
     assert nu("^readlink -m ~/.config/tridactyl") == "/home/alex/.dotfiles/modules/home-manager/librewolf/tridactyl"
     hosts = nu("ls ~/.config/librewolf/native-messaging-hosts/ | get name | path basename | sort | str join ,")
-    assert hosts == "tridactyl.json", hosts
+    assert hosts == "com.1password.1password.json,tridactyl.json", hosts
     machine.succeed(f"grep -q 'Path=default' {lw}/profiles.ini")
     machine.execute("su -s /bin/sh alex -c 'timeout 40 librewolf --headless about:blank' >/dev/null 2>&1")
     machine.succeed(f"test -f {lw}/default/prefs.js")
