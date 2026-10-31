@@ -8,6 +8,8 @@ in {
   options.dotfiles.ssh.enable = lib.mkEnableOption "SSH config and keys";
 
   config = lib.mkIf config.dotfiles.ssh.enable {
+    services.ssh-agent.enable = true;
+
     programs.ssh = {
       enable = true;
       enableDefaultConfig = false;
@@ -16,11 +18,13 @@ in {
           HostName = "github.com";
           IdentityFile = "${keys}/github-personal";
           IdentitiesOnly = true;
+          AddKeysToAgent = "yes";
         };
         "gitlab.com" = {
           HostName = "gitlab.com";
           IdentityFile = "${keys}/gitlab-professional";
           IdentitiesOnly = true;
+          AddKeysToAgent = "yes";
         };
       };
     };

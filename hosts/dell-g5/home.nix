@@ -14,6 +14,7 @@
     journal.enable = true;
     ghostty.enable = true;
     git.enable = true;
+    gpg.enable = true;
     k9s.enable = true;
     lazygit.enable = true;
     librewolf.enable = true;

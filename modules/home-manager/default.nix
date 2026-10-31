@@ -15,6 +15,7 @@
     ./journal
     ./ghostty
     ./git
+    ./gpg
     ./hyprland
     ./k9s
     ./lazygit
