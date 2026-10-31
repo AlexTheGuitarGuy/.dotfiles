@@ -55,5 +55,9 @@ in {
     };
 
     xdg.configFile.tridactyl.source = live "${repo}/tridactyl";
+
+    home.activation.librewolfDefaultBrowser = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      run ${pkgs.xdg-utils}/bin/xdg-mime default librewolf.desktop x-scheme-handler/http x-scheme-handler/https text/html application/xhtml+xml
+    '';
   };
 }
