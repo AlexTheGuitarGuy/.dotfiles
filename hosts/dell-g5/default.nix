@@ -32,6 +32,12 @@
 
   networking.hostName = "dell-g5";
   networking.networkmanager.enable = true;
+  networking.networkmanager.wifi.powersave = false;
+
+  services.printing.enable = true;
+
+  services.pipewire.alsa.support32Bit = true;
+  security.rtkit.enable = true;
 
   boot.loader.systemd-boot = {
     enable = true;
@@ -42,6 +48,17 @@
 
   time.timeZone = "Europe/Chisinau";
   i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "ro_RO.UTF-8";
+    LC_IDENTIFICATION = "ro_RO.UTF-8";
+    LC_MEASUREMENT = "ro_RO.UTF-8";
+    LC_MONETARY = "ro_RO.UTF-8";
+    LC_NAME = "ro_RO.UTF-8";
+    LC_NUMERIC = "ro_RO.UTF-8";
+    LC_PAPER = "ro_RO.UTF-8";
+    LC_TELEPHONE = "ro_RO.UTF-8";
+    LC_TIME = "ro_RO.UTF-8";
+  };
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nixpkgs.config.allowUnfree = true;
