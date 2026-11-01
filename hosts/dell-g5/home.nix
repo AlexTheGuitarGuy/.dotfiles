@@ -37,6 +37,7 @@
         "podman-desktop"
         "slack"
         "Telegram"
+        "spotify"
         "1password --silent"
       ];
       pinnedApps = [
@@ -49,15 +50,15 @@
           workspace = "2";
         }
         {
-          class = "Bruno";
+          class = "bruno";
           workspace = "3";
         }
         {
-          class = "Podman Desktop";
+          class = "podman-desktop";
           workspace = "5";
         }
         {
-          class = "Slack";
+          class = "slack";
           workspace = "18";
         }
         {
