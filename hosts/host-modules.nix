@@ -19,6 +19,7 @@ in
             inherit (prev.stdenv.hostPlatform) system;
             inherit (prev) config;
           };
+          inherit (final.unstable) ghostty lazygit yazi;
         })
       ];
     }

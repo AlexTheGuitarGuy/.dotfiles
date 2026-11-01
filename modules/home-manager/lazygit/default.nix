@@ -51,10 +51,10 @@
           }
         ];
         git = {
-          pagers = [
+          diffRenderers = [
             {
               colorArg = "always";
-              pager = "delta --paging=never";
+              command = "delta --paging=never";
             }
           ];
         };
