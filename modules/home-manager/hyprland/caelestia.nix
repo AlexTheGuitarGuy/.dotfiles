@@ -45,6 +45,8 @@ in {
           rounding.scale = shellScale;
         };
 
+        border.rounding = 25;
+
         background = {
           enabled = true;
           wallpaperEnabled = true;

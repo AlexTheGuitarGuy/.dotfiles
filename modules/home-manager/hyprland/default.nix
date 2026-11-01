@@ -21,6 +21,8 @@
   };
 
   unscaled = px: builtins.floor (px / config.dotfiles.hyprland.scale + 0.5);
+  gapsOut = unscaled 8;
+  borderSize = unscaled 5;
 in {
   imports = [./caelestia.nix];
 
@@ -84,14 +86,14 @@ in {
         config = {
           general = {
             gaps_in = unscaled 3;
-            gaps_out = unscaled 8;
-            border_size = unscaled 5;
+            gaps_out = gapsOut;
+            border_size = borderSize;
             resize_on_border = false;
             allow_tearing = false;
             layout = "dwindle";
           };
           decoration = {
-            rounding = unscaled 10;
+            rounding = config.programs.caelestia.settings.border.rounding - gapsOut - borderSize;
             active_opacity = 1.0;
             inactive_opacity = 0.75;
             blur = {
