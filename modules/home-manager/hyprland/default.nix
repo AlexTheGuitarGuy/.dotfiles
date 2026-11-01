@@ -193,6 +193,8 @@ in {
       hyprcursor.enable = true;
     };
 
+    gtk.font.size = lib.mkForce 10;
+
     programs.fuzzel = {
       enable = true;
       settings.main = {
