@@ -15,6 +15,7 @@
         qt.enable = true;
         hyprland.enable = true;
         yazi.enable = true;
+        fuzzel.enable = true;
       };
     };
 

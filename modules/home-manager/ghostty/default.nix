@@ -10,7 +10,7 @@
       enable = true;
       settings = {
         font-family = "JetBrainsMono Nerd Font";
-        font-size = 10;
+        font-size = 12;
         app-notifications = "no-clipboard-copy";
         theme = "light:Catppuccin Latte,dark:Catppuccin Mocha";
         window-decoration = false;

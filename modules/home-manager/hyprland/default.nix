@@ -42,6 +42,7 @@ in {
             (bind "SHIFT + S" ''hl.dsp.exec_cmd("hyprshot --mode region --clipboard-only --freeze")'')
             (bind "V" ''hl.dsp.exec_cmd("caelestia clipboard")'')
             (bind "X" ''hl.dsp.exec_cmd("caelestia emoji -p")'')
+            (bind "ESCAPE" ''hl.dsp.exec_cmd("caelestia shell lock lock")'')
             {_args = ["XF86MonBrightnessUp" (lua ''hl.dsp.exec_cmd("brightnessctl set 5%+")'')];}
             {_args = ["XF86MonBrightnessDown" (lua ''hl.dsp.exec_cmd("brightnessctl set 5%-")'')];}
             {_args = ["ALT + F" (lua ''hl.dsp.window.fullscreen({ action = "toggle" })'')];}
@@ -101,7 +102,7 @@ in {
           }
         ];
 
-        monitor = {output = ""; mode = "preferred"; position = "auto"; scale = 1.25;};
+        monitor = {output = ""; mode = "preferred"; position = "auto"; scale = 1;};
       };
     };
 
@@ -150,6 +151,8 @@ in {
       hyprcursor.enable = true;
     };
 
-    home.packages = with pkgs; [ghostty hyprshot wl-clipboard pavucontrol brightnessctl catppuccin-cursors.mochaLavender phinger-cursors];
+    programs.fuzzel.enable = true;
+
+    home.packages = with pkgs; [ghostty hyprshot wl-clipboard pavucontrol brightnessctl];
   };
 }

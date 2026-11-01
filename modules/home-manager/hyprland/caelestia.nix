@@ -129,7 +129,7 @@ in {
       };
     };
 
-    xdg.dataFile."caelestia/wallpapers/wallpaper.png".source = ./wallpaper.png;
+    xdg.dataFile."caelestia/wallpapers".source = config.lib.file.mkOutOfStoreSymlink "${config.dotfiles.repo}/modules/home-manager/hyprland/wallpapers";
 
     # Caelestia rewrites shell.json at runtime, so replace the store link with a writable copy.
     xdg.configFile."caelestia/shell.json".force = true;
