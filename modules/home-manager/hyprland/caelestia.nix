@@ -8,6 +8,7 @@
   cli = config.programs.caelestia.cli.package;
   wallpaperDir = "${config.xdg.dataHome}/caelestia/wallpapers";
   wallpaper = "${wallpaperDir}/wallpaper.png";
+  shellScale = 1.0 / config.dotfiles.hyprland.scale;
 in {
   imports = [inputs.caelestia-shell.homeManagerModules.default];
 
@@ -31,11 +32,11 @@ in {
               sans = "JetBrainsMono Nerd Font";
               mono = "JetBrainsMono Nerd Font Mono";
             };
-            scale = 0.8;
+            scale = shellScale;
           };
-          padding.scale = 0.8;
-          spacing.scale = 0.8;
-          rounding.scale = 0.8;
+          padding.scale = shellScale;
+          spacing.scale = shellScale;
+          rounding.scale = shellScale;
         };
 
         background = {

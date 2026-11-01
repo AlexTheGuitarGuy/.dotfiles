@@ -66,7 +66,7 @@
           name = "DejaVu Serif";
         };
       };
-      fonts.sizes.popups = 8;
+      fonts.sizes.popups = builtins.floor (10 / config.home-manager.users.${user}.dotfiles.hyprland.scale + 0.5);
       targets = {
         gtk.enable = true;
         qt.enable = true;

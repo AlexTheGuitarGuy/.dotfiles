@@ -19,6 +19,8 @@
     UP = "u";
     DOWN = "d";
   };
+
+  unscaled = px: builtins.floor (px / config.dotfiles.hyprland.scale + 0.5);
 in {
   imports = [./caelestia.nix];
 
@@ -29,6 +31,12 @@ in {
       default = [];
       example = ["Telegram" "spotify"];
       description = "Commands started once when Hyprland starts.";
+    };
+    scale = lib.mkOption {
+      type = lib.types.float;
+      default = 1.0;
+      example = 1.25;
+      description = "Monitor scale. Apps grow with it; the shell, gaps, borders and pickers keep their size.";
     };
   };
 
@@ -76,15 +84,15 @@ in {
 
         config = {
           general = {
-            gaps_in = 4;
-            gaps_out = 16;
-            border_size = 4;
+            gaps_in = unscaled 5;
+            gaps_out = unscaled 20;
+            border_size = unscaled 5;
             resize_on_border = false;
             allow_tearing = false;
             layout = "dwindle";
           };
           decoration = {
-            rounding = 8;
+            rounding = unscaled 10;
             active_opacity = 1.0;
             inactive_opacity = 0.75;
             blur = {
@@ -123,7 +131,7 @@ in {
           }
         ];
 
-        monitor = {output = ""; mode = "preferred"; position = "auto"; scale = 1.25;};
+        monitor = {output = ""; mode = "preferred"; position = "auto"; inherit (config.dotfiles.hyprland) scale;};
       };
     };
 
