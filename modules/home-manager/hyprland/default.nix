@@ -20,6 +20,8 @@
     DOWN = "d";
   };
 
+  screenshot = "hyprshot --mode region --raw --freeze | satty --filename - --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard --output-filename ~/Pictures/Screenshots/satty-%Y%m%d-%H%M%S.png";
+
   gapsOut = 8;
   borderSize = 5;
 in {
@@ -53,9 +55,8 @@ in {
             (bind "C" "hl.dsp.window.close()")
             (bind "SHIFT + E" "hl.dsp.exit()")
             (bind "SPACE" ''hl.dsp.global("caelestia:launcher")'')
-            {_args = ["Print" (lua ''hl.dsp.exec_cmd("hyprshot --mode region --clipboard-only --freeze")'')];}
-            (bind "SHIFT + Z" ''hl.dsp.exec_cmd("hyprshot --mode region --clipboard-only --freeze")'')
-            (bind "SHIFT + X" ''hl.dsp.exec_cmd("hyprshot --mode region --raw --freeze | satty --filename - --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard --output-filename ~/Pictures/Screenshots/satty-%Y%m%d-%H%M%S.png")'')
+            {_args = ["Print" (lua ''hl.dsp.exec_cmd("${screenshot}")'')];}
+            (bind "SHIFT + Z" ''hl.dsp.exec_cmd("${screenshot}")'')
             (bind "SHIFT + R" ''hl.dsp.exec_cmd("gpu-screen-recorder-gtk")'')
             (bind "V" ''hl.dsp.exec_cmd("caelestia clipboard")'')
             (bind "X" ''hl.dsp.exec_cmd("caelestia emoji -p")'')
