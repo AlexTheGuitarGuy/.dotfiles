@@ -18,8 +18,8 @@
           red = "#f38ba8";
         };
         character = {
-          success_symbol = "[[󰄛](green) ❯](peach)";
-          error_symbol = "[[󰄛](red) ❯](peach)";
+          success_symbol = "[[󰊠](green) ❯](peach)";
+          error_symbol = "[[󰊠](red) ❯](peach)";
         };
         git_branch.style = "bold mauve";
         directory = {
