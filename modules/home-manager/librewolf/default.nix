@@ -22,6 +22,14 @@
       "{d634138d-c276-4fc8-924b-40a0ea21d284}"
     ];
   });
+
+  vicinaeHost = pkgs.writeTextDir "lib/mozilla/native-messaging-hosts/com.vicinae.vicinae.json" (builtins.toJSON {
+    name = "com.vicinae.vicinae";
+    description = "Vicinae browser integration";
+    path = "${config.programs.vicinae.package}/libexec/vicinae/vicinae-browser-link";
+    type = "stdio";
+    allowed_extensions = ["firefox@vicinae.com"];
+  });
 in {
   options.dotfiles.librewolf = {
     enable = lib.mkEnableOption "LibreWolf";
@@ -42,9 +50,13 @@ in {
         path = "default";
         isDefault = true;
       };
+      policies.ExtensionSettings."firefox@vicinae.com" = {
+        installation_mode = "normal_installed";
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/vicinae/latest.xpi";
+      };
     };
 
-    mozilla.firefoxNativeMessagingHosts = [pkgs.tridactyl-native onePasswordHost];
+    mozilla.firefoxNativeMessagingHosts = [pkgs.tridactyl-native onePasswordHost] ++ lib.optional config.programs.vicinae.enable vicinaeHost;
 
     home.file = {
       "${cfg.profilePath}/chrome".source = live "${repo}/config/chrome";

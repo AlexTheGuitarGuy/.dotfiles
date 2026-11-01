@@ -57,8 +57,8 @@ in {
             (bind "RETURN" ''hl.dsp.exec_cmd("${lib.getExe pkgs.ghostty}")'')
             (bind "C" "hl.dsp.window.close()")
             (bind "SHIFT + E" "hl.dsp.exit()")
-            (bind "SPACE" ''hl.dsp.global("caelestia:launcher")'')
-            (bind "SHIFT + SPACE" ''hl.dsp.exec_cmd("anyrun")'')
+            (bind "SPACE" ''hl.dsp.exec_cmd("vicinae toggle")'')
+            (bind "SHIFT + SPACE" ''hl.dsp.global("caelestia:launcher")'')
             {_args = ["Print" (lua ''hl.dsp.exec_cmd("hyprshot --mode region --clipboard-only --freeze")'')];}
             (bind "SHIFT + S" ''hl.dsp.exec_cmd("hyprshot --mode region --clipboard-only --freeze")'')
             (bind "V" ''hl.dsp.exec_cmd("caelestia clipboard")'')
@@ -103,6 +103,7 @@ in {
             };
           };
           animations.enabled = true;
+          misc.focus_on_activate = true;
           input = {
             kb_layout = "us,ru,ro";
             kb_options = "grp:alt_shift_toggle";
@@ -118,6 +119,15 @@ in {
           {leaf = "borderangle"; enabled = true; speed = 8; bezier = "default";}
           {leaf = "fade"; enabled = true; speed = 7; bezier = "default";}
           {leaf = "workspaces"; enabled = true; speed = 6; bezier = "default";}
+        ];
+
+        layer_rule = [
+          {
+            match.namespace = "vicinae";
+            blur = true;
+            ignore_alpha = 0;
+            no_anim = true;
+          }
         ];
 
         window_rule = [
@@ -144,27 +154,13 @@ in {
       ];
     };
 
-    programs.anyrun = {
+    programs.vicinae = {
       enable = true;
-      config = {
-        plugins = map (p: "${pkgs.anyrun}/lib/lib${p}.so") ["applications" "symbols" "rink" "dictionary" "translate" "websearch"];
-        x.fraction = 0.5;
-        y.fraction = 0.3;
-        width.fraction = 0.3;
-        hideIcons = false;
-        ignoreExclusiveZones = false;
-        layer = "overlay";
-        hidePluginInfo = false;
-        closeOnClick = false;
-        showResultsImmediately = false;
-        maxEntries = null;
+      package = pkgs.unstable.vicinae;
+      systemd = {
+        enable = true;
+        autoStart = true;
       };
-      extraConfigFiles."websearch.ron".text = ''
-        Config(
-          prefix: "?",
-          engines: [DuckDuckGo]
-        )
-      '';
     };
 
     dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
