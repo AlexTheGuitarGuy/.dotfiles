@@ -71,7 +71,6 @@ in {
         reaper
         qpwgraph
         aseprite
-        godot_4
         renpy
         anki
         prismlauncher
@@ -95,6 +94,7 @@ in {
         jetbrains.datagrip
         mongodb-compass
         podman-desktop
+        godot_4
       ])
       ++ [apps2samsung tizenbrew-device-manager tizenbrew-installer moldsign godot-nvim];
 

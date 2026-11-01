@@ -194,6 +194,7 @@ in {
     };
 
     gtk.font.size = lib.mkForce 10;
+    dconf.settings."org/gnome/desktop/interface".text-scaling-factor = 1.25;
 
     programs.fuzzel = {
       enable = true;
