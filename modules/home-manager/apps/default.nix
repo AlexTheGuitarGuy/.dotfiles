@@ -101,6 +101,13 @@ in {
 
     xdg.configFile."xdg-terminals.list".text = "com.mitchellh.ghostty.desktop\n";
 
+    xdg.dataFile."PrismLauncher/themes/catppuccin-mocha-mauve".source = "${pkgs.fetchFromGitHub {
+      owner = "catppuccin";
+      repo = "prismlauncher";
+      rev = "1ef0e745286ce32750abc3bc5d3ca8073a623b60";
+      hash = "sha256-RN1VM29OH75GHSHgpu3HW8YSonIEnX7MZzCObJ6BwtQ=";
+    }}/themes/mocha/mauve";
+
     home.activation.defaultApps = lib.hm.dag.entryAfter ["writeBoundary"] (lib.concatStrings (lib.mapAttrsToList (app: types: ''
         run ${pkgs.xdg-utils}/bin/xdg-mime default ${app} ${lib.concatStringsSep " " types}
       '')
