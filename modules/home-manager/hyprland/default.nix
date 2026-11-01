@@ -61,7 +61,8 @@ in {
             (bind "SHIFT + E" "hl.dsp.exit()")
             (bind "SPACE" ''hl.dsp.global("caelestia:launcher")'')
             {_args = ["Print" (lua ''hl.dsp.exec_cmd("hyprshot --mode region --clipboard-only --freeze")'')];}
-            (bind "SHIFT + S" ''hl.dsp.exec_cmd("hyprshot --mode region --clipboard-only --freeze")'')
+            (bind "SHIFT + Z" ''hl.dsp.exec_cmd("hyprshot --mode region --clipboard-only --freeze")'')
+            (bind "SHIFT + R" ''hl.dsp.exec_cmd("gpu-screen-recorder-gtk")'')
             (bind "V" ''hl.dsp.exec_cmd("caelestia clipboard")'')
             (bind "X" ''hl.dsp.exec_cmd("caelestia emoji -p")'')
             (bind "ESCAPE" ''hl.dsp.exec_cmd("caelestia shell lock lock")'')
@@ -167,6 +168,6 @@ in {
       };
     };
 
-    home.packages = with pkgs; [ghostty hyprshot wl-clipboard pavucontrol brightnessctl brotab];
+    home.packages = with pkgs; [ghostty hyprshot wl-clipboard pavucontrol brightnessctl brotab gpu-screen-recorder-gtk];
   };
 }
