@@ -23,10 +23,16 @@ in {
             base = 0.9;
             layers = 0.55;
           };
-          font.family = {
-            sans = "JetBrainsMono Nerd Font";
-            mono = "JetBrainsMono Nerd Font Mono";
+          font = {
+            family = {
+              sans = "JetBrainsMono Nerd Font";
+              mono = "JetBrainsMono Nerd Font Mono";
+            };
+            scale = 0.8;
           };
+          padding.scale = 0.8;
+          spacing.scale = 0.8;
+          rounding.scale = 0.8;
         };
 
         background = {

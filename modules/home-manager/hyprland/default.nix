@@ -76,15 +76,15 @@ in {
 
         config = {
           general = {
-            gaps_in = 5;
-            gaps_out = 20;
-            border_size = 5;
+            gaps_in = 4;
+            gaps_out = 16;
+            border_size = 4;
             resize_on_border = false;
             allow_tearing = false;
             layout = "dwindle";
           };
           decoration = {
-            rounding = 10;
+            rounding = 8;
             active_opacity = 1.0;
             inactive_opacity = 0.75;
             blur = {
@@ -123,7 +123,7 @@ in {
           }
         ];
 
-        monitor = {output = ""; mode = "preferred"; position = "auto"; scale = 1;};
+        monitor = {output = ""; mode = "preferred"; position = "auto"; scale = 1.25;};
       };
     };
 

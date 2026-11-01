@@ -62,6 +62,7 @@
           name = "DejaVu Serif";
         };
       };
+      fonts.sizes.popups = 8;
       targets = {
         gtk.enable = true;
         qt.enable = true;
