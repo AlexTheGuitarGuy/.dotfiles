@@ -21,6 +21,7 @@
   };
 
   screenshot = "hyprshot --mode region --raw --freeze | satty --filename - --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard --output-filename ~/Pictures/Screenshots/satty-%Y%m%d-%H%M%S.png";
+  focusOnActivateLater = "sleep 60 && hyprctl eval 'hl.config({ misc = { focus_on_activate = true } })'";
 
   gapsOut = 8;
   borderSize = 5;
@@ -59,7 +60,7 @@ in {
       extraConfig =
         lib.optionalString (config.dotfiles.hyprland.autostart != []) ''
           hl.on("hyprland.start", function()
-          ${lib.concatMapStrings (cmd: "  hl.exec_cmd(${builtins.toJSON cmd})\n") config.dotfiles.hyprland.autostart}end)
+          ${lib.concatMapStrings (cmd: "  hl.exec_cmd(${builtins.toJSON cmd})\n") (config.dotfiles.hyprland.autostart ++ [focusOnActivateLater])}end)
         ''
         + ''
           local pinned = ${lib.generators.toLua {} cfg.pinnedApps}
@@ -125,7 +126,7 @@ in {
             };
           };
           animations.enabled = true;
-          misc.focus_on_activate = true;
+          misc.focus_on_activate = config.dotfiles.hyprland.autostart == [];
           input = {
             kb_layout = "us,ru,ro";
             kb_options = "grp:alt_shift_toggle";
