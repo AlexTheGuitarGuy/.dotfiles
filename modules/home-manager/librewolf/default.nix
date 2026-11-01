@@ -23,12 +23,12 @@
     ];
   });
 
-  vicinaeHost = pkgs.writeTextDir "lib/mozilla/native-messaging-hosts/com.vicinae.vicinae.json" (builtins.toJSON {
-    name = "com.vicinae.vicinae";
-    description = "Vicinae browser integration";
-    path = "${config.programs.vicinae.package}/libexec/vicinae/vicinae-browser-link";
+  brotabHost = pkgs.writeTextDir "lib/mozilla/native-messaging-hosts/brotab_mediator.json" (builtins.toJSON {
+    name = "brotab_mediator";
+    description = "brotab tab control for the caelestia launcher";
+    path = "${pkgs.brotab}/bin/bt_mediator";
     type = "stdio";
-    allowed_extensions = ["firefox@vicinae.com"];
+    allowed_extensions = ["brotab_mediator@example.org"];
   });
 in {
   options.dotfiles.librewolf = {
@@ -50,13 +50,13 @@ in {
         path = "default";
         isDefault = true;
       };
-      policies.ExtensionSettings."firefox@vicinae.com" = {
+      policies.ExtensionSettings."brotab_mediator@example.org" = {
         installation_mode = "normal_installed";
-        install_url = "https://addons.mozilla.org/firefox/downloads/latest/vicinae/latest.xpi";
+        install_url = "https://addons.mozilla.org/firefox/downloads/latest/brotab/latest.xpi";
       };
     };
 
-    mozilla.firefoxNativeMessagingHosts = [pkgs.tridactyl-native onePasswordHost] ++ lib.optional config.programs.vicinae.enable vicinaeHost;
+    mozilla.firefoxNativeMessagingHosts = [pkgs.tridactyl-native onePasswordHost brotabHost];
 
     home.file = {
       "${cfg.profilePath}/chrome".source = live "${repo}/config/chrome";

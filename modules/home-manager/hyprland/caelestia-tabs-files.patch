@@ -1,0 +1,335 @@
+diff -ruN a/modules/launcher/AppList.qml b/modules/launcher/AppList.qml
+--- a/modules/launcher/AppList.qml	2026-11-01 03:52:40.619292379 +0200
++++ b/modules/launcher/AppList.qml	2026-11-01 03:54:21.162284788 +0200
+@@ -57,7 +57,7 @@
+         case "variant":
+             return M3Variants.query(text);
+         default:
+-            return Apps.search(text);
++            return [...Apps.search(text), ...Tabs.query(text), ...Files.results];
+         }
+     }
+ 
+@@ -103,7 +103,7 @@
+             name: "apps"
+ 
+             PropertyChanges {
+-                root.delegate: appItem
++                root.delegate: mixedItem
+             }
+         },
+         State {
+@@ -255,9 +255,9 @@
+     }
+ 
+     Component {
+-        id: appItem
++        id: mixedItem
+ 
+-        AppItem {
++        MixedItem {
+             screenState: root.screenState
+         }
+     }
+@@ -297,6 +297,7 @@
+     Connections {
+         function onTextChanged() {
+             root.syncDisplayText();
++            Files.query(root.stateForText(root.search.text) === "apps" ? root.search.text : "");
+         }
+ 
+         target: root.search
+@@ -305,6 +306,10 @@
+     Connections {
+         function onLauncherChanged() {
+             root.syncDisplayText();
++            if (root.screenState.launcher) {
++                Tabs.refresh();
++                Files.refresh();
++            }
+         }
+ 
+         target: root.screenState
+diff -ruN a/modules/launcher/Content.qml b/modules/launcher/Content.qml
+--- a/modules/launcher/Content.qml	2026-11-01 03:52:40.620211612 +0200
++++ b/modules/launcher/Content.qml	2026-11-01 03:54:26.645496202 +0200
+@@ -76,6 +76,8 @@
+                         currentItem.modelData.onClicked(list.currentList);
+                 } else if (list.currentList?.isMath(text)) {
+                     currentItem.onClicked();
++                } else if (currentItem.modelData?.kind) {
++                    currentItem.activate();
+                 } else {
+                     Apps.launch(currentItem.modelData);
+                     root.screenState.launcher = false;
+@@ -89,6 +91,13 @@
+         Keys.onEscapePressed: root.screenState.launcher = false
+ 
+         Keys.onPressed: event => {
++            const selected = list.currentList?.currentItem?.modelData;
++            if ((event.modifiers & Qt.ControlModifier) && event.key === Qt.Key_Delete && selected?.kind === "tab") {
++                Tabs.close(selected.id);
++                event.accepted = true;
++                return;
++            }
++
+             if (!GlobalConfig.launcher.vimKeybinds)
+                 return;
+ 
+diff -ruN a/modules/launcher/items/MixedItem.qml b/modules/launcher/items/MixedItem.qml
+--- a/modules/launcher/items/MixedItem.qml	1970-01-01 03:00:00.000000000 +0300
++++ b/modules/launcher/items/MixedItem.qml	2026-11-01 03:53:58.804416324 +0200
+@@ -0,0 +1,44 @@
++import QtQuick
++import Caelestia.Config
++import qs.components
++
++Item {
++    id: root
++
++    required property var modelData
++    required property ScreenState screenState
++
++    function activate(): void {
++        loader.item?.activate();
++    }
++
++    implicitHeight: Tokens.sizes.launcher.itemHeight
++
++    anchors.left: parent?.left
++    anchors.right: parent?.right
++
++    Loader {
++        id: loader
++
++        anchors.fill: parent
++        sourceComponent: root.modelData?.kind ? resultItem : appItem
++    }
++
++    Component {
++        id: appItem
++
++        AppItem {
++            modelData: root.modelData
++            screenState: root.screenState
++        }
++    }
++
++    Component {
++        id: resultItem
++
++        ResultItem {
++            modelData: root.modelData
++            screenState: root.screenState
++        }
++    }
++}
+diff -ruN a/modules/launcher/items/ResultItem.qml b/modules/launcher/items/ResultItem.qml
+--- a/modules/launcher/items/ResultItem.qml	1970-01-01 03:00:00.000000000 +0300
++++ b/modules/launcher/items/ResultItem.qml	2026-11-01 03:54:09.543834784 +0200
+@@ -0,0 +1,77 @@
++import QtQuick
++import Caelestia.Config
++import qs.components
++import qs.services
++import qs.modules.launcher.services
++
++Item {
++    id: root
++
++    required property var modelData
++    required property ScreenState screenState
++
++    function activate(): void {
++        if (modelData.kind === "tab")
++            Tabs.activate(modelData.id);
++        else
++            Files.open(modelData.path);
++        screenState.launcher = false;
++    }
++
++    implicitHeight: Tokens.sizes.launcher.itemHeight
++
++    anchors.left: parent?.left
++    anchors.right: parent?.right
++
++    StateLayer {
++        radius: Tokens.rounding.large
++        onClicked: root.activate()
++    }
++
++    Item {
++        anchors.fill: parent
++        anchors.leftMargin: Tokens.padding.medium
++        anchors.rightMargin: Tokens.padding.medium
++        anchors.margins: Tokens.padding.small
++
++        MaterialIcon {
++            id: icon
++
++            text: root.modelData.kind === "tab" ? "tab" : root.modelData.kind === "folder" ? "folder" : "description"
++            color: Colours.palette.m3onSurfaceVariant
++            fontStyle: Tokens.font.icon.builders.large.scale(1.3).build()
++
++            anchors.verticalCenter: parent.verticalCenter
++        }
++
++        Item {
++            anchors.left: icon.right
++            anchors.leftMargin: Tokens.spacing.medium
++            anchors.verticalCenter: icon.verticalCenter
++
++            implicitWidth: parent.width - icon.width
++            implicitHeight: title.implicitHeight + subtitle.implicitHeight
++
++            StyledText {
++                id: title
++
++                text: root.modelData.title
++                font: Tokens.font.body.medium
++                elide: Text.ElideRight
++                width: root.width - icon.width - Tokens.rounding.extraLargeIncreased
++            }
++
++            StyledText {
++                id: subtitle
++
++                text: root.modelData.url
++                font: Tokens.font.body.small
++                color: Colours.palette.m3outline
++                elide: Text.ElideMiddle
++                width: root.width - icon.width - Tokens.rounding.extraLargeIncreased
++
++                anchors.top: title.bottom
++            }
++        }
++    }
++}
+diff -ruN a/modules/launcher/services/Files.qml b/modules/launcher/services/Files.qml
+--- a/modules/launcher/services/Files.qml	1970-01-01 03:00:00.000000000 +0300
++++ b/modules/launcher/services/Files.qml	2026-11-01 03:53:49.216040638 +0200
+@@ -0,0 +1,68 @@
++pragma Singleton
++
++import QtQuick
++import Quickshell
++import Quickshell.Io
++
++Singleton {
++    id: root
++
++    readonly property string home: Quickshell.env("HOME")
++    readonly property string index: `${Quickshell.env("XDG_RUNTIME_DIR")}/caelestia-files.txt`
++    property string pending: ""
++    property var results: []
++
++    function refresh(): void {
++        indexProc.running = true;
++    }
++
++    function query(search: string): void {
++        pending = search.trim();
++        if (pending.length < 2) {
++            results = [];
++            return;
++        }
++        debounce.restart();
++    }
++
++    function open(path: string): void {
++        if (path.endsWith("/"))
++            Quickshell.execDetached(["ghostty", "-e", "yazi", path]);
++        else
++            Quickshell.execDetached(["xdg-open", path]);
++    }
++
++    Timer {
++        id: debounce
++
++        interval: 120
++        onTriggered: {
++            searchProc.running = false;
++            searchProc.command = ["sh", "-c", 'fzf --filter "$1" --scheme=path < "$2" | head -n 5', "sh", root.pending, root.index];
++            searchProc.running = true;
++        }
++    }
++
++    Process {
++        id: indexProc
++
++        command: ["sh", "-c", '[ -n "$(find "$1" -mmin -5 2>/dev/null)" ] || { fd --type f --type d --exclude node_modules . "$HOME" > "$1.tmp" && mv "$1.tmp" "$1"; }', "sh", root.index]
++    }
++
++    Process {
++        id: searchProc
++
++        stdout: StdioCollector {
++            onStreamFinished: root.results = text.split("\n").filter(p => p).map(path => {
++                const dir = path.endsWith("/");
++                const name = path.replace(/\/$/, "").split("/").pop();
++                return {
++                    kind: dir ? "folder" : "file",
++                    path,
++                    title: name,
++                    url: path.replace(root.home, "~")
++                };
++            })
++        }
++    }
++}
+diff -ruN a/modules/launcher/services/Tabs.qml b/modules/launcher/services/Tabs.qml
+--- a/modules/launcher/services/Tabs.qml	1970-01-01 03:00:00.000000000 +0300
++++ b/modules/launcher/services/Tabs.qml	2026-11-01 03:53:43.216804567 +0200
+@@ -0,0 +1,52 @@
++pragma Singleton
++
++import QtQuick
++import Quickshell
++import Quickshell.Io
++import "../../../utils/scripts/fuzzysort.js" as Fuzzy
++
++Singleton {
++    id: root
++
++    property var tabs: []
++
++    function refresh(): void {
++        listProc.running = true;
++    }
++
++    function query(search: string): var {
++        const text = search.trim();
++        if (text.length < 2)
++            return [];
++        return Fuzzy.go(text, tabs, {
++            keys: ["title", "url"],
++            limit: 5
++        }).map(r => r.obj);
++    }
++
++    function activate(id: string): void {
++        Quickshell.execDetached(["bt", "activate", "--focused", id]);
++    }
++
++    function close(id: string): void {
++        Quickshell.execDetached(["bt", "close", id]);
++        tabs = tabs.filter(t => t.id !== id);
++    }
++
++    Process {
++        id: listProc
++
++        command: ["bt", "list"]
++        stdout: StdioCollector {
++            onStreamFinished: root.tabs = text.split("\n").filter(l => l.includes("\t")).map(l => {
++                const [id, title, url] = l.split("\t");
++                return {
++                    kind: "tab",
++                    id,
++                    title: title ?? "",
++                    url: url ?? ""
++                };
++            })
++        }
++    }
++}

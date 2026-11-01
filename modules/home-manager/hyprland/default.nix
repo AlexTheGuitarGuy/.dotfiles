@@ -57,8 +57,7 @@ in {
             (bind "RETURN" ''hl.dsp.exec_cmd("${lib.getExe pkgs.ghostty}")'')
             (bind "C" "hl.dsp.window.close()")
             (bind "SHIFT + E" "hl.dsp.exit()")
-            (bind "SPACE" ''hl.dsp.exec_cmd("vicinae toggle")'')
-            (bind "SHIFT + SPACE" ''hl.dsp.global("caelestia:launcher")'')
+            (bind "SPACE" ''hl.dsp.global("caelestia:launcher")'')
             {_args = ["Print" (lua ''hl.dsp.exec_cmd("hyprshot --mode region --clipboard-only --freeze")'')];}
             (bind "SHIFT + S" ''hl.dsp.exec_cmd("hyprshot --mode region --clipboard-only --freeze")'')
             (bind "V" ''hl.dsp.exec_cmd("caelestia clipboard")'')
@@ -121,15 +120,6 @@ in {
           {leaf = "workspaces"; enabled = true; speed = 6; bezier = "default";}
         ];
 
-        layer_rule = [
-          {
-            match.namespace = "vicinae";
-            blur = true;
-            ignore_alpha = 0;
-            no_anim = true;
-          }
-        ];
-
         window_rule = [
           {match.class = "^(spotify)$"; workspace = "19 silent";}
           {
@@ -154,15 +144,6 @@ in {
       ];
     };
 
-    programs.vicinae = {
-      enable = true;
-      package = pkgs.unstable.vicinae;
-      systemd = {
-        enable = true;
-        autoStart = true;
-      };
-    };
-
     dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
     programs.yazi.enable = true;
@@ -178,6 +159,6 @@ in {
 
     programs.fuzzel.enable = true;
 
-    home.packages = with pkgs; [ghostty hyprshot wl-clipboard pavucontrol brightnessctl];
+    home.packages = with pkgs; [ghostty hyprshot wl-clipboard pavucontrol brightnessctl brotab];
   };
 }

@@ -17,7 +17,12 @@ in {
       enable = true;
       systemd.enable = true;
       package = inputs.caelestia-shell.packages.${pkgs.stdenv.hostPlatform.system}.with-cli.overrideAttrs (old: {
-        patches = (old.patches or []) ++ [./caelestia-calc.patch ./caelestia-search.patch];
+        patches = (old.patches or []) ++ [./caelestia-calc.patch ./caelestia-search.patch ./caelestia-tabs-files.patch];
+        postInstall =
+          old.postInstall
+          + ''
+            wrapProgram $out/bin/caelestia-shell --prefix PATH : ${lib.makeBinPath [pkgs.brotab pkgs.fd pkgs.fzf pkgs.xdg-utils]}
+          '';
       });
 
       settings = {

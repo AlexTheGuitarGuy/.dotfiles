@@ -16,7 +16,6 @@
         hyprland.enable = true;
         yazi.enable = true;
         fuzzel.enable = true;
-        vicinae.enable = true;
       };
     };
 
