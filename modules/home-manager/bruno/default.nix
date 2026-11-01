@@ -12,16 +12,17 @@
     name = "bruno";
     runtimeInputs = [pkgs.sops];
     text = ''
+      cmd="exec $(printf '%q ' ${lib.getExe bruno} "$@")"
       if [ -f "$HOME/.config/sops/age/keys.txt" ]; then
-        set -a
+        files=()
         for f in "${config.dotfiles.repo}/secrets/secrets.yaml" "$HOME"/.config/secrets.d/*.yaml; do
-          [ -e "$f" ] || continue
-          # shellcheck disable=SC1090
-          . <(sops -d --output-type dotenv "$f")
+          [ -e "$f" ] && files=("$f" "''${files[@]}")
         done
-        set +a
+        for f in "''${files[@]}"; do
+          cmd="exec sops exec-env $(printf '%q' "$f") $(printf '%q' "$cmd")"
+        done
       fi
-      exec ${lib.getExe bruno} "$@"
+      eval "$cmd"
     '';
   };
 in {
