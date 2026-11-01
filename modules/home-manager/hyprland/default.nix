@@ -157,7 +157,13 @@ in {
       hyprcursor.enable = true;
     };
 
-    programs.fuzzel.enable = true;
+    programs.fuzzel = {
+      enable = true;
+      settings.main = {
+        width = 60;
+        lines = 15;
+      };
+    };
 
     home.packages = with pkgs; [ghostty hyprshot wl-clipboard pavucontrol brightnessctl brotab];
   };
