@@ -8,12 +8,17 @@
   herdr = inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default;
   pluginDeps = with pkgs; [bash jq fzf zoxide nodejs];
 
-  sessionizer = pkgs.fetchFromGitHub {
+  sessionizerSrc = pkgs.fetchFromGitHub {
     owner = "salkhalil";
     repo = "herdr-sessionizer";
     rev = "0ba66fafbee69628b7215566a94e7cdd02de4e0a";
     hash = "sha256-+iyMABY2RlyF6kC9XkIzZ1Hb7J5M32gw3SNFSdCvz3Y=";
   };
+  sessionizer = pkgs.runCommand "herdr-sessionizer" {} ''
+    cp -r ${sessionizerSrc} $out
+    chmod -R u+w $out
+    sed -i '1a export SHELL=${pkgs.bash}/bin/bash' $out/bin/sessionizer
+  '';
   synchronize-panes = pkgs.fetchFromGitHub {
     owner = "furuhashin";
     repo = "herdr-synchronize-panes";
