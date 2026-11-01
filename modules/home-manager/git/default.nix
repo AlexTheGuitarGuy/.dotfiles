@@ -13,8 +13,20 @@
   worktree-gitnexus = script "worktree-gitnexus" [pkgs.git pkgs.jq];
   gitnexus-reindex = script "gitnexus-reindex" [pkgs.git pkgs.jq pkgs.util-linux];
   git-wt-clean = script "git-wt-clean" [pkgs.git pkgs.jq pkgs.gawk];
+  worktree-pnpm = pkgs.writeShellApplication {
+    name = "worktree-pnpm";
+    runtimeInputs = [pkgs.git pkgs.gnugrep];
+    text = "PNPM=${lib.escapeShellArg config.dotfiles.git.worktreePnpm}\n" + builtins.readFile ./worktree-pnpm.sh;
+  };
 in {
-  options.dotfiles.git.enable = lib.mkEnableOption "Git";
+  options.dotfiles.git = {
+    enable = lib.mkEnableOption "Git";
+    worktreePnpm = lib.mkOption {
+      type = lib.types.str;
+      default = lib.getExe pkgs.pnpm;
+      description = "pnpm command run in new worktrees of pnpm repos; override to add registry credentials.";
+    };
+  };
 
   config = lib.mkIf config.dotfiles.git.enable {
     programs.git = {
@@ -40,6 +52,10 @@ in {
           gitnexus-worktree = {
             event = "post-checkout";
             command = lib.getExe worktree-gitnexus;
+          };
+          pnpm-worktree = {
+            event = "post-checkout";
+            command = lib.getExe worktree-pnpm;
           };
           gitnexus-push = {
             event = "pre-push";
