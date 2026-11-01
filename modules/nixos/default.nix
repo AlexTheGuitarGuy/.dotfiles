@@ -1,3 +1,3 @@
 {
-  imports = [./apps ./docker ./hyprland];
+  imports = [./apps ./docker ./hyprland ./laptop ./nix];
 }

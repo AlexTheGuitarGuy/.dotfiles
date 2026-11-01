@@ -8,6 +8,7 @@
   dotfiles.hyprland.enable = true;
   dotfiles.apps.enable = true;
   dotfiles.docker.enable = true;
+  dotfiles.laptop.enable = true;
 
   # Intel UHD 630 drives the desktop and the laptop screen; the RTX 2060 (external HDMI/DP ports)
   # runs apps started with `nvidia-offload`.
@@ -60,8 +61,6 @@
     LC_TIME = "ro_RO.UTF-8";
   };
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-  nixpkgs.config.allowUnfree = true;
 
   users.users.${user} = {
     isNormalUser = true;
