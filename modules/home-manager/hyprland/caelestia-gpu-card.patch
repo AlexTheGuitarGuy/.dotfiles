@@ -1,0 +1,76 @@
+diff -ruN a/modules/dashboard/Performance.qml b/modules/dashboard/Performance.qml
+--- a/modules/dashboard/Performance.qml	2026-11-01 05:00:32.136180568 +0200
++++ b/modules/dashboard/Performance.qml	2026-11-01 05:00:51.396233636 +0200
+@@ -1,6 +1,7 @@
+ import "performance"
+ import QtQuick
+ import QtQuick.Layouts
++import Quickshell.Io
+ import Quickshell.Services.UPower
+ import Caelestia.Config
+ import Caelestia.I18n
+@@ -88,9 +89,62 @@
+                 WrappedLoader {
+                     id: gpuCard
+ 
+-                    active: Config.dashboard.performance.showGpu && Gpu.type !== GpuType.None
++                    active: Config.dashboard.performance.showGpu
+ 
+-                    sourceComponent: HeroCard {
++                    sourceComponent: Gpu.type === GpuType.None ? sysfsGpuCard : gpuServiceCard
++                }
++
++                Component {
++                    id: sysfsGpuCard
++
++                    HeroCard {
++                        id: sysfsCard
++
++                        property real load: NaN
++                        property string offload: ""
++
++                        icon: "desktop_windows"
++                        label: Tr.tr("GPU")
++                        subLabel: sysfsCard.offload ? `Integrated · dGPU ${sysfsCard.offload}` : "Integrated"
++                        usage: sysfsCard.load
++                        temperature: Cpu.temperature
++                        accent: Colours.palette.m3secondary
++
++                        ServiceRef {
++                            service: Cpu
++                        }
++
++                        Process {
++                            id: sysfsProc
++
++                            command: ["sh", "-c", 'for f in /sys/class/drm/card*/gt_act_freq_mhz; do [ -r "$f" ] && echo "freq $(cat "$f") $(cat "${f%act_freq_mhz}max_freq_mhz")"; done; for d in /sys/bus/pci/drivers/nvidia/0000:*; do [ -r "$d/power/runtime_status" ] && echo "dgpu $(cat "$d/power/runtime_status")"; done']
++                            stdout: StdioCollector {
++                                onStreamFinished: {
++                                    for (const line of text.split("\n")) {
++                                        const [kind, a, b] = line.split(" ");
++                                        if (kind === "freq" && Number(b) > 0)
++                                            sysfsCard.load = Number(a) / Number(b);
++                                        else if (kind === "dgpu")
++                                            sysfsCard.offload = a === "suspended" ? Tr.tr("asleep") : Tr.tr("active");
++                                    }
++                                }
++                            }
++                        }
++
++                        Timer {
++                            interval: 2000
++                            running: true
++                            repeat: true
++                            triggeredOnStart: true
++                            onTriggered: sysfsProc.running = true
++                        }
++                    }
++                }
++
++                Component {
++                    id: gpuServiceCard
++
++                    HeroCard {
+                         icon: "desktop_windows"
+                         label: Tr.tr("GPU")
+                         subLabel: Gpu.name || (Gpu.detecting ? Tr.tr("Detecting GPU...") : Tr.trCtx("None", "GPU name"))
