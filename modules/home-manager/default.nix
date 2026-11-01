@@ -28,6 +28,7 @@
     ./posting
     ./secrets
     ./shots
+    ./spotify
     ./ssh
     ./starship
   ];

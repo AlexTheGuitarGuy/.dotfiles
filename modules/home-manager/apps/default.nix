@@ -62,7 +62,6 @@ in {
         slack
         teams-for-linux
         viber
-        spotify
 
         obs-studio
         kdePackages.kdenlive
