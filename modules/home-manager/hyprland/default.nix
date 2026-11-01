@@ -169,7 +169,17 @@ in {
 
     dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
-    programs.yazi.enable = true;
+    programs.yazi = {
+      enable = true;
+      plugins.smart-enter = pkgs.yaziPlugins.smart-enter;
+      keymap.mgr.prepend_keymap = [
+        {
+          on = "<Enter>";
+          run = "plugin smart-enter";
+          desc = "Enter the folder or open the file";
+        }
+      ];
+    };
     services.cliphist.enable = true;
 
     home.pointerCursor = {

@@ -39,6 +39,11 @@
     "nvim.desktop" = ["text/plain" "text/markdown" "text/x-csrc" "text/x-python" "application/json" "application/x-yaml" "application/toml" "application/x-shellscript"];
     "yazi.desktop" = ["inode/directory"];
     "org.gnome.FileRoller.desktop" = ["application/zip" "application/x-tar" "application/gzip" "application/x-compressed-tar" "application/x-xz-compressed-tar" "application/x-7z-compressed" "application/vnd.rar" "application/x-rar"];
+    "mpv.desktop" = ["video/mp4" "video/x-matroska" "video/webm" "video/quicktime" "video/x-msvideo" "video/mpeg" "video/ogg" "audio/mpeg" "audio/flac" "audio/ogg" "audio/x-wav" "audio/mp4" "audio/aac" "audio/opus"];
+    "writer.desktop" = ["application/vnd.oasis.opendocument.text" "application/msword" "application/vnd.openxmlformats-officedocument.wordprocessingml.document" "application/rtf"];
+    "calc.desktop" = ["application/vnd.oasis.opendocument.spreadsheet" "application/vnd.ms-excel" "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" "text/csv"];
+    "impress.desktop" = ["application/vnd.oasis.opendocument.presentation" "application/vnd.ms-powerpoint" "application/vnd.openxmlformats-officedocument.presentationml.presentation"];
+    "draw.desktop" = ["application/vnd.oasis.opendocument.graphics"];
   };
 
   godot-nvim = pkgs.writeShellApplication {

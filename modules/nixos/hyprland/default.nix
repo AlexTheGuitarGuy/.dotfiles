@@ -42,9 +42,11 @@
 
     xdg.portal = {
       enable = true;
-      xdgOpenUsePortal = true;
       extraPortals = [pkgs.xdg-desktop-portal-gtk];
     };
+    environment.systemPackages = [
+      (lib.hiPrio (pkgs.writeShellScriptBin "xdg-open" ''exec ${lib.getExe' pkgs.glib "gio"} open "$@"''))
+    ];
 
     # Only GTK, Qt, Hyprland borders and yazi; the other tools carry their own Catppuccin themes.
     stylix = {

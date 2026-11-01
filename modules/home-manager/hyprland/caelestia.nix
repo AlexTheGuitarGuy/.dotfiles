@@ -20,7 +20,7 @@ in {
         postInstall =
           old.postInstall
           + ''
-            wrapProgram $out/bin/caelestia-shell --prefix PATH : ${lib.makeBinPath [pkgs.brotab pkgs.fd pkgs.fzf pkgs.xdg-utils]}
+            wrapProgram $out/bin/caelestia-shell --prefix PATH : ${lib.makeBinPath [pkgs.brotab pkgs.fd pkgs.fzf]}
           '';
       });
 
