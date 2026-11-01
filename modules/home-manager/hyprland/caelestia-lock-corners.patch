@@ -1,0 +1,37 @@
+diff -ru a/modules/lock/Content.qml b/modules/lock/Content.qml
+--- a/modules/lock/Content.qml	2026-11-01 18:18:56.395137774 +0200
++++ b/modules/lock/Content.qml	2026-11-01 18:19:00.906837176 +0200
+@@ -48,8 +48,7 @@
+             Layout.fillWidth: true
+             Layout.fillHeight: true
+ 
+-            bottomRightRadius: Tokens.rounding.extraLarge
+-            radius: Tokens.rounding.medium
++            radius: Tokens.rounding.extraLarge
+             color: Colours.tPalette.m3surfaceContainer
+ 
+             NotifDock {
+diff -ru a/modules/lock/Fetch.qml b/modules/lock/Fetch.qml
+--- a/modules/lock/Fetch.qml	2026-11-01 18:18:56.392145561 +0200
++++ b/modules/lock/Fetch.qml	2026-11-01 18:18:56.404044627 +0200
+@@ -18,7 +18,7 @@
+     readonly property int cBoxSize: Tokens.font.body.medium.pointSize * 2
+ 
+     implicitHeight: layout.implicitHeight + layout.anchors.topMargin + layout.anchors.margins
+-    radius: Tokens.rounding.medium
++    radius: Tokens.rounding.extraLarge
+     color: Colours.tPalette.m3surfaceContainer
+ 
+     ColumnLayout {
+diff -ru a/modules/lock/WeatherInfo.qml b/modules/lock/WeatherInfo.qml
+--- a/modules/lock/WeatherInfo.qml	2026-11-01 18:18:56.388130156 +0200
++++ b/modules/lock/WeatherInfo.qml	2026-11-01 18:18:56.401389852 +0200
+@@ -16,7 +16,7 @@
+             return base + Tokens.spacing.largeIncreased + forecast.implicitHeight + forecast.anchors.margins;
+         return base + brief.anchors.topMargin;
+     }
+-    radius: Tokens.rounding.extraExtraLarge
++    radius: Tokens.rounding.extraLarge
+     color: Colours.tPalette.m3surfaceContainer
+ 
+     Timer {

@@ -16,7 +16,7 @@ in {
       enable = true;
       systemd.enable = true;
       package = inputs.caelestia-shell.packages.${pkgs.stdenv.hostPlatform.system}.with-cli.overrideAttrs (old: {
-        patches = (old.patches or []) ++ [./caelestia-calc.patch ./caelestia-search.patch ./caelestia-tabs-files.patch ./caelestia-gpu-card.patch];
+        patches = (old.patches or []) ++ [./caelestia-calc.patch ./caelestia-search.patch ./caelestia-tabs-files.patch ./caelestia-gpu-card.patch ./caelestia-lock-corners.patch];
         postInstall =
           old.postInstall
           + ''
