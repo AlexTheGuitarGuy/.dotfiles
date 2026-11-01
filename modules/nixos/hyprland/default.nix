@@ -16,6 +16,7 @@
         librewolf.enable = false;
         gnome.enable = false;
         kde.enable = false;
+        ghostty.enable = false;
       };
     };
 

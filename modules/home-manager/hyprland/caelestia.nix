@@ -24,6 +24,15 @@
       primaryFixedDim = "cba6f7";
       onPrimaryFixed = "290250";
       onPrimaryFixedVariant = "57377f";
+      secondary_paletteKeyColor = "8a68b3";
+      secondary = "cba6f7";
+      onSecondary = "3f1e66";
+      secondaryContainer = "57377f";
+      onSecondaryContainer = "caa5f6";
+      secondaryFixed = "eedcff";
+      secondaryFixedDim = "cba6f7";
+      onSecondaryFixed = "290250";
+      onSecondaryFixedVariant = "57377f";
     })} '.colours += $accent' "$scheme" > "$tmp"
     ${pkgs.coreutils}/bin/mv "$tmp" "$scheme"
   '';
