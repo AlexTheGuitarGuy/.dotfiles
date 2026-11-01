@@ -31,7 +31,7 @@
 
     hyprland = {
       autostart = [
-        "ghostty --class=com.mitchellh.ghostty.home"
+        "ghostty --class=com.mitchellh.ghostty.home -e herdr"
         "librewolf"
         "bruno"
         "podman-desktop"
@@ -51,11 +51,11 @@
         }
         {
           class = "bruno";
-          workspace = "3";
+          workspace = "5";
         }
         {
           class = "podman-desktop";
-          workspace = "5";
+          workspace = "6";
         }
         {
           class = "slack";
