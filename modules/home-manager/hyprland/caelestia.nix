@@ -32,13 +32,14 @@ in {
             base = 0.9;
             layers = 0.55;
           };
-          font = {
-            family = {
-              sans = "JetBrainsMono Nerd Font";
-              mono = "JetBrainsMono Nerd Font Mono";
+          font =
+            lib.genAttrs ["headline" "title" "body" "label"] (_: {family = "JetBrainsMono Nerd Font";})
+            // {
+              mono.family = "JetBrainsMono Nerd Font Mono";
+              clock = "JetBrainsMono Nerd Font";
+              workspaces = "JetBrainsMono Nerd Font";
+              scale = shellScale;
             };
-            scale = shellScale;
-          };
           padding.scale = shellScale;
           spacing.scale = shellScale;
           rounding.scale = shellScale;
@@ -114,8 +115,8 @@ in {
         # Empty location: caelestia finds the city from the IP address.
         services = {
           weatherLocation = "";
-          useFahrenheit = false;
-          useTwelveHourClock = false;
+          weatherUnits = "Celsius";
+          clockFormat = "TwentyFourHour";
           maxVolume = 1.0;
           defaultPlayer = "Spotify";
         };

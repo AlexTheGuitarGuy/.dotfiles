@@ -1,6 +1,6 @@
 diff -ruN a/modules/launcher/AppList.qml b/modules/launcher/AppList.qml
 --- a/modules/launcher/AppList.qml	2026-11-01 03:52:40.619292379 +0200
-+++ b/modules/launcher/AppList.qml	2026-11-01 03:54:21.162284788 +0200
++++ b/modules/launcher/AppList.qml	2026-11-01 04:05:42.561414098 +0200
 @@ -57,7 +57,7 @@
          case "variant":
              return M3Variants.query(text);
@@ -10,7 +10,19 @@ diff -ruN a/modules/launcher/AppList.qml b/modules/launcher/AppList.qml
          }
      }
  
-@@ -103,7 +103,7 @@
+@@ -96,14 +96,18 @@
+             Schemes.reload();
+     }
+ 
+-    Component.onCompleted: displayText = search.text
++    Component.onCompleted: {
++        displayText = search.text;
++        Tabs.refresh();
++        Files.refresh();
++    }
+ 
+     states: [
+         State {
              name: "apps"
  
              PropertyChanges {
@@ -19,7 +31,7 @@ diff -ruN a/modules/launcher/AppList.qml b/modules/launcher/AppList.qml
              }
          },
          State {
-@@ -255,9 +255,9 @@
+@@ -255,9 +259,9 @@
      }
  
      Component {
@@ -31,7 +43,7 @@ diff -ruN a/modules/launcher/AppList.qml b/modules/launcher/AppList.qml
              screenState: root.screenState
          }
      }
-@@ -297,6 +297,7 @@
+@@ -297,6 +301,7 @@
      Connections {
          function onTextChanged() {
              root.syncDisplayText();
@@ -39,7 +51,7 @@ diff -ruN a/modules/launcher/AppList.qml b/modules/launcher/AppList.qml
          }
  
          target: root.search
-@@ -305,6 +306,10 @@
+@@ -305,6 +310,10 @@
      Connections {
          function onLauncherChanged() {
              root.syncDisplayText();
