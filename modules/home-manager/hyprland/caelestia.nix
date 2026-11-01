@@ -8,6 +8,25 @@
   cli = config.programs.caelestia.cli.package;
   wallpaperDir = "${config.xdg.dataHome}/caelestia/wallpapers";
   wallpaper = "${wallpaperDir}/wallpaper.png";
+
+  mauveAccent = pkgs.writeShellScript "caelestia-mauve-accent" ''
+    scheme="${config.xdg.stateHome}/caelestia/scheme.json"
+    tmp="$(${pkgs.coreutils}/bin/mktemp "$scheme.XXXXXX")"
+    ${lib.getExe pkgs.jq} --argjson accent ${lib.escapeShellArg (builtins.toJSON {
+      primary_paletteKeyColor = "8967b3";
+      surfaceTint = "cba6f7";
+      primary = "cba6f7";
+      onPrimary = "3f1f66";
+      primaryContainer = "8967b3";
+      onPrimaryContainer = "ffffff";
+      inversePrimary = "704f99";
+      primaryFixed = "eedbff";
+      primaryFixedDim = "cba6f7";
+      onPrimaryFixed = "290250";
+      onPrimaryFixedVariant = "57377f";
+    })} '.colours += $accent' "$scheme" > "$tmp"
+    ${pkgs.coreutils}/bin/mv "$tmp" "$scheme"
+  '';
 in {
   imports = [inputs.caelestia-shell.homeManagerModules.default];
 
@@ -153,6 +172,7 @@ in {
     # Seed the color scheme and wallpaper before the shell starts.
     systemd.user.services.caelestia.Service.ExecStartPre = [
       "${cli}/bin/caelestia scheme set -n catppuccin -f mocha -m dark"
+      "${mauveAccent}"
       "${pkgs.bash}/bin/bash -c '[ -s ${config.xdg.stateHome}/caelestia/wallpaper/path.txt ] || ${cli}/bin/caelestia wallpaper -f ${wallpaper} -N'"
     ];
   };

@@ -12,7 +12,6 @@
         font-family = "JetBrainsMono Nerd Font";
         font-size = 12;
         app-notifications = "no-clipboard-copy";
-        theme = "light:Catppuccin Latte,dark:Catppuccin Mocha";
         window-decoration = false;
       };
     };

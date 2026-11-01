@@ -11,11 +11,11 @@
     home-manager.users.${user} = {
       dotfiles.hyprland.enable = true;
       stylix.targets = {
-        gtk.enable = true;
-        qt.enable = true;
-        hyprland.enable = true;
-        yazi.enable = true;
-        fuzzel.enable = true;
+        neovim.enable = false;
+        firefox.enable = false;
+        librewolf.enable = false;
+        gnome.enable = false;
+        kde.enable = false;
       };
     };
 
@@ -48,10 +48,9 @@
       (lib.hiPrio (pkgs.writeShellScriptBin "xdg-open" ''exec ${lib.getExe' pkgs.glib "gio"} open "$@"''))
     ];
 
-    # Only GTK, Qt, Hyprland borders and yazi; the other tools carry their own Catppuccin themes.
     stylix = {
       enable = true;
-      autoEnable = false;
+      autoEnable = true;
       base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
       polarity = "dark";
       fonts = {
@@ -61,13 +60,6 @@
         };
       };
       fonts.sizes.popups = 10;
-      targets = {
-        gtk.enable = true;
-        qt.enable = true;
-        fontconfig.enable = true;
-        font-packages.enable = true;
-        console.enable = true;
-      };
     };
 
     fonts = {

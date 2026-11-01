@@ -58,22 +58,6 @@
             }
           ];
         };
-        gui = {
-          theme = {
-            activeBorderColor = ["#89b4fa" "bold"];
-            cherryPickedCommitBgColor = ["#45475a"];
-            cherryPickedCommitFgColor = ["#89b4fa"];
-            defaultFgColor = ["#cdd6f4"];
-            inactiveBorderColor = ["#a6adc8"];
-            inactiveViewSelectedLineBgColor = ["#6c7086"];
-            markedBaseCommitBgColor = ["#f9e2af"];
-            markedBaseCommitFgColor = ["#89b4fa"];
-            optionsTextColor = ["#89b4fa"];
-            searchingActiveBorderColor = ["#f9e2af"];
-            selectedLineBgColor = ["#313244"];
-            unstagedChangesColor = ["#f38ba8"];
-          };
-        };
         keybinding = {universal = {suspendApp = "<disabled>";};};
         os = {
           editPreset = "nvim";
