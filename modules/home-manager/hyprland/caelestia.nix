@@ -31,6 +31,7 @@ in {
             base = 0.9;
             layers = 0.55;
           };
+          font = lib.genAttrs ["body" "label"] (_: {family = "JetBrainsMono Nerd Font";});
         };
 
         border.rounding = 25;
