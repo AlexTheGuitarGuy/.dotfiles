@@ -1,3 +1,6 @@
 {
-  "plugin": ["./herdr-tui-session.js"]
+  "plugin": [
+    "./herdr-tui-session.js"
+  ],
+  "theme": "catppuccin"
 }

@@ -27,7 +27,7 @@
     services.greetd = {
       enable = true;
       settings.default_session = {
-        command = "${lib.getExe pkgs.tuigreet} --time --cmd ${lib.getExe' config.programs.hyprland.package "start-hyprland"}";
+        command = "${lib.getExe pkgs.tuigreet} --time --theme 'border=magenta;text=white;prompt=blue;time=cyan;action=blue;button=magenta;input=white' --cmd ${lib.getExe' config.programs.hyprland.package "start-hyprland"}";
         user = "greeter";
       };
     };
@@ -67,6 +67,7 @@
         qt.enable = true;
         fontconfig.enable = true;
         font-packages.enable = true;
+        console.enable = true;
       };
     };
 
