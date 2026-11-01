@@ -22,13 +22,25 @@
 in {
   imports = [./caelestia.nix];
 
-  options.dotfiles.hyprland.enable = lib.mkEnableOption "Hyprland user config";
+  options.dotfiles.hyprland = {
+    enable = lib.mkEnableOption "Hyprland user config";
+    autostart = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      example = ["Telegram" "spotify"];
+      description = "Commands started once when Hyprland starts.";
+    };
+  };
 
   config = lib.mkIf config.dotfiles.hyprland.enable {
     wayland.windowManager.hyprland = {
       enable = true;
       package = null;
       portalPackage = null;
+      extraConfig = lib.optionalString (config.dotfiles.hyprland.autostart != []) ''
+        hl.on("hyprland.start", function()
+        ${lib.concatMapStrings (cmd: "  hl.exec_cmd(${builtins.toJSON cmd})\n") config.dotfiles.hyprland.autostart}end)
+      '';
       settings = {
         mod._var = "SUPER";
 
@@ -102,6 +114,13 @@ in {
 
         window_rule = [
           {match.class = "^(spotify)$"; workspace = "19 silent";}
+          {
+            match = {
+              class = "^(org\\.telegram\\.desktop)$";
+              initial_title = "^(Telegram)$";
+            };
+            workspace = "20 silent";
+          }
         ];
 
         monitor = {output = ""; mode = "preferred"; position = "auto"; scale = 1;};
