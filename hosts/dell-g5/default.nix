@@ -13,7 +13,11 @@
   # Intel UHD 630 drives the desktop and the laptop screen; the RTX 2060 (external HDMI/DP ports)
   # runs apps started with `nvidia-offload`.
   services.xserver.videoDrivers = ["modesetting" "nvidia"];
-  hardware.graphics.enable = true;
+  hardware.graphics = {
+    enable = true;
+    extraPackages = [pkgs.intel-media-driver];
+  };
+  environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
   hardware.nvidia = {
     open = true;
     modesetting.enable = true;
@@ -60,7 +64,6 @@
     LC_TELEPHONE = "ro_RO.UTF-8";
     LC_TIME = "ro_RO.UTF-8";
   };
-
 
   users.users.${user} = {
     isNormalUser = true;
