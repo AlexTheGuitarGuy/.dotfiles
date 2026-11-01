@@ -1,0 +1,45 @@
+diff -ru a/modules/launcher/AppList.qml b/modules/launcher/AppList.qml
+--- a/modules/launcher/AppList.qml	2026-11-01 03:12:17.749823631 +0200
++++ b/modules/launcher/AppList.qml	2026-11-01 03:12:34.973708042 +0200
+@@ -36,9 +36,16 @@
+             return "actions";
+         }
+ 
++        if (isMath(text))
++            return "calc";
++
+         return "apps";
+     }
+ 
++    function isMath(text: string): bool {
++        return /^[-(]*\d[\d.,]*(\s*[-+*\/^%(×÷]|\s+[a-zA-Z$€£])/.test(text);
++    }
++
+     function resultsForText(text: string): var {
+         switch (stateForText(text)) {
+         case "actions":
+diff -ru a/modules/launcher/Content.qml b/modules/launcher/Content.qml
+--- a/modules/launcher/Content.qml	2026-11-01 03:12:17.750107399 +0200
++++ b/modules/launcher/Content.qml	2026-11-01 03:12:39.722915584 +0200
+@@ -74,6 +74,8 @@
+                         currentItem.onClicked();
+                     else
+                         currentItem.modelData.onClicked(list.currentList);
++                } else if (list.currentList?.isMath(text)) {
++                    currentItem.onClicked();
+                 } else {
+                     Apps.launch(currentItem.modelData);
+                     root.screenState.launcher = false;
+diff -ru a/modules/launcher/items/CalcItem.qml b/modules/launcher/items/CalcItem.qml
+--- a/modules/launcher/items/CalcItem.qml	2026-11-01 03:12:17.751948258 +0200
++++ b/modules/launcher/items/CalcItem.qml	2026-11-01 03:12:37.542820415 +0200
+@@ -11,7 +11,8 @@
+     id: root
+ 
+     required property var list
+-    readonly property string math: list.search.text.slice(`${GlobalConfig.launcher.actionPrefix}calc `.length)
++    readonly property string calcPrefix: `${GlobalConfig.launcher.actionPrefix}calc `
++    readonly property string math: list.search.text.startsWith(calcPrefix) ? list.search.text.slice(calcPrefix.length) : list.search.text
+ 
+     function onClicked(): void {
+         Quickshell.execDetached(["wl-copy", Qalculator.rawResult]);

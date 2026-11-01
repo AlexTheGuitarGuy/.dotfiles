@@ -15,6 +15,9 @@ in {
     programs.caelestia = {
       enable = true;
       systemd.enable = true;
+      package = inputs.caelestia-shell.packages.${pkgs.stdenv.hostPlatform.system}.with-cli.overrideAttrs (old: {
+        patches = (old.patches or []) ++ [./caelestia-calc.patch];
+      });
 
       settings = {
         appearance = {
