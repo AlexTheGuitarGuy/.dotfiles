@@ -111,5 +111,9 @@ in {
         run ${pkgs.xdg-utils}/bin/xdg-mime default ${app} ${lib.concatStringsSep " " types}
       '')
       defaultApps));
+
+    home.activation.godotNvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      run ${lib.getExe godot-nvim} setup || true
+    '';
   };
 }

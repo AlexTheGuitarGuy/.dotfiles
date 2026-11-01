@@ -49,7 +49,7 @@ start_in_herdr() {
 
 ghostty_window() {
   hyprctl clients -j | jq -r --arg title "$1" \
-    '[.[] | select(.class == "com.mitchellh.ghostty" and (.title | startswith($title)))][-1].address // empty'
+    '[.[] | select((.class | startswith("com.mitchellh.ghostty")) and (.title | startswith($title)))][-1].address // empty'
 }
 
 focus_terminal() {
