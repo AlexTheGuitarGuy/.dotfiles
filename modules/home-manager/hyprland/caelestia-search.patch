@@ -1,0 +1,26 @@
+diff -ru a/modules/launcher/services/Apps.qml b/modules/launcher/services/Apps.qml
+--- a/modules/launcher/services/Apps.qml	2026-11-01 03:14:44.395562699 +0200
++++ b/modules/launcher/services/Apps.qml	2026-11-01 03:14:44.409628773 +0200
+@@ -45,8 +45,8 @@
+             keys = ["keywords", "name"];
+             weights = [0.9, 0.1];
+         } else {
+-            keys = ["name"];
+-            weights = [1];
++            keys = ["name", "genericName", "keywords", "comment", "categories"];
++            weights = [1, 0.5, 0.5, 0.3, 0.2];
+ 
+             if (!search.startsWith(`${prefix}t `))
+                 return query(search).map(e => e.entry);
+diff -ru a/utils/Searcher.qml b/utils/Searcher.qml
+--- a/utils/Searcher.qml	2026-11-01 03:14:44.397634451 +0200
++++ b/utils/Searcher.qml	2026-11-01 03:14:44.412306839 +0200
+@@ -21,7 +21,7 @@
+             _item: e
+         };
+         for (const k of keys)
+-            obj[k] = Fuzzy.prepare(e[k]);
++            obj[k] = Fuzzy.prepare([].concat(e[k] ?? []).join(" "));
+         return obj;
+     }) : []
+ 
