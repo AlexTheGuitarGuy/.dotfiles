@@ -83,8 +83,8 @@ in {
 
         config = {
           general = {
-            gaps_in = unscaled 5;
-            gaps_out = unscaled 20;
+            gaps_in = unscaled 3;
+            gaps_out = unscaled 8;
             border_size = unscaled 5;
             resize_on_border = false;
             allow_tearing = false;
