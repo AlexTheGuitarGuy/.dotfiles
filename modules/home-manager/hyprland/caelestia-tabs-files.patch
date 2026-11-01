@@ -1,6 +1,6 @@
 diff -ruN a/modules/launcher/AppList.qml b/modules/launcher/AppList.qml
---- a/modules/launcher/AppList.qml	2026-11-01 03:52:40.619292379 +0200
-+++ b/modules/launcher/AppList.qml	2026-11-01 04:05:42.561414098 +0200
+--- a/modules/launcher/AppList.qml
++++ b/modules/launcher/AppList.qml
 @@ -57,7 +57,7 @@
          case "variant":
              return M3Variants.query(text);
@@ -63,8 +63,8 @@ diff -ruN a/modules/launcher/AppList.qml b/modules/launcher/AppList.qml
  
          target: root.screenState
 diff -ruN a/modules/launcher/Content.qml b/modules/launcher/Content.qml
---- a/modules/launcher/Content.qml	2026-11-01 03:52:40.620211612 +0200
-+++ b/modules/launcher/Content.qml	2026-11-01 03:54:26.645496202 +0200
+--- a/modules/launcher/Content.qml
++++ b/modules/launcher/Content.qml
 @@ -76,6 +76,8 @@
                          currentItem.modelData.onClicked(list.currentList);
                  } else if (list.currentList?.isMath(text)) {
@@ -89,8 +89,8 @@ diff -ruN a/modules/launcher/Content.qml b/modules/launcher/Content.qml
                  return;
  
 diff -ruN a/modules/launcher/items/MixedItem.qml b/modules/launcher/items/MixedItem.qml
---- a/modules/launcher/items/MixedItem.qml	1970-01-01 03:00:00.000000000 +0300
-+++ b/modules/launcher/items/MixedItem.qml	2026-11-01 03:53:58.804416324 +0200
+--- a/modules/launcher/items/MixedItem.qml
++++ b/modules/launcher/items/MixedItem.qml
 @@ -0,0 +1,44 @@
 +import QtQuick
 +import Caelestia.Config
@@ -137,10 +137,12 @@ diff -ruN a/modules/launcher/items/MixedItem.qml b/modules/launcher/items/MixedI
 +    }
 +}
 diff -ruN a/modules/launcher/items/ResultItem.qml b/modules/launcher/items/ResultItem.qml
---- a/modules/launcher/items/ResultItem.qml	1970-01-01 03:00:00.000000000 +0300
-+++ b/modules/launcher/items/ResultItem.qml	2026-11-01 03:54:09.543834784 +0200
-@@ -0,0 +1,77 @@
+--- a/modules/launcher/items/ResultItem.qml
++++ b/modules/launcher/items/ResultItem.qml
+@@ -0,0 +1,107 @@
 +import QtQuick
++import Quickshell
++import Quickshell.Widgets
 +import Caelestia.Config
 +import qs.components
 +import qs.services
@@ -151,6 +153,21 @@ diff -ruN a/modules/launcher/items/ResultItem.qml b/modules/launcher/items/Resul
 +
 +    required property var modelData
 +    required property ScreenState screenState
++
++    function fileIcon(): string {
++        if (modelData.kind === "folder")
++            return "folder";
++        const ext = modelData.path.split(".").pop().toLowerCase();
++        const types = {
++            image: ["png", "jpg", "jpeg", "gif", "webp", "svg", "bmp", "avif", "heic"],
++            movie: ["mp4", "mkv", "webm", "mov", "avi"],
++            music_note: ["mp3", "flac", "ogg", "wav", "m4a", "opus"],
++            picture_as_pdf: ["pdf"],
++            folder_zip: ["zip", "tar", "gz", "xz", "7z", "rar", "zst"],
++            code: ["js", "ts", "tsx", "jsx", "py", "nix", "lua", "sh", "nu", "rs", "go", "java", "c", "cpp", "h", "json", "yaml", "yml", "toml", "qml", "css", "html"]
++        };
++        return Object.keys(types).find(icon => types[icon].includes(ext)) ?? "draft";
++    }
 +
 +    function activate(): void {
 +        if (modelData.kind === "tab")
@@ -176,14 +193,27 @@ diff -ruN a/modules/launcher/items/ResultItem.qml b/modules/launcher/items/Resul
 +        anchors.rightMargin: Tokens.padding.medium
 +        anchors.margins: Tokens.padding.small
 +
-+        MaterialIcon {
++        Item {
 +            id: icon
 +
-+            text: root.modelData.kind === "tab" ? "tab" : root.modelData.kind === "folder" ? "folder" : "description"
-+            color: Colours.palette.m3onSurfaceVariant
-+            fontStyle: Tokens.font.icon.builders.large.scale(1.3).build()
-+
++            implicitWidth: parent.height * 0.8
++            implicitHeight: implicitWidth
 +            anchors.verticalCenter: parent.verticalCenter
++
++            IconImage {
++                visible: root.modelData.kind === "tab"
++                anchors.fill: parent
++                asynchronous: true
++                source: visible ? Quickshell.iconPath("librewolf", "web-browser") : ""
++            }
++
++            MaterialIcon {
++                visible: root.modelData.kind !== "tab"
++                anchors.centerIn: parent
++                text: visible ? root.fileIcon() : ""
++                color: Colours.palette.m3onSurfaceVariant
++                fontStyle: Tokens.font.icon.builders.large.scale(1.3).build()
++            }
 +        }
 +
 +        Item {
@@ -218,8 +248,8 @@ diff -ruN a/modules/launcher/items/ResultItem.qml b/modules/launcher/items/Resul
 +    }
 +}
 diff -ruN a/modules/launcher/services/Files.qml b/modules/launcher/services/Files.qml
---- a/modules/launcher/services/Files.qml	1970-01-01 03:00:00.000000000 +0300
-+++ b/modules/launcher/services/Files.qml	2026-11-01 03:53:49.216040638 +0200
+--- a/modules/launcher/services/Files.qml
++++ b/modules/launcher/services/Files.qml
 @@ -0,0 +1,68 @@
 +pragma Singleton
 +
@@ -290,8 +320,8 @@ diff -ruN a/modules/launcher/services/Files.qml b/modules/launcher/services/File
 +    }
 +}
 diff -ruN a/modules/launcher/services/Tabs.qml b/modules/launcher/services/Tabs.qml
---- a/modules/launcher/services/Tabs.qml	1970-01-01 03:00:00.000000000 +0300
-+++ b/modules/launcher/services/Tabs.qml	2026-11-01 03:53:43.216804567 +0200
+--- a/modules/launcher/services/Tabs.qml
++++ b/modules/launcher/services/Tabs.qml
 @@ -0,0 +1,52 @@
 +pragma Singleton
 +
