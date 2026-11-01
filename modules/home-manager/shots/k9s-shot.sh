@@ -7,7 +7,7 @@ args=(); while [ "$1" != "--" ]; do args+=("$1"); shift; done; shift
 cfg=$(mktemp -d); sock="k9s-shot-$$"; class="shot.k9s.p$$"
 client() { hyprctl clients -j | jq -c --arg c "$class" '.[] | select(.class == $c)'; }
 prev=$(hyprctl activeworkspace -j | jq -r .id)
-trap 'tmux -L "$sock" kill-server 2>/dev/null; rm -rf "$cfg"; for _ in $(seq 1 20); do [ -n "$(client)" ] || break; sleep 0.25; done; hyprctl dispatch "hl.dsp.focus({ workspace = \"$prev\" })" >/dev/null' EXIT
+trap 'tmux -L "$sock" kill-server 2>/dev/null; rm -rf "$cfg"; for _ in $(seq 1 20); do [ -n "$(client)" ] || break; sleep 0.25; done; hyprctl eval "hl.config({ cursor = { invisible = false } })" >/dev/null; hyprctl dispatch "hl.dsp.focus({ workspace = \"$prev\" })" >/dev/null' EXIT
 cp -rL "${K9S_CONFIG_DIR:-$HOME/.config/k9s}/." "$cfg/"
 chmod -R u+w "$cfg"
 sed -i -E 's/^(\s*tail:\s*)[0-9]+/\150000/; s/^(\s*buffer:\s*)[0-9]+/\150000/; s/^(\s*skipLatestRevCheck:\s*).*/\1true/' "$cfg/config.yaml"
@@ -51,7 +51,9 @@ for a in "$@"; do
               active && break
             done
             active || { echo "k9s-shot: window not on top, no shot" >&2; exit 1; }
+            hyprctl eval "hl.config({ cursor = { invisible = true } })" >/dev/null; sleep 1
             grim -g "$(client | jq -r '"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"')" "$(realpath -m "${a#shot:}")"
+            hyprctl eval "hl.config({ cursor = { invisible = false } })" >/dev/null
             active || { rm -f "$(realpath -m "${a#shot:}")"; echo "k9s-shot: window lost focus during shot, discarded" >&2; exit 1; }
             echo "${a#shot:}" ;;
   esac
