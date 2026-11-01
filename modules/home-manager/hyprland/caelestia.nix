@@ -8,20 +8,6 @@
   cli = config.programs.caelestia.cli.package;
   wallpaperDir = "${config.xdg.dataHome}/caelestia/wallpapers";
   wallpaper = "${wallpaperDir}/wallpaper.png";
-  shellScale = 1.0 / config.dotfiles.hyprland.scale;
-  shellPx = px: builtins.floor (px * shellScale + 0.5);
-
-  shellTokens = pkgs.runCommand "caelestia-shell-tokens.json" {nativeBuildInputs = [pkgs.gawk pkgs.jq];} ''
-    awk -v scale=${toString shellScale} '
-      /^class [A-Za-z]+ : / { cls = $2 }
-      cls == "SizeTokens" && match($0, /CONFIG_SUBOBJECT\(([A-Za-z]+), ([A-Za-z]+)\)/, m) { key[m[1]] = m[2] }
-      match($0, /CONFIG_(GLOBAL_)?PROPERTY\((int|qreal), ([A-Za-z]+), ([0-9.]+)\)/, m) && m[3] !~ /Sweep$|^heightMult$|^ratio$/ {
-        n++; pcls[n] = cls; pname[n] = m[3]; pval[n] = (m[2] == "int") ? int(m[4] * scale + 0.5) : m[4] * scale
-      }
-      END { for (i = 1; i <= n; i++) if (pcls[i] in key) print key[pcls[i]], pname[i], pval[i] }
-    ' ${inputs.caelestia-shell}/plugin/src/Caelestia/Config/tokens.hpp \
-      | jq -Rn '{sizes: (reduce (inputs | split(" ")) as [$g, $k, $v] ({}; .[$g][$k] = ($v | tonumber)))}' > $out
-  '';
 in {
   imports = [inputs.caelestia-shell.homeManagerModules.default];
 
@@ -51,17 +37,10 @@ in {
               mono.family = "JetBrainsMono Nerd Font Mono";
               clock = "JetBrainsMono Nerd Font";
               workspaces = "JetBrainsMono Nerd Font";
-              scale = shellScale;
             };
-          padding.scale = shellScale;
-          spacing.scale = shellScale;
-          rounding.scale = shellScale;
         };
 
-        border = {
-          rounding = shellPx 25;
-          thickness = shellPx 10;
-        };
+        border.rounding = 25;
 
         background = {
           enabled = true;
@@ -87,7 +66,7 @@ in {
 
         general = {
           apps = {
-            terminal = ["ghostty"];
+            terminal = ["ghostty" "-e"];
             audio = ["pavucontrol"];
             playback = ["mpv"];
             explorer = ["ghostty" "-e" "yazi"];
@@ -167,7 +146,6 @@ in {
 
     # Caelestia rewrites shell.json at runtime, so replace the store link with a writable copy.
     xdg.configFile."caelestia/shell.json".force = true;
-    xdg.configFile."caelestia/shell-tokens.json" = lib.mkIf (config.dotfiles.hyprland.scale != 1.0) {source = shellTokens;};
     home.activation.caelestiaWritableSettings = lib.hm.dag.entryBetween ["reloadSystemd"] ["linkGeneration"] ''
       config_file="${config.xdg.configHome}/caelestia/shell.json"
       if [ -L "$config_file" ]; then

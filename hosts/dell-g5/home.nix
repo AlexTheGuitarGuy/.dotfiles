@@ -11,7 +11,6 @@
     gh.enable = true;
     gh-dash.enable = true;
     herdr.enable = true;
-    hyprland.scale = 1.25;
     journal.enable = true;
     ghostty.enable = true;
     git.enable = true;
