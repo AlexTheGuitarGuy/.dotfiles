@@ -39,6 +39,11 @@ in {
       default = "${configPath}/default";
       description = "The LibreWolf profile directory, relative to home. Other modules link profile files here.";
     };
+    fingerprintingExemptions = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [];
+      description = "Base domains that get no fingerprinting protection (privacy.fingerprintingProtection.granularOverrides).";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -49,12 +54,19 @@ in {
         id = 0;
         path = "default";
         isDefault = true;
+        settings."privacy.fingerprintingProtection.granularOverrides" = builtins.toJSON (map (domain: {
+            firstPartyDomain = domain;
+            overrides = "-AllTargets";
+          })
+          cfg.fingerprintingExemptions);
       };
       policies.ExtensionSettings."brotab_mediator@example.org" = {
         installation_mode = "normal_installed";
         install_url = "https://addons.mozilla.org/firefox/downloads/latest/brotab/latest.xpi";
       };
     };
+
+    dotfiles.librewolf.fingerprintingExemptions = ["google.com"];
 
     mozilla.firefoxNativeMessagingHosts = [pkgs.tridactyl-native onePasswordHost brotabHost];
 

@@ -86,6 +86,6 @@ Restart LibreWolf once (Ctrl+Q, then start it) and check:
 | Problem | Fix |
 |---|---|
 | QR codes or maps look striped | Click the canvas icon in the address bar, allow, reload |
-| Wrong timezone or odd layout on a site | Add the site's base domain to `privacy.fingerprintingProtection.granularOverrides` in the profile's `user.js` (kept outside this repo), for example `[{"firstPartyDomain":"example.com","overrides":"-AllTargets"}]`. `localhost` and IPs can't be listed |
+| Wrong timezone or odd layout on a site | Add the site's base domain to `dotfiles.librewolf.fingerprintingExemptions` (personal sites here, work sites in the work overlay); it becomes `privacy.fingerprintingProtection.granularOverrides`. Subdomains and paths can't be told apart (`meet.google.com` and `google.com/maps` are both `google.com`); `localhost` and IPs can't be listed |
 | Sites ignore dark mode | Sites see the real dark preference (`-CSSPrefersColorScheme`); Dark Reader for sites without a dark theme |
 | A site breaks because something is blocked | Shield icon next to the address bar, turn off tracking protection for that site |
