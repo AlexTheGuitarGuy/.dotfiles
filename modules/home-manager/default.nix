@@ -8,6 +8,7 @@
     ./btop
     ./bruno
     ./claude
+    ./cli
     ./fastfetch
     ./gh
     ./gh-dash

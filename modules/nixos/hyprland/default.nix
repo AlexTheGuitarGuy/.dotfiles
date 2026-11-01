@@ -67,6 +67,10 @@
       enableDefaultPackages = true;
       packages = [
         pkgs.nerd-fonts.jetbrains-mono
+        pkgs.nerd-fonts.fantasque-sans-mono
+        pkgs.fantasque-sans-mono
+        pkgs.victor-mono
+        pkgs.poppins
         (pkgs.runCommand "google-sans-flex" {} ''
           install -Dm444 ${pkgs.fetchurl {
             name = "GoogleSansFlex.ttf";

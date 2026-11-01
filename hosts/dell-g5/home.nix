@@ -7,6 +7,7 @@
     btop.enable = true;
     bruno.enable = true;
     claude.enable = true;
+    cli.enable = true;
     fastfetch.enable = true;
     gh.enable = true;
     gh-dash.enable = true;
