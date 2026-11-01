@@ -22,6 +22,18 @@
 
   screenshot = "hyprshot --mode region --raw --freeze | satty --filename - --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard --output-filename ~/Pictures/Screenshots/satty-%Y%m%d-%H%M%S.png";
 
+  pinnedApps = [
+    {
+      class = "spotify";
+      workspace = "19";
+    }
+    {
+      class = "org.telegram.desktop";
+      initial_title = "Telegram";
+      workspace = "20";
+    }
+  ];
+
   gapsOut = 8;
   borderSize = 5;
 in {
@@ -42,10 +54,21 @@ in {
       enable = true;
       package = null;
       portalPackage = null;
-      extraConfig = lib.optionalString (config.dotfiles.hyprland.autostart != []) ''
-        hl.on("hyprland.start", function()
-        ${lib.concatMapStrings (cmd: "  hl.exec_cmd(${builtins.toJSON cmd})\n") config.dotfiles.hyprland.autostart}end)
-      '';
+      extraConfig =
+        lib.optionalString (config.dotfiles.hyprland.autostart != []) ''
+          hl.on("hyprland.start", function()
+          ${lib.concatMapStrings (cmd: "  hl.exec_cmd(${builtins.toJSON cmd})\n") config.dotfiles.hyprland.autostart}end)
+        ''
+        + ''
+          local pinned = ${lib.generators.toLua {} pinnedApps}
+          hl.on("window.move_to_workspace", function(w, ws)
+            for _, app in ipairs(pinned) do
+              if w.class == app.class and (app.initial_title == nil or w.initial_title == app.initial_title) and ws.name ~= app.workspace then
+                hl.dispatch(hl.dsp.window.move({ window = w, workspace = app.workspace, follow = false }))
+              end
+            end
+          end)
+        '';
       settings = {
         mod._var = "SUPER";
 
@@ -118,16 +141,18 @@ in {
           {leaf = "workspaces"; enabled = true; speed = 6; bezier = "default";}
         ];
 
-        window_rule = [
-          {match.class = "^(spotify)$"; workspace = "19 silent";}
-          {
-            match = {
-              class = "^(org\\.telegram\\.desktop)$";
-              initial_title = "^(Telegram)$";
-            };
-            workspace = "20 silent";
-          }
-        ];
+        window_rule =
+          map (app: {
+            match = lib.mapAttrs (_: v: "^(${lib.escapeRegex v})$") (removeAttrs app ["workspace"]);
+            workspace = "${app.workspace} silent";
+          })
+          pinnedApps
+          ++ [
+            {
+              match.class = "^(org\\.telegram\\.desktop)$";
+              suppress_event = "activatefocus";
+            }
+          ];
 
         monitor = {output = ""; mode = "preferred"; position = "auto"; scale = 1;};
       };
