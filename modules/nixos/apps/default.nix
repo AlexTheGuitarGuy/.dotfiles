@@ -35,8 +35,5 @@
       text = "librewolf\n";
       mode = "0755";
     };
-
-    # Smart card daemon for MoldSign's eToken.
-    services.pcscd.enable = true;
   };
 }

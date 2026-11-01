@@ -23,16 +23,6 @@
     };
   };
 
-  # MoldSign has no public download; its folder (bundled JRE, writes its data next to itself)
-  # is copied to ~/Apps/MoldSign by hand. The FHS env gives the JRE and the eToken library
-  # the usual /lib layout plus the X11 and smart card libraries.
-  moldsign = pkgs.buildFHSEnv {
-    name = "moldsign";
-    targetPkgs = p:
-      with p; [pcsclite zlib freetype fontconfig alsa-lib libx11 libxext libxrender libxtst libxi];
-    runScript = "sh ${config.home.homeDirectory}/Apps/MoldSign/MoldSign-Desk.sh";
-  };
-
   defaultApps = {
     "org.gnome.Loupe.desktop" = ["image/png" "image/jpeg" "image/gif" "image/webp" "image/bmp" "image/tiff" "image/avif" "image/heic" "image/svg+xml"];
     "org.pwmt.zathura.desktop" = ["application/pdf"];
@@ -96,7 +86,7 @@ in {
         podman-desktop
         godot_4
       ])
-      ++ [apps2samsung tizenbrew-device-manager tizenbrew-installer moldsign godot-nvim];
+      ++ [apps2samsung tizenbrew-device-manager tizenbrew-installer godot-nvim];
 
     xdg.configFile."xdg-terminals.list".text = "com.mitchellh.ghostty.desktop\n";
 
