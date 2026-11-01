@@ -7,6 +7,9 @@ inputs: {
 in
   [
     {_module.args = {inherit inputs user;};}
+    ({lib, ...}: {
+      system.configurationRevision = lib.mkDefault "dotfiles ${inputs.self.shortRev or inputs.self.dirtyShortRev or "unknown"}";
+    })
     {
       nixpkgs.overlays = [
         (final: prev: {

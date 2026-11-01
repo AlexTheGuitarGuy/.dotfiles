@@ -29,4 +29,6 @@
     ssh.enable = true;
     starship.enable = true;
   };
+
+  programs.caelestia.settings.services.gpuType = "None";
 }
