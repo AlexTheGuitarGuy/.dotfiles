@@ -7,6 +7,7 @@
   lua = lib.generators.mkLuaInline;
   bind = key: dispatcher: {_args = [(lua ''mod .. " + ${key}"'') (lua dispatcher)];};
   mouseBind = key: dispatcher: {_args = [(lua ''mod .. " + ${key}"'') (lua dispatcher) {mouse = true;}];};
+  mediaKey = key: cmd: repeating: {_args = [key (lua ''hl.dsp.exec_cmd("${cmd}")'') {inherit repeating; locked = true;}];};
 
   # Home-row workspaces: a s d f / j k l ; = 1-8, u i o p = 9-12, m , . / = 13-16, q w e r = 17-20.
   workspaceKeys = ["A" "S" "D" "F" "J" "K" "L" "semicolon" "U" "I" "O" "P" "M" "comma" "period" "slash" "Q" "W" "E" "R"];
@@ -43,8 +44,16 @@ in {
             (bind "V" ''hl.dsp.exec_cmd("caelestia clipboard")'')
             (bind "X" ''hl.dsp.exec_cmd("caelestia emoji -p")'')
             (bind "ESCAPE" ''hl.dsp.exec_cmd("caelestia shell lock lock")'')
-            {_args = ["XF86MonBrightnessUp" (lua ''hl.dsp.exec_cmd("brightnessctl set 5%+")'')];}
-            {_args = ["XF86MonBrightnessDown" (lua ''hl.dsp.exec_cmd("brightnessctl set 5%-")'')];}
+            (mediaKey "XF86MonBrightnessUp" "caelestia shell brightness set +5%" true)
+            (mediaKey "XF86MonBrightnessDown" "caelestia shell brightness set 5%-" true)
+            (mediaKey "XF86AudioRaiseVolume" "${pkgs.wireplumber}/bin/wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+" true)
+            (mediaKey "XF86AudioLowerVolume" "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-" true)
+            (mediaKey "XF86AudioMute" "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle" false)
+            (mediaKey "XF86AudioMicMute" "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle" false)
+            (mediaKey "XF86AudioPlay" "caelestia shell mpris playPause" false)
+            (mediaKey "XF86AudioPause" "caelestia shell mpris playPause" false)
+            (mediaKey "XF86AudioNext" "caelestia shell mpris next" false)
+            (mediaKey "XF86AudioPrev" "caelestia shell mpris previous" false)
             {_args = ["ALT + F" (lua ''hl.dsp.window.fullscreen({ action = "toggle" })'')];}
             (mouseBind "mouse:272" "hl.dsp.window.drag()")
             (mouseBind "mouse:273" "hl.dsp.window.resize()")
@@ -93,13 +102,6 @@ in {
 
         window_rule = [
           {match.class = "^(spotify)$"; workspace = "19 silent";}
-          {
-            match = {
-              class = "^(org\\.telegram\\.desktop)$";
-              initial_title = "^(Telegram)$";
-            };
-            workspace = "20 silent";
-          }
         ];
 
         monitor = {output = ""; mode = "preferred"; position = "auto"; scale = 1;};
