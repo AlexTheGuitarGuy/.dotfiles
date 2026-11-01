@@ -64,11 +64,11 @@ in {
         viber
 
         obs-studio
-        kdePackages.kdenlive
         gimp
         mpv
         snapshot
         reaper
+        postgresql_18
         qpwgraph
         aseprite
         renpy
@@ -111,6 +111,9 @@ in {
         run ${pkgs.xdg-utils}/bin/xdg-mime default ${app} ${lib.concatStringsSep " " types}
       '')
       defaultApps));
+
+    home.file.".jdks/jdk-17".source = "${pkgs.jdk17}/lib/openjdk";
+    home.file.".jdks/jdk-25".source = "${pkgs.jdk25}/lib/openjdk";
 
     home.activation.godotNvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run ${lib.getExe godot-nvim} setup || true
