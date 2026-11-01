@@ -44,7 +44,7 @@ in {
       enable = true;
       systemd.enable = true;
       package = inputs.caelestia-shell.packages.${pkgs.stdenv.hostPlatform.system}.with-cli.overrideAttrs (old: {
-        patches = (old.patches or []) ++ [./caelestia-calc.patch ./caelestia-search.patch ./caelestia-tabs-files.patch ./caelestia-gpu-card.patch ./caelestia-lock-corners.patch];
+        patches = (old.patches or []) ++ [./caelestia-calc.patch ./caelestia-search.patch ./caelestia-tabs-files.patch ./caelestia-gpu-card.patch ./caelestia-lock-corners.patch ./caelestia-night-light.patch];
         postInstall =
           old.postInstall
           + ''
@@ -128,6 +128,13 @@ in {
           defaultExpireTimeout = 2000;
           fullscreenExpireTimeout = 2000;
         };
+
+        utilities.quickToggles =
+          map (id: {
+            inherit id;
+            enabled = id != "vpn";
+          })
+          ["wifi" "bluetooth" "mic" "settings" "gameMode" "wallpaperPlaying" "dnd" "nightLight" "vpn"];
 
         paths.wallpaperDir = wallpaperDir;
 

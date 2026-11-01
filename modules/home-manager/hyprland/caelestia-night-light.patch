@@ -1,0 +1,52 @@
+diff -ruN a/modules/utilities/cards/Toggles.qml b/modules/utilities/cards/Toggles.qml
+--- a/modules/utilities/cards/Toggles.qml
++++ b/modules/utilities/cards/Toggles.qml
+@@ -2,7 +2,9 @@
+ 
+ import QtQuick
+ import QtQuick.Layouts
++import Quickshell
+ import Quickshell.Bluetooth
++import Quickshell.Io
+ import Caelestia.Components
+ import Caelestia.Config
+ import Caelestia.I18n
+@@ -146,6 +148,38 @@
+                     }
+                 }
+                 DelegateChoice {
++                    roleValue: "nightLight"
++                    delegate: Toggle {
++                        id: nightLight
++
++                        property bool warm
++
++                        icon: "nightlight"
++                        checked: warm
++                        onClicked: {
++                            warm = !warm;
++                            Quickshell.execDetached(["hyprctl", "hyprsunset", "temperature", warm ? "4000" : "6500"]);
++                        }
++
++                        Process {
++                            id: nightLightQuery
++
++                            running: true
++                            command: ["hyprctl", "hyprsunset", "temperature"]
++                            stdout: StdioCollector {
++                                onStreamFinished: nightLight.warm = parseInt(text) < 6000
++                            }
++                        }
++
++                        Timer {
++                            running: true
++                            repeat: true
++                            interval: 60000
++                            onTriggered: nightLightQuery.running = true
++                        }
++                    }
++                }
++                DelegateChoice {
+                     roleValue: "vpn"
+                     delegate: Toggle {
+                         icon: "vpn_key"
