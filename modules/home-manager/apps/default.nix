@@ -33,6 +33,14 @@
     runScript = "sh ${config.home.homeDirectory}/Apps/MoldSign/MoldSign-Desk.sh";
   };
 
+  defaultApps = {
+    "org.gnome.Loupe.desktop" = ["image/png" "image/jpeg" "image/gif" "image/webp" "image/bmp" "image/tiff" "image/avif" "image/heic" "image/svg+xml"];
+    "org.pwmt.zathura.desktop" = ["application/pdf"];
+    "nvim.desktop" = ["text/plain" "text/markdown" "text/x-csrc" "text/x-python" "application/json" "application/x-yaml" "application/toml" "application/x-shellscript"];
+    "yazi.desktop" = ["inode/directory"];
+    "org.gnome.FileRoller.desktop" = ["application/zip" "application/x-tar" "application/gzip" "application/x-compressed-tar" "application/x-xz-compressed-tar" "application/x-7z-compressed" "application/vnd.rar" "application/x-rar"];
+  };
+
   godot-nvim = pkgs.writeShellApplication {
     name = "godot-nvim";
     runtimeInputs = with pkgs; [jq python3 procps hostname];
@@ -66,6 +74,10 @@ in {
         wineWow64Packages.stable
 
         libreoffice-fresh
+        loupe
+        zathura
+        file-roller
+        xdg-terminal-exec
         qbittorrent
         qalculate-gtk
         proton-vpn
@@ -80,5 +92,12 @@ in {
         mongodb-compass
       ])
       ++ [apps2samsung tizenbrew-device-manager tizenbrew-installer moldsign godot-nvim];
+
+    xdg.configFile."xdg-terminals.list".text = "com.mitchellh.ghostty.desktop\n";
+
+    home.activation.defaultApps = lib.hm.dag.entryAfter ["writeBoundary"] (lib.concatStrings (lib.mapAttrsToList (app: types: ''
+        run ${pkgs.xdg-utils}/bin/xdg-mime default ${app} ${lib.concatStringsSep " " types}
+      '')
+      defaultApps));
   };
 }
