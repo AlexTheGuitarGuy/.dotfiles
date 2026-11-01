@@ -95,6 +95,7 @@ in {
         jetbrains.idea
         jetbrains.datagrip
         mongodb-compass
+        podman-desktop
       ])
       ++ [apps2samsung tizenbrew-device-manager tizenbrew-installer moldsign godot-nvim];
 
