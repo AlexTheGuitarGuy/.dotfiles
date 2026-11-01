@@ -28,6 +28,7 @@ in {
       // link "agents/"
       // link "plugins/"
       // link "herdr-opencode/"
+      // link "themes/"
       // {
         "opencode/plugins/caveman.js".text = ''
           import v1 from "${caveman}/dist/index.js";

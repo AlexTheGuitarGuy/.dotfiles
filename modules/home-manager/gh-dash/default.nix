@@ -140,7 +140,7 @@
             background = {selected = "#313244";};
             border = {
               faint = "#181825";
-              primary = "#89b4fa";
+              primary = "#cba6f7";
               secondary = "#585b70";
             };
             text = {

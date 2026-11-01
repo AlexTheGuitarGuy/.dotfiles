@@ -37,32 +37,32 @@
           }
           {
             key = " DE/WM";
-            keyColor = "blue";
+            keyColor = "magenta";
             type = "wm";
           }
           {
             key = "│ ├󰉼";
-            keyColor = "blue";
+            keyColor = "magenta";
             type = "wmtheme";
           }
           {
             key = "│ ├󰀻";
-            keyColor = "blue";
+            keyColor = "magenta";
             type = "icons";
           }
           {
             key = "│ ├";
-            keyColor = "blue";
+            keyColor = "magenta";
             type = "cursor";
           }
           {
             key = "│ ├";
-            keyColor = "blue";
+            keyColor = "magenta";
             type = "terminalfont";
           }
           {
             key = "│ └";
-            keyColor = "blue";
+            keyColor = "magenta";
             type = "terminal";
           }
           {

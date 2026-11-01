@@ -144,6 +144,10 @@ in {
           auto_switch = true;
           light_name = "catppuccin-latte";
           dark_name = "catppuccin";
+          custom = {
+            light.accent = "#8839ef";
+            dark.accent = "#cba6f7";
+          };
         };
         experimental.pane_history = false;
         advanced.scrollback_limit_bytes = 2000000;

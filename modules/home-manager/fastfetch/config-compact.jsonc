@@ -31,7 +31,7 @@
         {
             "type": "wm",
             "key": " ",
-            "keyColor": "blue"
+            "keyColor": "magenta"
         },
         {
             "type": "shell",
@@ -41,7 +41,7 @@
         {
             "type": "terminal",
             "key": " ",
-            "keyColor": "blue"
+            "keyColor": "magenta"
         },
         /*
         {

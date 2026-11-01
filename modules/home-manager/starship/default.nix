@@ -9,14 +9,22 @@
     programs.starship = {
       enable = true;
       settings = {
-        character = {
-          success_symbol = "[[󰊠](green) ❯](orange)";
-          error_symbol = "[[󰊠](red) ❯](orange)";
+        palette = "catppuccin_mocha";
+        palettes.catppuccin_mocha = {
+          green = "#a6e3a1";
+          lavender = "#b4befe";
+          mauve = "#cba6f7";
+          peach = "#fab387";
+          red = "#f38ba8";
         };
-        git_branch.style = "bold purple";
+        character = {
+          success_symbol = "[[󰊠](green) ❯](peach)";
+          error_symbol = "[[󰊠](red) ❯](peach)";
+        };
+        git_branch.style = "bold mauve";
         directory = {
           truncation_length = 4;
-          style = "bold base07";
+          style = "bold lavender";
         };
       };
     };

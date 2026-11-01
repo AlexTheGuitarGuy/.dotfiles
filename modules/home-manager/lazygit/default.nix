@@ -51,12 +51,28 @@
           }
         ];
         git = {
-          diffRenderers = [
+          pagers = [
             {
               colorArg = "always";
-              command = "delta --paging=never";
+              pager = "delta --paging=never";
             }
           ];
+        };
+        gui = {
+          theme = {
+            activeBorderColor = ["#cba6f7" "bold"];
+            cherryPickedCommitBgColor = ["#45475a"];
+            cherryPickedCommitFgColor = ["#cba6f7"];
+            defaultFgColor = ["#cdd6f4"];
+            inactiveBorderColor = ["#a6adc8"];
+            inactiveViewSelectedLineBgColor = ["#6c7086"];
+            markedBaseCommitBgColor = ["#f9e2af"];
+            markedBaseCommitFgColor = ["#cba6f7"];
+            optionsTextColor = ["#cba6f7"];
+            searchingActiveBorderColor = ["#f9e2af"];
+            selectedLineBgColor = ["#313244"];
+            unstagedChangesColor = ["#f38ba8"];
+          };
         };
         keybinding = {universal = {suspendApp = "<disabled>";};};
         os = {

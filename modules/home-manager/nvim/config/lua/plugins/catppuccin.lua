@@ -8,6 +8,17 @@ return {
   end,
   opts = {
     flavour = 'mocha',
+    integrations = {
+      lualine = {
+        all = function(colors)
+          return {
+            normal = { a = { bg = colors.mauve }, b = { fg = colors.mauve } },
+            visual = { a = { bg = colors.pink }, b = { fg = colors.pink } },
+            inactive = { a = { fg = colors.mauve } },
+          }
+        end,
+      },
+    },
     custom_highlights = function(colors)
       return {
         GitSignsCurrentLineBlame = { fg = colors.overlay2 },
