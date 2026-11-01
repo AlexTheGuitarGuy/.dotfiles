@@ -78,7 +78,16 @@
 
     fonts = {
       enableDefaultPackages = true;
-      packages = [pkgs.nerd-fonts.jetbrains-mono];
+      packages = [
+        pkgs.nerd-fonts.jetbrains-mono
+        (pkgs.runCommand "google-sans-flex" {} ''
+          install -Dm444 ${pkgs.fetchurl {
+            name = "GoogleSansFlex.ttf";
+            url = "https://github.com/google/fonts/raw/6c1dbe27dcf7d817d4b62cec033ba77fa8e2a5ec/ofl/googlesansflex/GoogleSansFlex%5BROND,opsz,slnt,wdth,wght%5D.ttf";
+            hash = "sha256-qax3B5iFfV6KxZPO1Csi5Ap8CM7Jgxn5Kw7Mwng6d7o=";
+          }} $out/share/fonts/truetype/GoogleSansFlex.ttf
+        '')
+      ];
     };
   };
 }

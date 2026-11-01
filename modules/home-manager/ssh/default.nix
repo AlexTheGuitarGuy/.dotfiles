@@ -3,12 +3,16 @@
   config,
   ...
 }: let
-  keys = "${config.home.homeDirectory}/.ssh/keys";
+  ssh = "${config.home.homeDirectory}/.ssh";
 in {
   options.dotfiles.ssh.enable = lib.mkEnableOption "SSH config and keys";
 
   config = lib.mkIf config.dotfiles.ssh.enable {
-    services.ssh-agent.enable = true;
+    sshAuthSock.initialization = {
+      bash = ''export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"'';
+      fish = ''set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gcr/ssh"'';
+      nushell = ''$env.SSH_AUTH_SOCK = $"($env.XDG_RUNTIME_DIR)/gcr/ssh"'';
+    };
 
     programs.ssh = {
       enable = true;
@@ -16,27 +20,25 @@ in {
       settings = {
         "github.com" = {
           HostName = "github.com";
-          IdentityFile = "${keys}/github-personal";
+          IdentityFile = "${ssh}/github-personal";
           IdentitiesOnly = true;
-          AddKeysToAgent = "yes";
         };
         "gitlab.com" = {
           HostName = "gitlab.com";
-          IdentityFile = "${keys}/gitlab-professional";
+          IdentityFile = "${ssh}/gitlab-professional";
           IdentitiesOnly = true;
-          AddKeysToAgent = "yes";
         };
       };
     };
 
-    home.file.".ssh/pubkeys" = {
-      source = ./pubkeys;
-      recursive = true;
+    home.file = {
+      ".ssh/github-personal.pub".source = ./pubkeys/github-personal.pub;
+      ".ssh/gitlab-professional.pub".source = ./pubkeys/gitlab-professional.pub;
     };
 
     sops.secrets = {
-      SSH_KEY_GITHUB_PERSONAL.path = "${keys}/github-personal";
-      SSH_KEY_GITLAB_PROFESSIONAL.path = "${keys}/gitlab-professional";
+      SSH_KEY_GITHUB_PERSONAL.path = "${ssh}/github-personal";
+      SSH_KEY_GITLAB_PROFESSIONAL.path = "${ssh}/gitlab-professional";
     };
   };
 }

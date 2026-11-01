@@ -32,10 +32,9 @@ in {
             layers = 0.55;
           };
           font =
-            lib.genAttrs ["headline" "title" "body" "label"] (_: {family = "JetBrainsMono Nerd Font";})
+            lib.genAttrs ["body" "label"] (_: {family = "JetBrainsMono Nerd Font";})
             // {
               mono.family = "JetBrainsMono Nerd Font Mono";
-              clock = "JetBrainsMono Nerd Font";
               workspaces = "JetBrainsMono Nerd Font";
             };
         };
