@@ -13,6 +13,7 @@
         font-size = 10;
         app-notifications = "no-clipboard-copy";
         theme = "light:Catppuccin Latte,dark:Catppuccin Mocha";
+        window-decoration = false;
       };
     };
   };

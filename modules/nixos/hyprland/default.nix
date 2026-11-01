@@ -53,8 +53,8 @@
           name = "JetBrainsMono Nerd Font Mono";
         };
         sansSerif = {
-          package = pkgs.dejavu_fonts;
-          name = "DejaVu Sans";
+          package = pkgs.nerd-fonts.jetbrains-mono;
+          name = "JetBrainsMono Nerd Font";
         };
         serif = {
           package = pkgs.dejavu_fonts;

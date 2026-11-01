@@ -39,6 +39,11 @@ in {
             (bind "SPACE" ''hl.dsp.global("caelestia:launcher")'')
             (bind "SHIFT + SPACE" ''hl.dsp.exec_cmd("anyrun")'')
             {_args = ["Print" (lua ''hl.dsp.exec_cmd("hyprshot --mode region --clipboard-only --freeze")'')];}
+            (bind "SHIFT + S" ''hl.dsp.exec_cmd("hyprshot --mode region --clipboard-only --freeze")'')
+            (bind "V" ''hl.dsp.exec_cmd("caelestia clipboard")'')
+            (bind "X" ''hl.dsp.exec_cmd("caelestia emoji -p")'')
+            {_args = ["XF86MonBrightnessUp" (lua ''hl.dsp.exec_cmd("brightnessctl set 5%+")'')];}
+            {_args = ["XF86MonBrightnessDown" (lua ''hl.dsp.exec_cmd("brightnessctl set 5%-")'')];}
             {_args = ["ALT + F" (lua ''hl.dsp.window.fullscreen({ action = "toggle" })'')];}
             (mouseBind "mouse:272" "hl.dsp.window.drag()")
             (mouseBind "mouse:273" "hl.dsp.window.resize()")
@@ -71,6 +76,7 @@ in {
           input = {
             kb_layout = "us,ru,ro";
             kb_options = "grp:alt_shift_toggle";
+            touchpad.natural_scroll = true;
           };
         };
 
@@ -86,10 +92,16 @@ in {
 
         window_rule = [
           {match.class = "^(spotify)$"; workspace = "19 silent";}
-          {match.class = "^(org\\.telegram\\.desktop)$"; workspace = "20 silent";}
+          {
+            match = {
+              class = "^(org\\.telegram\\.desktop)$";
+              initial_title = "^(Telegram)$";
+            };
+            workspace = "20 silent";
+          }
         ];
 
-        monitor = {output = ""; mode = "preferred"; position = "auto"; scale = 1;};
+        monitor = {output = ""; mode = "preferred"; position = "auto"; scale = 1.25;};
       };
     };
 
@@ -130,6 +142,14 @@ in {
     programs.yazi.enable = true;
     services.cliphist.enable = true;
 
-    home.packages = with pkgs; [ghostty hyprshot wl-clipboard pavucontrol];
+    home.pointerCursor = {
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+      size = 24;
+      gtk.enable = true;
+      hyprcursor.enable = true;
+    };
+
+    home.packages = with pkgs; [ghostty hyprshot wl-clipboard pavucontrol brightnessctl catppuccin-cursors.mochaLavender phinger-cursors];
   };
 }

@@ -17,10 +17,16 @@ in {
       systemd.enable = true;
 
       settings = {
-        appearance.transparency = {
-          enabled = true;
-          base = 0.9;
-          layers = 0.55;
+        appearance = {
+          transparency = {
+            enabled = true;
+            base = 0.9;
+            layers = 0.55;
+          };
+          font.family = {
+            sans = "JetBrainsMono Nerd Font";
+            mono = "JetBrainsMono Nerd Font Mono";
+          };
         };
 
         background = {
@@ -140,7 +146,7 @@ in {
     # Seed the color scheme and wallpaper before the shell starts.
     systemd.user.services.caelestia.Service.ExecStartPre = [
       "${cli}/bin/caelestia scheme set -n catppuccin -f mocha -m dark"
-      "${cli}/bin/caelestia wallpaper -f ${wallpaper} -N"
+      "${pkgs.bash}/bin/bash -c '[ -s ${config.xdg.stateHome}/caelestia/wallpaper/path.txt ] || ${cli}/bin/caelestia wallpaper -f ${wallpaper} -N'"
     ];
   };
 }
