@@ -1,6 +1,8 @@
 # usage: term-shot <out.png> <wait-seconds-per-command> <cmd>...
 out=$(realpath -m "$1"); wait=$2; shift 2
 class="shot.term.p$$"
+prev=$(hyprctl activeworkspace -j | jq -r .id)
+trap 'hyprctl dispatch "hl.dsp.focus({ workspace = \"$prev\" })" >/dev/null' EXIT
 client() { hyprctl clients -j | jq -c --arg c "$class" '.[] | select(.class == $c)'; }
 sleep 1
 ghostty --class="$class" --working-directory="$PWD" -e nu >/dev/null 2>&1 &

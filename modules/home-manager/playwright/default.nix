@@ -8,6 +8,7 @@
     name = "playwright-mcp";
     runtimeInputs = [pkgs.nodejs];
     text = ''
+      npx -y -p @playwright/mcp@latest playwright install ffmpeg >&2 || true
       exec npx -y @playwright/mcp@latest --browser chrome --executable-path ${lib.getExe pkgs.google-chrome} "$@"
     '';
   };

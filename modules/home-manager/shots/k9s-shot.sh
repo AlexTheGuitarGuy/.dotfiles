@@ -6,7 +6,8 @@
 args=(); while [ "$1" != "--" ]; do args+=("$1"); shift; done; shift
 cfg=$(mktemp -d); sock="k9s-shot-$$"; class="shot.k9s.p$$"
 client() { hyprctl clients -j | jq -c --arg c "$class" '.[] | select(.class == $c)'; }
-trap 'tmux -L "$sock" kill-server 2>/dev/null; rm -rf "$cfg"; for _ in $(seq 1 20); do [ -n "$(client)" ] || break; sleep 0.25; done' EXIT
+prev=$(hyprctl activeworkspace -j | jq -r .id)
+trap 'tmux -L "$sock" kill-server 2>/dev/null; rm -rf "$cfg"; for _ in $(seq 1 20); do [ -n "$(client)" ] || break; sleep 0.25; done; hyprctl dispatch "hl.dsp.focus({ workspace = \"$prev\" })" >/dev/null' EXIT
 cp -rL "${K9S_CONFIG_DIR:-$HOME/.config/k9s}/." "$cfg/"
 chmod -R u+w "$cfg"
 sed -i -E 's/^(\s*tail:\s*)[0-9]+/\150000/; s/^(\s*buffer:\s*)[0-9]+/\150000/; s/^(\s*skipLatestRevCheck:\s*).*/\1true/' "$cfg/config.yaml"
