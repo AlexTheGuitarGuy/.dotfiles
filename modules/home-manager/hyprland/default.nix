@@ -22,20 +22,10 @@
 
   screenshot = "hyprshot --mode region --raw --freeze | satty --filename - --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard --output-filename ~/Pictures/Screenshots/satty-%Y%m%d-%H%M%S.png";
 
-  pinnedApps = [
-    {
-      class = "spotify";
-      workspace = "19";
-    }
-    {
-      class = "org.telegram.desktop";
-      initial_title = "Telegram";
-      workspace = "20";
-    }
-  ];
-
   gapsOut = 8;
   borderSize = 5;
+
+  cfg = config.dotfiles.hyprland;
 in {
   imports = [./caelestia.nix];
 
@@ -46,6 +36,18 @@ in {
       default = [];
       example = ["Telegram" "spotify"];
       description = "Commands started once when Hyprland starts.";
+    };
+    pinnedApps = lib.mkOption {
+      type = lib.types.listOf (lib.types.attrsOf lib.types.str);
+      default = [];
+      example = [
+        {
+          class = "org.telegram.desktop";
+          initial_title = "Telegram";
+          workspace = "20";
+        }
+      ];
+      description = "Windows that open on their workspace and are moved back when moved away. class and the optional initial_title match exactly.";
     };
   };
 
@@ -60,7 +62,7 @@ in {
           ${lib.concatMapStrings (cmd: "  hl.exec_cmd(${builtins.toJSON cmd})\n") config.dotfiles.hyprland.autostart}end)
         ''
         + ''
-          local pinned = ${lib.generators.toLua {} pinnedApps}
+          local pinned = ${lib.generators.toLua {} cfg.pinnedApps}
           hl.on("window.move_to_workspace", function(w, ws)
             for _, app in ipairs(pinned) do
               if w.class == app.class and (app.initial_title == nil or w.initial_title == app.initial_title) and ws.name ~= app.workspace then
@@ -146,7 +148,7 @@ in {
             match = lib.mapAttrs (_: v: "^(${lib.escapeRegex v})$") (removeAttrs app ["workspace"]);
             workspace = "${app.workspace} silent";
           })
-          pinnedApps
+          cfg.pinnedApps
           ++ [
             {
               match.class = "^(org\\.telegram\\.desktop)$";

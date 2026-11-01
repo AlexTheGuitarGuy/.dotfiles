@@ -28,6 +28,49 @@
     shots.enable = true;
     ssh.enable = true;
     starship.enable = true;
+
+    hyprland = {
+      autostart = [
+        "ghostty --class=com.mitchellh.ghostty.home"
+        "librewolf"
+        "bruno"
+        "podman-desktop"
+        "slack"
+        "Telegram"
+        "1password --silent"
+      ];
+      pinnedApps = [
+        {
+          class = "com.mitchellh.ghostty.home";
+          workspace = "1";
+        }
+        {
+          class = "librewolf";
+          workspace = "2";
+        }
+        {
+          class = "Bruno";
+          workspace = "3";
+        }
+        {
+          class = "Podman Desktop";
+          workspace = "5";
+        }
+        {
+          class = "Slack";
+          workspace = "18";
+        }
+        {
+          class = "spotify";
+          workspace = "19";
+        }
+        {
+          class = "org.telegram.desktop";
+          initial_title = "Telegram";
+          workspace = "20";
+        }
+      ];
+    };
   };
 
   programs.caelestia.settings.services.gpuType = "None";
