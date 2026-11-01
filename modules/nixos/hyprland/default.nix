@@ -20,6 +20,7 @@
         k9s.enable = false;
         lazygit.enable = false;
         starship.enable = false;
+        nushell.enable = false;
       };
     };
 

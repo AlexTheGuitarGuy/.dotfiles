@@ -14,6 +14,7 @@
         highlight_resolved_externals = true;
         color_config = {
           shape_external_resolved = "green";
+          shape_internalcall = "green";
           shape_external = "red";
         };
       };
