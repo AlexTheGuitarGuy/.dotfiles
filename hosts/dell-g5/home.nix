@@ -36,6 +36,7 @@
         "sleep 5 && librewolf"
         "bruno"
         "podman-desktop"
+        "teams-for-linux"
         "slack"
         "Telegram"
         "spotify"
@@ -57,6 +58,10 @@
         {
           class = "podman-desktop";
           workspace = "6";
+        }
+        {
+          class = "teams-for-linux";
+          workspace = "8";
         }
         {
           class = "slack";
