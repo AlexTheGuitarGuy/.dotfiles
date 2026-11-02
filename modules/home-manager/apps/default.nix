@@ -104,8 +104,6 @@ in {
     home.file.".jdks/jdk-17".source = "${pkgs.jdk17}/lib/openjdk";
     home.file.".jdks/jdk-25".source = "${pkgs.jdk25}/lib/openjdk";
 
-    xdg.dataFile."telegram-themes/catppuccin-mocha-mauve.tdesktop-palette".source = ./telegram/catppuccin-mocha-mauve.tdesktop-palette;
-    xdg.dataFile."telegram-themes/catppuccin-mocha-mauve.attheme".source = ./telegram/catppuccin-mocha-mauve.attheme;
 
     home.activation.godotNvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run ${lib.getExe godot-nvim} setup || true
