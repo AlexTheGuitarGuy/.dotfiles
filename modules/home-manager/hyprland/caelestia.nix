@@ -179,6 +179,7 @@ in {
 
     xdg.dataFile."caelestia/wallpapers".source = config.lib.file.mkOutOfStoreSymlink "${config.dotfiles.repo}/modules/home-manager/hyprland/wallpapers";
 
+    xdg.configFile."caelestia/shell-tokens.json".text = builtins.toJSON {sizes.lock.forecastItemWidth = 64;};
     # Caelestia rewrites shell.json at runtime, so replace the store link with a writable copy.
     xdg.configFile."caelestia/shell.json".force = true;
     home.activation.caelestiaWritableSettings = lib.hm.dag.entryBetween ["reloadSystemd"] ["linkGeneration"] ''
