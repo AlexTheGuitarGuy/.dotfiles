@@ -5,7 +5,18 @@ M.servers = {
   cssls = {},
   html = {},
   jsonls = {},
-  ts_ls = {},
+  ts_ls = {
+    settings = {
+      typescript = {
+        updateImportsOnFileMove = { enabled = 'always' },
+        suggest = { completeFunctionCalls = true },
+      },
+      javascript = {
+        updateImportsOnFileMove = { enabled = 'always' },
+        suggest = { completeFunctionCalls = true },
+      },
+    },
+  },
   rust_analyzer = {},
   yamlls = {},
   dockerls = {},
@@ -20,7 +31,16 @@ M.servers = {
       },
     },
   },
-  gopls = {},
+  gopls = {
+    settings = {
+      gopls = {
+        completeUnimported = true,
+        usePlaceholders = true,
+      },
+    },
+  },
+  nixd = {},
+  helm_ls = {},
   gdscript = {},
   buf_ls = {},
   sqls = {

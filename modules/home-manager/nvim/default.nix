@@ -29,9 +29,11 @@ in {
           bash-language-server
           buf
           dockerfile-language-server
+          helm-ls
           gopls
           graphql-language-service-cli
           lua-language-server
+          nixd
           rust-analyzer
           sqls
           tailwindcss-language-server
@@ -53,6 +55,10 @@ in {
           git
           glib
           ripgrep
+          alejandra
+          deadnix
+          hadolint
+          statix
         ]);
     };
 

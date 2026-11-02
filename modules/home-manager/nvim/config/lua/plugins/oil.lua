@@ -10,6 +10,11 @@ return {
       win_options = {
         signcolumn = 'yes:2',
       },
+      view_options = {
+        is_always_hidden = function(name)
+          return name == '.direnv' or name == 'result'
+        end,
+      },
       keymaps = {
         ['<C-s>'] = false,
         ['<C-l>'] = false,

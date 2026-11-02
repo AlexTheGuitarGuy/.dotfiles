@@ -1,8 +1,23 @@
+local buf_dir = function()
+  local ok, oil = pcall(require, 'oil')
+  local dir = ok and oil.get_current_dir() or nil
+  if dir then
+    return dir
+  end
+  local name = vim.api.nvim_buf_get_name(0)
+  if name == '' then
+    return vim.fn.getcwd()
+  end
+  return vim.fn.fnamemodify(name, ':p:h')
+end
+
 local keys = {
   { '<leader>a', function() Snacks.dashboard() end, desc = 'Open Dashboard' },
   { '<leader>z', function() Snacks.zen() end, desc = 'Toggle Zen Mode' },
   { '<leader>ff', function() Snacks.picker.files() end, desc = 'Find Files' },
   { '<leader>fw', function() Snacks.picker.grep() end, desc = 'Live Grep' },
+  { '<leader>fF', function() Snacks.picker.files({ cwd = buf_dir() }) end, desc = 'Find Files In Buffer Dir' },
+  { '<leader>fW', function() Snacks.picker.grep({ cwd = buf_dir() }) end, desc = 'Live Grep In Buffer Dir' },
   { '<leader>fu', function() Snacks.picker.grep_word() end, desc = 'Grep Word Under Cursor' },
   { '<leader>gf', function() Snacks.picker.git_files() end, desc = 'Git Files' },
   { '<leader>fr', function() Snacks.picker.recent() end, desc = 'Recent Files' },
@@ -27,11 +42,11 @@ return {
         },
         files = {
           hidden = true,
-          exclude = { 'node_modules' },
+          exclude = { 'node_modules', '.direnv', 'result' },
         },
         grep = {
           hidden = true,
-          exclude = { 'node_modules' },
+          exclude = { 'node_modules', '.direnv', 'result' },
         },
       },
     },

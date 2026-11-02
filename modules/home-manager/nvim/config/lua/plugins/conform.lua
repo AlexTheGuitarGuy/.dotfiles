@@ -4,6 +4,7 @@ return {
   opts = {
     formatters_by_ft = {
       lua = { 'stylua' },
+      nix = { 'alejandra' },
       javascript = { 'prettierd' },
       javascriptreact = { 'prettierd' },
       typescript = { 'prettierd' },
