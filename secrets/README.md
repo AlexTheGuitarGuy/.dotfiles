@@ -80,6 +80,17 @@ no re-registration. A static `--header "...: ${CONTEXT7_API_KEY}"` does not work
 user scope: Claude Code only expands `${VAR}` in project `.mcp.json`, so the literal
 string is sent.
 
+## Inventory
+
+Names only; values stay in `secrets/secrets.yaml`.
+
+| Key | Used by | Purpose |
+|---|---|---|
+| `SSH_KEY_GITHUB_PERSONAL` | `modules/home-manager/ssh` (sops-nix, written to `~/.ssh`) | personal GitHub SSH key |
+| `SSH_KEY_GITLAB_PROFESSIONAL` | `modules/home-manager/ssh` (sops-nix, written to `~/.ssh`) | GitLab SSH key |
+| `CONTEXT7_API_KEY` | `modules/home-manager/claude` (context7 `headersHelper`) | context7 MCP authentication |
+| `OPENROUTER_API_KEY` | no reference in this repo | OpenRouter API access, hand it to a command with `sops exec-env` |
+
 ## Tools reference
 
 | Command | Purpose |
