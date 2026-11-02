@@ -224,6 +224,11 @@ in {
       ];
     };
 
+    systemd.user.services.kanshi = {
+      Unit.StartLimitIntervalSec = 0;
+      Service.RestartSec = 2;
+    };
+
     services.hyprsunset = {
       enable = true;
       settings.profile = [

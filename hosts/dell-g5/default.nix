@@ -27,9 +27,15 @@
     name = "start-hyprland-gpu";
     text = ''
       dgpu="$(basename "$(readlink -f /dev/dri/dgpu)")"
-      if grep -qx connected /sys/class/drm/"$dgpu"-*/status 2>/dev/null; then
-        export AQ_DRM_DEVICES=/dev/dri/dgpu:/dev/dri/igpu
-      fi
+      exec 3</dev/dri/dgpu || true
+      for _ in 1 2 3 4 5 6; do
+        if grep -qx connected /sys/class/drm/"$dgpu"-*/status 2>/dev/null; then
+          export AQ_DRM_DEVICES=/dev/dri/dgpu:/dev/dri/igpu
+          break
+        fi
+        sleep 0.5
+      done
+      exec 3<&-
       exec ${lib.getExe' config.programs.hyprland.package "start-hyprland"}
     '';
   });
