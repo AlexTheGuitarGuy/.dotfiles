@@ -44,7 +44,7 @@ start_in_herdr() {
     out="$(herdr workspace create --cwd "$project" --label "$(basename "$project")" --focus)"
   fi
   herdr pane run "$(jq -r '.result.root_pane.pane_id' <<<"$out")" "nvim --listen $pipe" >/dev/null
-  pgrep -f '^herdr( |$)' >/dev/null || setsid ghostty -e herdr >/dev/null 2>&1 &
+  pgrep -f '^herdr( |$)' >/dev/null || setsid ghostty -e nu -e herdr >/dev/null 2>&1 &
 }
 
 ghostty_window() {
