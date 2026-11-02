@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [
+    ./ai
     ./apps
     ./btop
     ./bruno

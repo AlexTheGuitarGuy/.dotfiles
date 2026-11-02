@@ -10,7 +10,7 @@ work-related goes into this repo: no employer names, hostnames, ticket keys or i
 commit messages generic too.
 
 Before changing anything here, check whether the work flake needs the same change and warn the user when
-a change here breaks it (the work flake uses `dotfiles.lib.mkHost`, `dotfiles.claude.mcpServers`,
+a change here breaks it (the work flake uses `dotfiles.lib.mkHost`, `dotfiles.ai.mcpServers`, `dotfiles.ai.agents`,
 `dotfiles.claude.settingsOverlays`, `dotfiles.librewolf.profilePath` and the nvim, git and nushell
 modules).
 

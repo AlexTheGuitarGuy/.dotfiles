@@ -147,42 +147,12 @@ in {
     mcpServers = lib.mkOption {
       type = lib.types.attrsOf (pkgs.formats.json {}).type;
       default = {};
-      description = "User-scope MCP servers, written into ~/.claude.json on activation. Servers added by hand are kept.";
+      description = "User-scope MCP servers, written into ~/.claude.json on activation. Rendered from dotfiles.ai.mcpServers. Servers added by hand are kept.";
     };
   };
 
   config = lib.mkIf cfg.enable {
     home.packages = [(pkgs.unstable.claude-code.override {inherit (pkgs) alsa-lib;}) ai-commit-msgs claude-settings-build pkgs.evidence];
-
-    dotfiles.claude.mcpServers = {
-      gitnexus = {
-        type = "stdio";
-        command = "gitnexus";
-        args = ["mcp"];
-        env = {};
-      };
-      playwright = {
-        type = "stdio";
-        command = "playwright-mcp";
-        args = [
-          "--user-data-dir"
-          "${config.home.homeDirectory}/.cache/playwright-mcp"
-          "--output-dir"
-          "${config.home.homeDirectory}/.cache/playwright-mcp-out"
-          "--save-session"
-          "--caps"
-          "devtools"
-          "--init-script"
-          "${config.home.homeDirectory}/.config/playwright/url-bar.js"
-        ];
-        env = {};
-      };
-      context7 = {
-        type = "http";
-        url = "https://mcp.context7.com/mcp";
-        headersHelper = "${lib.getExe pkgs.sops} -d --extract '[\"CONTEXT7_API_KEY\"]' ${config.dotfiles.repo}/secrets/secrets.yaml | ${lib.getExe pkgs.jq} -Rc '{CONTEXT7_API_KEY: .}'";
-      };
-    };
 
     home.file =
       {
@@ -201,7 +171,7 @@ in {
     '';
 
     # settings.json is a real file, not a store link: Claude rewrites it (/config). Hand edits are kept, with a warning.
-    home.activation.claudeSettings =lib.hm.dag.entryAfter ["writeBoundary"] ''
+    home.activation.claudeSettings = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run mkdir -p ${config.home.homeDirectory}/.claude
       if ! run ${lib.getExe claude-settings-build} ${(pkgs.formats.json {}).generate "claude-settings.base.json" settings} ${lib.escapeShellArgs cfg.settingsOverlays}; then
         warnEcho "claude settings.json left unchanged, see the message above"

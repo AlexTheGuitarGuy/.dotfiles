@@ -4,46 +4,6 @@
     "superpowers@git+https://github.com/obra/superpowers.git#2ce8aa15d05bd57213e6f746f953aafb7ded7a8b",
     "@dietrichgebert/ponytail"
   ],
-  "mcp": {
-    "context7": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "@upstash/context7-mcp"
-      ],
-      "enabled": true
-    },
-    "atlassian": {
-      "type": "remote",
-      "url": "https://mcp.atlassian.com/v1/mcp/authv2",
-      "enabled": false
-    },
-    "gitnexus": {
-      "type": "local",
-      "command": [
-        "gitnexus",
-        "mcp"
-      ],
-      "enabled": true
-    },
-    "playwright": {
-      "type": "local",
-      "command": [
-        "playwright-mcp",
-        "--user-data-dir",
-        "/home/alex/.cache/playwright-mcp",
-        "--output-dir",
-        "/home/alex/.cache/playwright-mcp-out",
-        "--save-session",
-        "--caps",
-        "devtools",
-        "--init-script",
-        "/home/alex/.config/playwright/url-bar.js"
-      ],
-      "enabled": true
-    }
-  },
   "lsp": true,
   "instructions": [
     "/home/alex/.claude/rules/*.md"

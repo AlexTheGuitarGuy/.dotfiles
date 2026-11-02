@@ -24,7 +24,7 @@ in {
     # Each file is linked on its own: OpenCode installs its plugins into ~/.config/opencode
     # (node_modules, package.json), so the directory itself stays writable.
     xdg.configFile =
-      link ""
+      removeAttrs (link "") ["opencode/opencode.json"]
       // link "agents/"
       // link "plugins/"
       // link "herdr-opencode/"

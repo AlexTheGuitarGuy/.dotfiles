@@ -70,9 +70,9 @@ automatically. Give it to the command that needs it, one of:
 
 ## Claude Code MCP servers
 
-The user-scope MCP servers are declared in `dotfiles.claude.mcpServers`
-(`modules/home-manager/claude/default.nix`, work servers in the dvag repo) and merged
-into `~/.claude.json` on every switch. Verify with `claude mcp list`.
+The user-scope MCP servers are declared in `dotfiles.ai.mcpServers`
+(`modules/home-manager/ai/default.nix`, work servers in the dvag repo). They are merged into
+`~/.claude.json` on every switch and rendered into the OpenCode `mcp` block. Verify with `claude mcp list`.
 
 context7 uses a `headersHelper` that decrypts `CONTEXT7_API_KEY` from sops at
 connect time, so no key is stored in `~/.claude.json` and rotating it in sops needs
