@@ -1,4 +1,6 @@
 {
+  lib,
+  config,
   pkgs,
   user,
   ...
@@ -17,6 +19,21 @@
     enable = true;
     extraPackages = [pkgs.intel-media-driver];
   };
+  services.udev.extraRules = ''
+    SUBSYSTEM=="drm", KERNEL=="card*", KERNELS=="0000:01:00.0", DRIVERS=="nvidia", SYMLINK+="dri/dgpu"
+    SUBSYSTEM=="drm", KERNEL=="card*", KERNELS=="0000:00:02.0", DRIVERS=="i915", SYMLINK+="dri/igpu"
+  '';
+  dotfiles.hyprland.startCommand = lib.getExe (pkgs.writeShellApplication {
+    name = "start-hyprland-gpu";
+    text = ''
+      dgpu="$(basename "$(readlink -f /dev/dri/dgpu)")"
+      if grep -qx connected /sys/class/drm/"$dgpu"-*/status 2>/dev/null; then
+        export AQ_DRM_DEVICES=/dev/dri/dgpu:/dev/dri/igpu
+      fi
+      exec ${lib.getExe' config.programs.hyprland.package "start-hyprland"}
+    '';
+  });
+
   hardware.nvidia = {
     open = true;
     modesetting.enable = true;

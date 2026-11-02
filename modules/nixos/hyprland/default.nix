@@ -6,6 +6,11 @@
   ...
 }: {
   options.dotfiles.hyprland.enable = lib.mkEnableOption "Hyprland desktop";
+  options.dotfiles.hyprland.startCommand = lib.mkOption {
+    type = lib.types.str;
+    default = lib.getExe' config.programs.hyprland.package "start-hyprland";
+    description = "Command the login screen runs to start the Hyprland session.";
+  };
 
   config = lib.mkIf config.dotfiles.hyprland.enable {
     home-manager.users.${user} = {
@@ -32,7 +37,7 @@
     services.greetd = {
       enable = true;
       settings.default_session = {
-        command = "${lib.getExe pkgs.tuigreet} --time --theme 'border=magenta;text=white;prompt=magenta;time=cyan;action=magenta;button=magenta;input=white' --cmd ${lib.getExe' config.programs.hyprland.package "start-hyprland"}";
+        command = "${lib.getExe pkgs.tuigreet} --time --theme 'border=magenta;text=white;prompt=magenta;time=cyan;action=magenta;button=magenta;input=white' --cmd ${config.dotfiles.hyprland.startCommand}";
         user = "greeter";
       };
     };
