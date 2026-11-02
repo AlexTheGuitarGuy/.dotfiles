@@ -73,7 +73,6 @@ in {
         qbittorrent
         qalculate-gtk
         proton-vpn
-        gnome-network-displays
         wvkbd
       ])
       # Far behind on stable, and these move fast.
