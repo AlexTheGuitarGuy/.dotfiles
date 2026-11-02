@@ -59,7 +59,6 @@ in {
         snapshot
         reaper
         postgresql_18
-        qpwgraph
         aseprite
         renpy
         anki
