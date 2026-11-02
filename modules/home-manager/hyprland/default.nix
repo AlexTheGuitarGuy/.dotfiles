@@ -183,6 +183,20 @@ in {
       enable = true;
       settings = [
         {
+          profile.name = "dell";
+          profile.outputs = [
+            {
+              criteria = "eDP-1";
+              status = "disable";
+            }
+            {
+              criteria = "Dell Inc. DELL S2725DSM H4CD0C4";
+              status = "enable";
+              mode = "1920x1080@119.88Hz";
+            }
+          ];
+        }
+        {
           profile.name = "docked";
           profile.outputs = [
             {
