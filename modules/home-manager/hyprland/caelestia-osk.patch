@@ -1,0 +1,18 @@
+diff -ruN a/modules/utilities/cards/Toggles.qml b/modules/utilities/cards/Toggles.qml
+--- a/modules/utilities/cards/Toggles.qml
++++ b/modules/utilities/cards/Toggles.qml
+@@ -180,6 +180,14 @@
+                     }
+                 }
+                 DelegateChoice {
++                    roleValue: "keyboard"
++                    delegate: Toggle {
++                        icon: "keyboard"
++                        checked: false
++                        onClicked: Quickshell.execDetached(["osk"])
++                    }
++                }
++                DelegateChoice {
+                     roleValue: "vpn"
+                     delegate: Toggle {
+                         icon: "vpn_key"

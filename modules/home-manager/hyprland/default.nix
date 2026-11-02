@@ -235,6 +235,6 @@ in {
       };
     };
 
-    home.packages = with pkgs; [ghostty hyprshot satty wl-clipboard pavucontrol brightnessctl brotab gpu-screen-recorder-gtk];
+    home.packages = with pkgs; [osk ghostty hyprshot satty wl-clipboard pavucontrol brightnessctl brotab gpu-screen-recorder-gtk];
   };
 }
