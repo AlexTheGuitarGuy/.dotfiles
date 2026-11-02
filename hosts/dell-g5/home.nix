@@ -33,7 +33,7 @@
     hyprland = {
       autostart = [
         "ghostty --class=com.mitchellh.ghostty.home -e herdr"
-        "librewolf"
+        "sleep 5 && librewolf"
         "bruno"
         "podman-desktop"
         "slack"
