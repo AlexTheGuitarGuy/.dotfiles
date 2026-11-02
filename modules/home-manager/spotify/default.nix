@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  options,
   pkgs,
   inputs,
   ...
@@ -11,14 +12,15 @@ in {
 
   options.dotfiles.spotify.enable = lib.mkEnableOption "Spotify patched with spicetify";
 
-  config = lib.mkIf config.dotfiles.spotify.enable {
-    programs.spicetify = {
-      enable = true;
-      theme = spicePkgs.themes.catppuccin;
-      colorScheme = "mocha";
-      enabledExtensions = [spicePkgs.extensions.adblock];
-    };
-
-    stylix.targets.spicetify.enable = false;
-  };
+  config = lib.mkIf config.dotfiles.spotify.enable ({
+      programs.spicetify = {
+        enable = true;
+        theme = spicePkgs.themes.catppuccin;
+        colorScheme = "mocha";
+        enabledExtensions = [spicePkgs.extensions.adblock];
+      };
+    }
+    // lib.optionalAttrs (options ? stylix) {
+      stylix.targets.spicetify.enable = false;
+    });
 }
