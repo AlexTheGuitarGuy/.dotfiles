@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: {
   options.dotfiles.lazygit.enable = lib.mkEnableOption "lazygit";
@@ -29,21 +30,21 @@
             ];
           }
           {
-            command = "git diff HEAD | diffnav";
+            command = "git diff HEAD | ${pkgs.diffnav}/bin/diffnav";
             context = "files";
             description = "Open working tree diff in diffnav";
             key = "<c-t>";
             output = "terminal";
           }
           {
-            command = "git show --format= {{.SelectedCommit.Hash}} | diffnav";
+            command = "git show --format= {{.SelectedCommit.Hash}} | ${pkgs.diffnav}/bin/diffnav";
             context = "commits";
             description = "Open commit diff in diffnav";
             key = "<c-t>";
             output = "terminal";
           }
           {
-            command = "b={{.SelectedLocalBranch.Name}}; base=$(gh pr view \"$b\" --json baseRefName -q .baseRefName 2>/dev/null) || base=$(git symbolic-ref --short refs/remotes/origin/HEAD | sed 's@^origin/@@'); git diff \"origin/$base...$b\" | diffnav";
+            command = "b={{.SelectedLocalBranch.Name}}; base=$(gh pr view \"$b\" --json baseRefName -q .baseRefName 2>/dev/null) || base=$(git symbolic-ref --short refs/remotes/origin/HEAD | sed 's@^origin/@@'); git diff \"origin/$base...$b\" | ${pkgs.diffnav}/bin/diffnav";
             context = "localBranches";
             description = "Open branch diff vs parent (PR base or default branch) in diffnav";
             key = "<c-t>";

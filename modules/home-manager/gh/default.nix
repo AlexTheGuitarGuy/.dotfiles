@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: {
   options.dotfiles.gh.enable = lib.mkEnableOption "GitHub CLI";
@@ -9,6 +10,7 @@
     programs.gh = {
       enable = true;
       gitCredentialHelper.enable = false;
+      extensions = [pkgs.gh-enhance];
     };
 
     xdg.configFile."gh/config.yml".source = lib.mkForce (config.lib.file.mkOutOfStoreSymlink "${config.dotfiles.repo}/modules/home-manager/gh/config.yml");

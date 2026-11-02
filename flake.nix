@@ -36,6 +36,8 @@
   outputs = inputs: let
     pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
   in {
+    formatter.x86_64-linux = pkgs.alejandra;
+
     lib = {
       hostModules = import ./hosts/host-modules.nix inputs;
       mkHost = args:

@@ -191,6 +191,10 @@ in {
     '';
 
     # Seed the color scheme and wallpaper before the shell starts.
+    systemd.user.services.caelestia.Unit = {
+      After = ["hyprsunset.service"];
+      Wants = ["hyprsunset.service"];
+    };
     systemd.user.services.caelestia.Service.ExecStartPre = [
       "${cli}/bin/caelestia scheme set -n catppuccin -f mocha -m dark"
       "${mauveAccent}"

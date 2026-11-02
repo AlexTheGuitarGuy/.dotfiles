@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: {
   options.dotfiles.gh-dash.enable = lib.mkEnableOption "gh-dash";
@@ -69,7 +70,7 @@
         keybindings = {
           prs = [
             {
-              command = "cd {{.RepoPath}}; lazygit\n";
+              command = "if [ -n \"{{.RepoPath}}\" ]; then cd \"{{.RepoPath}}\"; fi; lazygit";
               key = "g";
               name = "lazygit";
             }
@@ -114,7 +115,7 @@
             title = "Team Mentioned";
           }
         ];
-        pager = {diff = "diffnav";};
+        pager = {diff = "${pkgs.diffnav}/bin/diffnav";};
         prSections = [
           {
             filters = "is:open author:@me";

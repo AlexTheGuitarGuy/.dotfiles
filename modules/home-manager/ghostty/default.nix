@@ -14,6 +14,7 @@
         app-notifications = "no-clipboard-copy";
         theme = "light:Catppuccin Latte,dark:Catppuccin Mocha";
         window-decoration = false;
+        keybind = ["ctrl+shift+e=unbind" "ctrl+shift+p=unbind"];
       };
     };
   };
