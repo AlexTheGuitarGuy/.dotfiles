@@ -184,6 +184,7 @@ in {
       settings = [
         {
           profile.name = "dell";
+          profile.exec = ["${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/text-scaling-factor 1.0"];
           profile.outputs = [
             {
               criteria = "eDP-1";
@@ -198,6 +199,7 @@ in {
         }
         {
           profile.name = "docked";
+          profile.exec = ["${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/text-scaling-factor 1.0"];
           profile.outputs = [
             {
               criteria = "eDP-1";
@@ -211,6 +213,7 @@ in {
         }
         {
           profile.name = "laptop";
+          profile.exec = ["${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/text-scaling-factor 1.25"];
           profile.outputs = [
             {
               criteria = "eDP-1";
@@ -271,7 +274,6 @@ in {
         qt5ct = "Qt5 Settings";
         qt6ct = "Qt6 Settings";
       };
-    dconf.settings."org/gnome/desktop/interface".text-scaling-factor = 1.25;
 
     programs.fuzzel = {
       enable = true;
