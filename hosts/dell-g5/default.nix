@@ -10,6 +10,7 @@
   dotfiles.hyprland.enable = true;
   dotfiles.apps.enable = true;
   dotfiles.docker.enable = true;
+  dotfiles.gaming.enable = true;
   dotfiles.laptop.enable = true;
 
   # Intel UHD 630 drives the desktop and the laptop screen; the RTX 2060 (external HDMI/DP ports)
