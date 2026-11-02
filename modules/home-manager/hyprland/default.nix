@@ -184,7 +184,7 @@ in {
       settings = [
         {
           profile.name = "dell";
-          profile.exec = ["${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/text-scaling-factor 1.0"];
+          profile.exec = ["${pkgs.dconf}/bin/dconf write /org/gnome/desktop/interface/text-scaling-factor 1.25"];
           profile.outputs = [
             {
               criteria = "eDP-1";
