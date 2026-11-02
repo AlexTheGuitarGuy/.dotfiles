@@ -44,7 +44,7 @@ in {
       enable = true;
       systemd.enable = true;
       package = inputs.caelestia-shell.packages.${pkgs.stdenv.hostPlatform.system}.with-cli.overrideAttrs (old: {
-        patches = (old.patches or []) ++ [./caelestia-calc.patch ./caelestia-search.patch ./caelestia-tabs-files.patch ./caelestia-gpu-card.patch ./caelestia-lock-corners.patch ./caelestia-night-light.patch ./caelestia-osk.patch ./caelestia-kb-layout.patch];
+        patches = (old.patches or []) ++ [./caelestia-calc.patch ./caelestia-search.patch ./caelestia-tabs-files.patch ./caelestia-gpu-card.patch ./caelestia-lock-corners.patch ./caelestia-night-light.patch ./caelestia-osk.patch ./caelestia-kb-layout.patch ./caelestia-richtext-font.patch];
         postInstall =
           old.postInstall
           + ''
@@ -59,7 +59,6 @@ in {
             base = 0.9;
             layers = 0.55;
           };
-          font = lib.genAttrs ["body" "label"] (_: {family = "JetBrainsMono Nerd Font";});
         };
 
         border.rounding = 25;
@@ -179,7 +178,6 @@ in {
 
     xdg.dataFile."caelestia/wallpapers".source = config.lib.file.mkOutOfStoreSymlink "${config.dotfiles.repo}/modules/home-manager/hyprland/wallpapers";
 
-    xdg.configFile."caelestia/shell-tokens.json".text = builtins.toJSON {sizes.lock.forecastItemWidth = 64;};
     # Caelestia rewrites shell.json at runtime, so replace the store link with a writable copy.
     xdg.configFile."caelestia/shell.json".force = true;
     home.activation.caelestiaWritableSettings = lib.hm.dag.entryBetween ["reloadSystemd"] ["linkGeneration"] ''

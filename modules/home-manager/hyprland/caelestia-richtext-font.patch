@@ -1,0 +1,58 @@
+diff --git a/modules/lock/NotifGroup.qml b/modules/lock/NotifGroup.qml
+--- a/modules/lock/NotifGroup.qml
++++ b/modules/lock/NotifGroup.qml
+@@ -312,6 +312,7 @@
+ 
+         Layout.fillWidth: true
+         textFormat: Text.MarkdownText
++        font: Tokens.font.body.builders.small.family("JetBrainsMono Nerd Font").build()
+         text: {
+             const summary = modelData.summary.replace(/\n/g, " ");
+             const body = modelData.body.replace(/\n/g, " ");
+diff --git a/modules/notifications/Notification.qml b/modules/notifications/Notification.qml
+--- a/modules/notifications/Notification.qml
++++ b/modules/notifications/Notification.qml
+@@ -392,9 +392,9 @@
+ 
+                 animate: true
+                 textFormat: root.bodyTextFormat
++                font: Tokens.font.body.builders.small.family("JetBrainsMono Nerd Font").build()
+                 text: bodyPreviewMetrics.elidedText
+                 color: Colours.palette.m3onSurfaceVariant
+-                font: Tokens.font.body.small
+ 
+                 opacity: root.expanded ? 0 : 1
+ 
+@@ -424,9 +424,9 @@
+ 
+                 animate: true
+                 textFormat: root.bodyTextFormat
++                font: Tokens.font.body.builders.small.family("JetBrainsMono Nerd Font").build()
+                 text: root.modelData.body
+                 color: Colours.palette.m3onSurfaceVariant
+-                font: Tokens.font.body.small
+                 wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                 height: text ? implicitHeight : 0
+ 
+diff --git a/modules/sidebar/Notif.qml b/modules/sidebar/Notif.qml
+--- a/modules/sidebar/Notif.qml
++++ b/modules/sidebar/Notif.qml
+@@ -136,6 +136,7 @@
+ 
+             Layout.fillWidth: true
+             textFormat: Text.MarkdownText
++            font: Tokens.font.body.builders.small.family("JetBrainsMono Nerd Font").build()
+             text: String(root.modelData?.body ?? "").replace(/(.)\n(?!\n)/g, "$1\n\n") || Tr.tr("No body here! :/")
+             color: root.modelData?.urgency === "critical" ? Colours.palette.m3secondary : Colours.palette.m3outline
+             wrapMode: Text.WordWrap
+diff --git a/modules/utilities/toasts/ToastItem.qml b/modules/utilities/toasts/ToastItem.qml
+--- a/modules/utilities/toasts/ToastItem.qml
++++ b/modules/utilities/toasts/ToastItem.qml
+@@ -114,6 +114,7 @@
+             StyledText {
+                 Layout.fillWidth: true
+                 textFormat: Text.StyledText
++                font: Tokens.font.body.builders.small.family("JetBrainsMono Nerd Font").build()
+                 text: Tr.trMarked(root.modelData.message)
+                 color: {
+                     if (root.modelData.type === Toast.Success)
