@@ -70,6 +70,12 @@ in {
         };
 
         bar = {
+          entries =
+            map (id: {
+              inherit id;
+              enabled = true;
+            })
+            ["logo" "workspaces" "spacer" "activeWindow" "spacer" "tray" "clock" "statusIcons" "keyboard" "power"];
           workspaces = {
             shown = 4;
             activeIndicator = true;
@@ -134,7 +140,7 @@ in {
             inherit id;
             enabled = id != "vpn";
           })
-          ["wifi" "bluetooth" "mic" "settings" "gameMode" "wallpaperPlaying" "dnd" "nightLight" "keyboard" "vpn"];
+          ["wifi" "bluetooth" "mic" "settings" "gameMode" "wallpaperPlaying" "dnd" "nightLight" "vpn"];
 
         paths.wallpaperDir = wallpaperDir;
 

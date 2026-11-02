@@ -1,18 +1,37 @@
-diff -ruN a/modules/utilities/cards/Toggles.qml b/modules/utilities/cards/Toggles.qml
---- a/modules/utilities/cards/Toggles.qml
-+++ b/modules/utilities/cards/Toggles.qml
-@@ -180,6 +180,14 @@
-                     }
+diff -ruN a/modules/bar/Bar.qml b/modules/bar/Bar.qml
+--- a/modules/bar/Bar.qml
++++ b/modules/bar/Bar.qml
+@@ -172,6 +172,33 @@
                  }
-                 DelegateChoice {
-+                    roleValue: "keyboard"
-+                    delegate: Toggle {
-+                        icon: "keyboard"
-+                        checked: false
-+                        onClicked: Quickshell.execDetached(["osk"])
+             }
+             DelegateChoice {
++                roleValue: "keyboard"
++                delegate: EntryWrapper {
++                    Item {
++                        implicitWidth: keyboardIcon.implicitHeight + Tokens.padding.small
++                        implicitHeight: keyboardIcon.implicitHeight
++
++                        StateLayer {
++                            anchors.fill: undefined
++                            anchors.centerIn: parent
++                            implicitWidth: implicitHeight
++                            implicitHeight: keyboardIcon.implicitHeight + Tokens.padding.small
++                            radius: Tokens.rounding.full
++                            onClicked: Quickshell.execDetached(["osk"])
++                        }
++
++                        MaterialIcon {
++                            id: keyboardIcon
++
++                            anchors.centerIn: parent
++                            text: "keyboard"
++                            color: Colours.palette.m3secondary
++                            fontStyle: Tokens.font.icon.builders.small.weight(Font.Bold).build()
++                        }
 +                    }
 +                }
-+                DelegateChoice {
-                     roleValue: "vpn"
-                     delegate: Toggle {
-                         icon: "vpn_key"
++            }
++            DelegateChoice {
+                 roleValue: "power"
+                 delegate: EntryWrapper {
+                     Power {
