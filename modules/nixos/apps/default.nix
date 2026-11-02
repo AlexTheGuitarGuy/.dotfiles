@@ -29,6 +29,10 @@
       allowedTCPPorts = [7236 7250];
       allowedUDPPorts = [7236 5353];
     };
+    services.avahi = {
+      enable = true;
+      nssmdns4 = true;
+    };
 
     programs._1password.enable = true;
     programs._1password-gui = {
