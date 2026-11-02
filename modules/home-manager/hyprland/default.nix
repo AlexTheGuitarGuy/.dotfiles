@@ -21,6 +21,11 @@
   };
 
   screenshot = "hyprshot --mode region --raw --freeze | satty --filename - --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard --output-filename ~/Pictures/Screenshots/satty-%Y%m%d-%H%M%S.png";
+  osk = pkgs.writeShellApplication {
+    name = "osk";
+    runtimeInputs = with pkgs; [wvkbd procps];
+    text = "pkill -x wvkbd-mobintl || exec wvkbd-mobintl -L 300";
+  };
   focusOnActivateLater = "sleep 60 && hyprctl eval 'hl.config({ misc = { focus_on_activate = true } })'";
 
   gapsOut = 8;
@@ -83,6 +88,7 @@ in {
             (bind "SPACE" ''hl.dsp.global("caelestia:launcher")'')
             {_args = ["Print" (lua ''hl.dsp.exec_cmd("${screenshot}")'')];}
             (bind "SHIFT + Z" ''hl.dsp.exec_cmd("${screenshot}")'')
+            (bind "SHIFT + O" ''hl.dsp.exec_cmd("${lib.getExe osk}")'')
             (bind "SHIFT + R" ''hl.dsp.exec_cmd("gpu-screen-recorder-gtk")'')
             (bind "V" ''hl.dsp.exec_cmd("caelestia clipboard")'')
             (bind "X" ''hl.dsp.exec_cmd("caelestia emoji -p")'')
@@ -194,6 +200,24 @@ in {
     };
 
     gtk.font.size = lib.mkForce 10;
+
+    xdg.desktopEntries =
+      {
+        osk = {
+          name = "On-screen keyboard";
+          exec = lib.getExe osk;
+          icon = "input-keyboard";
+          categories = ["Utility"];
+        };
+      }
+      // lib.mapAttrs (exec: name: {
+        inherit name exec;
+        noDisplay = true;
+      }) {
+        kvantummanager = "Kvantum Manager";
+        qt5ct = "Qt5 Settings";
+        qt6ct = "Qt6 Settings";
+      };
     dconf.settings."org/gnome/desktop/interface".text-scaling-factor = 1.25;
 
     programs.fuzzel = {
