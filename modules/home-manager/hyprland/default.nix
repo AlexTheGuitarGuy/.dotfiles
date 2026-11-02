@@ -315,6 +315,64 @@ in {
       programs.yazi = {
         enable = true;
         plugins.smart-enter = pkgs.yaziPlugins.smart-enter;
+        theme.icon.dirs = lib.mkForce (map (dir: dir // {fg = mauveAccent.withHashtag.base0D;}) [
+          {
+            name = ".config";
+            text = "";
+          }
+          {
+            name = ".git";
+            text = "";
+          }
+          {
+            name = ".github";
+            text = "";
+          }
+          {
+            name = ".npm";
+            text = "";
+          }
+          {
+            name = "Desktop";
+            text = "";
+          }
+          {
+            name = "Development";
+            text = "";
+          }
+          {
+            name = "Documents";
+            text = "";
+          }
+          {
+            name = "Downloads";
+            text = "";
+          }
+          {
+            name = "Library";
+            text = "";
+          }
+          {
+            name = "Movies";
+            text = "";
+          }
+          {
+            name = "Music";
+            text = "";
+          }
+          {
+            name = "Pictures";
+            text = "";
+          }
+          {
+            name = "Public";
+            text = "";
+          }
+          {
+            name = "Videos";
+            text = "";
+          }
+        ]);
         settings.opener.open = [
           {
             run = "xdg-open %s1";
