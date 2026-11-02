@@ -21,7 +21,10 @@
     programs.virt-manager.enable = true;
     users.users.${user}.extraGroups = ["libvirtd"];
 
-    services.input-remapper.enable = true;
+    services.input-remapper = {
+      enable = true;
+      enableUdevRules = true;
+    };
 
     programs.thunar.enable = true;
 

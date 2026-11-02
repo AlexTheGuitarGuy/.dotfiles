@@ -179,6 +179,34 @@ in {
     };
 
     # Night light: warm from 20:00, neutral from 07:00.
+    services.kanshi = {
+      enable = true;
+      settings = [
+        {
+          profile.name = "docked";
+          profile.outputs = [
+            {
+              criteria = "eDP-1";
+              status = "disable";
+            }
+            {
+              criteria = "*";
+              status = "enable";
+            }
+          ];
+        }
+        {
+          profile.name = "laptop";
+          profile.outputs = [
+            {
+              criteria = "eDP-1";
+              status = "enable";
+            }
+          ];
+        }
+      ];
+    };
+
     services.hyprsunset = {
       enable = true;
       settings.profile = [

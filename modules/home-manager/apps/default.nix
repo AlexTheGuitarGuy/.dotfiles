@@ -23,6 +23,8 @@
     };
   };
 
+  slimblade = "Kensington SlimBlade Pro(2.4GHz Receiver) Kensington SlimBlade Pro Trackball(2.4GHz Receiver)";
+
   defaultApps = {
     "org.gnome.Loupe.desktop" = ["image/png" "image/jpeg" "image/gif" "image/webp" "image/bmp" "image/tiff" "image/avif" "image/heic" "image/svg+xml"];
     "org.pwmt.zathura.desktop" = ["application/pdf"];
@@ -103,6 +105,12 @@ in {
     home.file.".jdks/jdk-17".source = "${pkgs.jdk17}/lib/openjdk";
     home.file.".jdks/jdk-25".source = "${pkgs.jdk25}/lib/openjdk";
 
+
+    xdg.configFile."input-remapper-2/presets/${slimblade}/top-buttons-swapped.json".source = ./input-remapper/slimblade.json;
+    xdg.configFile."input-remapper-2/config.json".text = builtins.toJSON {
+      version = "2.0.1";
+      autoload.${slimblade} = "top-buttons-swapped";
+    };
 
     home.activation.godotNvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run ${lib.getExe godot-nvim} setup || true
