@@ -72,6 +72,15 @@
         };
       };
       fonts.sizes.popups = 10;
+      icons = {
+        enable = true;
+        package = pkgs.catppuccin-papirus-folders.override {
+          flavor = "mocha";
+          accent = "mauve";
+        };
+        dark = "Papirus-Dark";
+        light = "Papirus-Light";
+      };
     };
 
     fonts = {

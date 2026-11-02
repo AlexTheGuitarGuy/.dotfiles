@@ -315,6 +315,14 @@ in {
       programs.yazi = {
         enable = true;
         plugins.smart-enter = pkgs.yaziPlugins.smart-enter;
+        settings.opener.open = [
+          {
+            run = "xdg-open %s1";
+            desc = "Open";
+            for = "linux";
+            orphan = true;
+          }
+        ];
         keymap.mgr.prepend_keymap = [
           {
             on = "<Enter>";
