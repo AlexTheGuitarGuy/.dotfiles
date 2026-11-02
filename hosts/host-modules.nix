@@ -19,7 +19,7 @@ in
             inherit (prev.stdenv.hostPlatform) system;
             inherit (prev) config;
           };
-          inherit (final.unstable) ghostty lazygit nushell yazi;
+          inherit (final.unstable) carapace ghostty lazygit nushell yazi;
         })
       ];
     }

@@ -33,6 +33,7 @@ in {
       enable = true;
       ignores = [
         ".excluded/"
+        ".envrc"
         ".gitnexus/"
         ".99-tmp/"
         "**/.claude/settings.local.json"
