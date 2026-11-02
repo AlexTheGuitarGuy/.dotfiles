@@ -1,0 +1,12 @@
+diff -ruN a/services/Hypr.qml b/services/Hypr.qml
+--- a/services/Hypr.qml
++++ b/services/Hypr.qml
+@@ -24,7 +24,7 @@
+     readonly property HyprlandMonitor focusedMonitor: Hyprland.focusedMonitor
+     readonly property int activeWsId: focusedWorkspace?.id ?? 1
+ 
+-    readonly property HyprKeyboard keyboard: extras.devices.keyboards.find(kb => kb.main) ?? null
++    readonly property HyprKeyboard keyboard: extras.devices.keyboards.find(kb => kb.main && kb.layout !== "" && !kb.name.includes("virtual")) ?? extras.devices.keyboards.find(kb => kb.name.endsWith("keyboard") && kb.layout !== "" && !kb.name.includes("virtual")) ?? null
+     readonly property bool capsLock: keyboard?.capsLock ?? false
+     readonly property bool numLock: keyboard?.numLock ?? false
+     readonly property string defaultKbLayout: keyboard?.layout.split(",")[0] ?? "??"
