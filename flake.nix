@@ -38,6 +38,10 @@
   in {
     formatter.x86_64-linux = pkgs.alejandra;
 
+    devShells.x86_64-linux.default = pkgs.mkShell {
+      packages = with pkgs; [alejandra deadnix statix sops age nodejs];
+    };
+
     lib = {
       hostModules = import ./hosts/host-modules.nix inputs;
       mkHost = args:
