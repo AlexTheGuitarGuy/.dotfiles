@@ -156,6 +156,14 @@ in {
       # Stylix and each tool's own config do the theming, not the caelestia cli.
       cli = {
         enable = true;
+        package = inputs.caelestia-shell.inputs.caelestia-cli.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
+          postInstall =
+            (old.postInstall or "")
+            + ''
+
+              printf '\n\xef\xa3\xbf apple logo as apple users see it (iphone ipad mac only, others see an empty box)\n' >> $out/lib/python*/site-packages/caelestia/data/emojis.txt
+            '';
+        });
         settings.theme = lib.genAttrs [
           "enableTerm"
           "enableHypr"

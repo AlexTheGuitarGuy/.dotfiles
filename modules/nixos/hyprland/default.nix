@@ -82,6 +82,26 @@
         pkgs.fantasque-sans-mono
         pkgs.victor-mono
         pkgs.poppins
+        (pkgs.runCommand "apple-logo-font" {nativeBuildInputs = [pkgs.fontforge];} ''
+          fontforge -lang=py -c '
+          import fontforge
+          src = fontforge.open("${pkgs.font-awesome}/share/fonts/opentype/Font Awesome 7 Brands-Regular-400.otf")
+          src.selection.select(0xf179)
+          src.copy()
+          out = fontforge.font()
+          out.encoding = "UnicodeFull"
+          out.em = src.em
+          out.ascent = src.ascent
+          out.descent = src.descent
+          out.fontname = "AppleLogo"
+          out.familyname = "Apple Logo"
+          out.fullname = "Apple Logo"
+          out.selection.select(0xf8ff)
+          out.paste()
+          out.generate("AppleLogo.ttf")
+          '
+          install -Dm444 AppleLogo.ttf $out/share/fonts/truetype/AppleLogo.ttf
+        '')
         (pkgs.runCommand "google-sans-flex" {} ''
           install -Dm444 ${pkgs.fetchurl {
             name = "GoogleSansFlex.ttf";
