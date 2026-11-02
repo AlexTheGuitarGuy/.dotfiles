@@ -43,6 +43,11 @@
   borderSize = 5;
 
   cfg = config.dotfiles.hyprland;
+
+  mauveAccent = let
+    colors = config.lib.stylix.colors.override {base0D = "cba6f7";};
+  in
+    colors // {withHashtag = colors.withHashtag // {base0D = "#cba6f7"; blue = "#cba6f7";};};
 in {
   imports = [./caelestia.nix];
 
@@ -238,6 +243,8 @@ in {
     };
 
     dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+
+    stylix.targets = lib.genAttrs ["hyprland" "gtk" "fuzzel" "yazi"] (_: {colors.override = mauveAccent;});
 
     programs.yazi = {
       enable = true;
