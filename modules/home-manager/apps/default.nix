@@ -32,10 +32,7 @@
     "yazi.desktop" = ["inode/directory"];
     "org.gnome.FileRoller.desktop" = ["application/zip" "application/x-tar" "application/gzip" "application/x-compressed-tar" "application/x-xz-compressed-tar" "application/x-7z-compressed" "application/vnd.rar" "application/x-rar"];
     "mpv.desktop" = ["video/mp4" "video/x-matroska" "video/webm" "video/quicktime" "video/x-msvideo" "video/mpeg" "video/ogg" "audio/mpeg" "audio/flac" "audio/ogg" "audio/x-wav" "audio/mp4" "audio/aac" "audio/opus"];
-    "writer.desktop" = ["application/vnd.oasis.opendocument.text" "application/msword" "application/vnd.openxmlformats-officedocument.wordprocessingml.document" "application/rtf"];
-    "calc.desktop" = ["application/vnd.oasis.opendocument.spreadsheet" "application/vnd.ms-excel" "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" "text/csv"];
-    "impress.desktop" = ["application/vnd.oasis.opendocument.presentation" "application/vnd.ms-powerpoint" "application/vnd.openxmlformats-officedocument.presentationml.presentation"];
-    "draw.desktop" = ["application/vnd.oasis.opendocument.graphics"];
+    "onlyoffice-desktopeditors.desktop" = ["application/vnd.oasis.opendocument.text" "application/msword" "application/vnd.openxmlformats-officedocument.wordprocessingml.document" "application/rtf" "application/vnd.oasis.opendocument.spreadsheet" "application/vnd.ms-excel" "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" "text/csv" "application/vnd.oasis.opendocument.presentation" "application/vnd.ms-powerpoint" "application/vnd.openxmlformats-officedocument.presentationml.presentation"];
   };
 
   godot-nvim = pkgs.writeShellApplication {
@@ -67,7 +64,7 @@ in {
         prismlauncher
         wineWow64Packages.stable
 
-        libreoffice-fresh
+        onlyoffice-desktopeditors
         loupe
         zathura
         file-roller
@@ -104,7 +101,6 @@ in {
 
     home.file.".jdks/jdk-17".source = "${pkgs.jdk17}/lib/openjdk";
     home.file.".jdks/jdk-25".source = "${pkgs.jdk25}/lib/openjdk";
-
 
     xdg.configFile."input-remapper-2/presets/${slimblade}/top-buttons-swapped.json".source = ./input-remapper/slimblade.json;
     home.activation.inputRemapperConfig = lib.hm.dag.entryAfter ["writeBoundary"] (let

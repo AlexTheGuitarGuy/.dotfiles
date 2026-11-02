@@ -41,6 +41,7 @@ M.servers = {
   },
   nixd = {},
   helm_ls = {},
+  terraformls = {},
   gdscript = {},
   buf_ls = {},
   sqls = {

@@ -16,6 +16,9 @@ return {
       yaml = { 'prettierd' },
       markdown = { 'prettierd' },
       graphql = { 'prettierd' },
+      terraform = { 'terraform_fmt' },
+      ['terraform-vars'] = { 'terraform_fmt' },
+      hcl = { 'terraform_fmt' },
     },
     format_on_save = {
       lsp_fallback = true,

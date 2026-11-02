@@ -16,7 +16,7 @@ pkgs.testers.runNixOSTest {
   testScript = ''
     machine.wait_for_unit("home-manager-alex.service")
 
-    for app in ["Telegram", "slack", "teams-for-linux", "viber", "spotify", "obs", "kdenlive", "gimp", "mpv", "snapshot", "reaper", "qpwgraph", "aseprite", "godot", "renpy", "anki", "prismlauncher", "wine", "libreoffice", "qbittorrent", "qalculate-gtk", "protonvpn-app", "gnome-network-displays", "wvkbd-mobintl", "code", "intellij-idea", "datagrip", "mongodb-compass", "podman-desktop", "apps2samsung", "tizenbrew-device-manager", "tizenbrew-installer", "moldsign", "yazi", "virt-manager", "1password", "input-remapper-gtk"]:
+    for app in ["Telegram", "slack", "teams-for-linux", "viber", "spotify", "obs", "kdenlive", "gimp", "mpv", "snapshot", "reaper", "qpwgraph", "aseprite", "godot", "renpy", "anki", "prismlauncher", "wine", "onlyoffice-desktopeditors", "qbittorrent", "qalculate-gtk", "protonvpn-app", "gnome-network-displays", "wvkbd-mobintl", "code", "intellij-idea", "datagrip", "mongodb-compass", "podman-desktop", "apps2samsung", "tizenbrew-device-manager", "tizenbrew-installer", "moldsign", "yazi", "virt-manager", "1password", "input-remapper-gtk"]:
         machine.succeed(f"su -s /bin/sh alex -c 'command -v {app}'")
     machine.succeed("systemctl start input-remapper.service")
     machine.wait_for_unit("input-remapper.service")

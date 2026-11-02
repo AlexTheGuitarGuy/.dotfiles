@@ -37,6 +37,7 @@ in {
           rust-analyzer
           sqls
           tailwindcss-language-server
+          terraform-ls
           typescript
           typescript-language-server
           vscode-langservers-extracted
@@ -59,6 +60,7 @@ in {
           deadnix
           hadolint
           statix
+          terraform
         ]);
     };
 

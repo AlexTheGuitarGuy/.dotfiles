@@ -19,6 +19,6 @@
       settings.updates.auto_update = true;
     };
 
-    home.packages = with pkgs; [python3 lm_sensors nvtopPackages.full dnsutils whois];
+    home.packages = with pkgs; [python3 lm_sensors nvtopPackages.full dnsutils whois bluetuith p7zip wget ngrok terraform minikube];
   };
 }
