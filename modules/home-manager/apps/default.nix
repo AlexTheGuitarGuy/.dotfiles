@@ -104,7 +104,12 @@ in {
     home.file.".jdks/jdk-17".source = "${pkgs.jdk17}/lib/openjdk";
     home.file.".jdks/jdk-25".source = "${pkgs.jdk25}/lib/openjdk";
 
-    xdg.dataFile."telegram-themes/catppuccin-mocha-mauve.tdesktop-palette".source = ./telegram/catppuccin-mocha-mauve.tdesktop-palette;
+    xdg.dataFile."telegram-themes/catppuccin-mocha-mauve.tdesktop-theme".source =
+      pkgs.runCommand "catppuccin-mocha-mauve.tdesktop-theme" {nativeBuildInputs = with pkgs; [imagemagick zip];} ''
+        cp ${./telegram/catppuccin-mocha-mauve.tdesktop-palette} colors.tdesktop-theme
+        magick -size 64x64 xc:'#1e1e2e' tiled.png
+        zip -q $out colors.tdesktop-theme tiled.png
+      '';
     xdg.dataFile."telegram-themes/catppuccin-mocha-mauve.attheme".source = ./telegram/catppuccin-mocha-mauve.attheme;
 
     home.activation.godotNvim = lib.hm.dag.entryAfter ["writeBoundary"] ''

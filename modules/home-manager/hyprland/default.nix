@@ -27,9 +27,13 @@
     text = ''
       if pkill -x wvkbd-mobintl; then
         read -r kb idx < <(hyprctl devices -j | jq -r '.keyboards[] | select(.main) | "\(.name) \(.active_layout_index)"')
+        hyprctl switchxkblayout "$kb" next >/dev/null
         hyprctl switchxkblayout "$kb" "$idx" >/dev/null
       else
-        exec wvkbd-mobintl -L 300
+        exec wvkbd-mobintl -L 300 --fn "JetBrainsMono Nerd Font 14" \
+          --bg 11111b --fg 313244 --fg-sp 45475a \
+          --press cba6f7 --press-sp cba6f7 --swipe cba6f7 --swipe-sp cba6f7 \
+          --text cdd6f4 --text-sp cdd6f4
       fi
     '';
   };
