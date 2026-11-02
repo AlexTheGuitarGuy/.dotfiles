@@ -107,10 +107,17 @@ in {
 
 
     xdg.configFile."input-remapper-2/presets/${slimblade}/top-buttons-swapped.json".source = ./input-remapper/slimblade.json;
-    xdg.configFile."input-remapper-2/config.json".text = builtins.toJSON {
-      version = "2.0.1";
-      autoload.${slimblade} = "top-buttons-swapped";
-    };
+    home.activation.inputRemapperConfig = lib.hm.dag.entryAfter ["writeBoundary"] (let
+      cfg = pkgs.writeText "input-remapper-config.json" (builtins.toJSON {
+        version = "2.0.1";
+        autoload.${slimblade} = "top-buttons-swapped";
+      });
+    in ''
+      run rm -f ${config.xdg.configHome}/input-remapper-2/config.json
+      run install -Dm644 ${cfg} ${config.xdg.configHome}/input-remapper-2/config.json
+    '');
+
+    dotfiles.hyprland.autostart = ["input-remapper-control --command autoload"];
 
     home.activation.godotNvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run ${lib.getExe godot-nvim} setup || true
