@@ -23,8 +23,15 @@
   screenshot = "hyprshot --mode region --raw --freeze | satty --filename - --copy-command wl-copy --early-exit --actions-on-enter save-to-clipboard --output-filename ~/Pictures/Screenshots/satty-%Y%m%d-%H%M%S.png";
   osk = pkgs.writeShellApplication {
     name = "osk";
-    runtimeInputs = with pkgs; [wvkbd procps];
-    text = "pkill -x wvkbd-mobintl || exec wvkbd-mobintl -L 300";
+    runtimeInputs = with pkgs; [wvkbd procps jq];
+    text = ''
+      if pkill -x wvkbd-mobintl; then
+        read -r kb idx < <(hyprctl devices -j | jq -r '.keyboards[] | select(.main) | "\(.name) \(.active_layout_index)"')
+        hyprctl switchxkblayout "$kb" "$idx" >/dev/null
+      else
+        exec wvkbd-mobintl -L 300
+      fi
+    '';
   };
   focusOnActivateLater = "sleep 60 && hyprctl eval 'hl.config({ misc = { focus_on_activate = true } })'";
 

@@ -40,15 +40,15 @@ ctpAccent: ctpMauve;
 
 // Theme variables
 
-windowActiveTextFg: ctpText // online blue: fallback for active text like online status
+windowActiveTextFg: ctpAccent // online blue: fallback for active text like online status
 windowBg: ctpBase // white: fallback for background
-windowBgActive: ctpOverlay2 // bright blue: fallback for blue filled active areas
+windowBgActive: ctpAccent // bright blue: fallback for blue filled active areas
 windowBgOver: ctpSurface1 // light gray: fallback for background with mouse over
 windowBgRipple: ctpSurface1 // darker gray: fallback for ripple effect
 windowBoldFg: ctpText // dark gray: fallback for bold text
 windowBoldFgOver: ctpText // dark gray: fallback for bold text with mouse over
 windowFg: ctpText // black: fallback for text
-windowFgActive: ctpText // white: fallback for text on active areas
+windowFgActive: ctpBase // white: fallback for text on active areas
 windowFgOver: ctpText // black: fallback for text with mouse over
 windowShadowFg: ctpBase // black: fallback for shadow
 windowShadowFgFallback: ctpBase // gray: fallback for shadow without opacity
@@ -74,7 +74,7 @@ activeButtonFg: ctpCrust // default active button text
 activeButtonFgOver: ctpCrust // default active button text with mouse over
 activeButtonSecondaryFg: ctpMantle // default active button additional text (selected messages counter in forward / delete buttons)
 activeButtonSecondaryFgOver: ctpMantle // default active button additional text with mouse over
-activeLineFg: ctpOverlay2 // default active line (like code input field bottom border when you log in and field is focused)
+activeLineFg: ctpAccent // default active line (like code input field bottom border when you log in and field is focused)
 activeLineFgError: ctpRed // default active line for error state (like code input field bottom border when you log in and you've entered incorrect code)
 attentionButtonBgOver: ctpSurface1Transparent // default attention button background with mouse over
 attentionButtonBgRipple: ctpSurface1 // default attention button ripple effect
@@ -327,7 +327,7 @@ historyToDownFgOver: menuIconFgOver // arrow button icon with mouse over
 historyToDownShadow: ctpCrustTransparent // arrow button shadow
 historyUnreadBarBg: ctpSurface0 // new unread messages bar background
 historyUnreadBarBorder: shadowFg // new unread messages bar shadow
-historyUnreadBarFg: ctpOverlay2 // new unread messages bar text
+historyUnreadBarFg: ctpAccent // new unread messages bar text
 historyVideoMessageProgressFg: windowFg // radial playback progress in round video messages
 imageBg: ctpCrust // image background fallback (when photo size is less than minimum allowed)
 imageBgTransparent: windowBg // image background when displaying an image with opacity where no opacity is needed
