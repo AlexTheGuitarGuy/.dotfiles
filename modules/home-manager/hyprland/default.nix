@@ -193,7 +193,7 @@ in {
             {
               criteria = "Dell Inc. DELL S2725DSM H4CD0C4";
               status = "enable";
-              mode = "1920x1080@119.88Hz";
+              mode = "2560x1440@143.97Hz";
             }
           ];
         }
