@@ -9,9 +9,9 @@ in {
 
   config = lib.mkIf config.dotfiles.ssh.enable {
     sshAuthSock.initialization = {
-      bash = ''export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent"'';
-      fish = ''set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/ssh-agent"'';
-      nushell = ''$env.SSH_AUTH_SOCK = $"($env.XDG_RUNTIME_DIR)/ssh-agent"'';
+      bash = ''export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"'';
+      fish = ''set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/gcr/ssh"'';
+      nushell = ''$env.SSH_AUTH_SOCK = $"($env.XDG_RUNTIME_DIR)/gcr/ssh"'';
     };
 
     programs.ssh = {
