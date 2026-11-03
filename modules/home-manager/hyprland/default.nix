@@ -96,6 +96,7 @@ in {
         enable = true;
         package = null;
         portalPackage = null;
+        systemd.variables = ["--all"];
         extraConfig =
           lib.optionalString (config.dotfiles.hyprland.autostart != []) ''
             hl.on("hyprland.start", function()
