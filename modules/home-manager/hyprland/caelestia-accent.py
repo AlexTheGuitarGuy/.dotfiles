@@ -20,4 +20,6 @@ out["primary_paletteKeyColor"] = colours["primaryPaletteKeyColor"]
 out["secondary_paletteKeyColor"] = colours["secondaryPaletteKeyColor"]
 for k in "surfaceTint", "primary", "primaryFixedDim", "secondary", "secondaryFixedDim":
     out[k] = accent
+for k in [k for k in out if "rimary" in k]:
+    out[k.replace("primary", "tertiary").replace("Primary", "Tertiary")] = out[k]
 print(json.dumps(out))
