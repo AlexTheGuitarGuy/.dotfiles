@@ -41,9 +41,9 @@
         hyprctl switchxkblayout "$kb" "$idx" >/dev/null
       else
         exec wvkbd-mobintl -L 300 --landscape-layers landscape,landscapespecial,cyrillic,emoji --fn "JetBrainsMono Nerd Font 14" \
-          --bg 11111b --fg 313244 --fg-sp 45475a \
-          --press cba6f7 --press-sp cba6f7 --swipe cba6f7 --swipe-sp cba6f7 \
-          --text cdd6f4 --text-sp cdd6f4
+          --bg ${hex theme.palette.crust} --fg ${hex theme.palette.surface0} --fg-sp ${hex theme.palette.surface1} \
+          --press ${hex theme.palette.accent} --press-sp ${hex theme.palette.accent} --swipe ${hex theme.palette.accent} --swipe-sp ${hex theme.palette.accent} \
+          --text ${hex theme.palette.text} --text-sp ${hex theme.palette.text}
       fi
     '';
   };

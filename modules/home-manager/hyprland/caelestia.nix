@@ -27,6 +27,11 @@ in {
       enable = true;
       systemd.enable = true;
       package = inputs.caelestia-shell.packages.${pkgs.stdenv.hostPlatform.system}.with-cli.overrideAttrs (old: {
+        postPatch =
+          (old.postPatch or "")
+          + ''
+            substituteInPlace modules/bar/components/Clock.qml --replace-fail '"calendar_month"' '"schedule"'
+          '';
         patches = (old.patches or []) ++ [./caelestia-calc.patch ./caelestia-search.patch ./caelestia-tabs-files.patch ./caelestia-gpu-card.patch ./caelestia-lock-corners.patch ./caelestia-night-light.patch ./caelestia-osk.patch ./caelestia-kb-layout.patch ./caelestia-richtext-font.patch];
         postInstall =
           old.postInstall

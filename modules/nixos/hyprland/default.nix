@@ -10,6 +10,25 @@
     if theme.polarity == "light"
     then "latte"
     else "mocha";
+  ansiAccent =
+    {
+      rosewater = "lightred";
+      flamingo = "lightred";
+      pink = "lightmagenta";
+      mauve = "magenta";
+      red = "red";
+      maroon = "lightred";
+      peach = "yellow";
+      yellow = "lightyellow";
+      green = "green";
+      teal = "cyan";
+      sky = "lightcyan";
+      sapphire = "cyan";
+      blue = "blue";
+      lavender = "lightblue";
+    }.${
+      theme.accent
+    };
   switchDark = "/nix/var/nix/profiles/system/bin/switch-to-configuration";
   switchLight = "/run/current-system/specialisation/light/bin/switch-to-configuration";
   themeToggle = pkgs.writeShellApplication {
@@ -83,7 +102,7 @@ in {
     services.greetd = {
       enable = true;
       settings.default_session = {
-        command = "${lib.getExe pkgs.tuigreet} --time --theme 'border=magenta;text=white;prompt=magenta;time=cyan;action=magenta;button=magenta;input=white' --cmd ${config.dotfiles.hyprland.startCommand}";
+        command = "${lib.getExe pkgs.tuigreet} --time --theme 'border=${ansiAccent};text=white;prompt=${ansiAccent};time=cyan;action=${ansiAccent};button=${ansiAccent};input=white' --cmd ${config.dotfiles.hyprland.startCommand}";
         user = "greeter";
       };
     };
