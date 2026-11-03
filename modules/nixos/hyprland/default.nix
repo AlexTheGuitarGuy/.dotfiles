@@ -29,7 +29,7 @@
     }.${
       theme.accent
     };
-  switchDark = "/nix/var/nix/profiles/system/bin/switch-to-configuration";
+  switchDark = "/run/dotfiles-theme-base/bin/switch-to-configuration";
   switchLight = "/run/current-system/specialisation/light/bin/switch-to-configuration";
   themeToggle = pkgs.writeShellApplication {
     name = "theme-toggle";
@@ -72,7 +72,7 @@ in {
           After = ["graphical-session.target"];
         };
         Service = {
-          Type = "oneshot";
+          Type = "simple";
           ExecStart = "${lib.getExe themeToggle} restore";
         };
         Install.WantedBy = ["graphical-session.target"];
@@ -127,6 +127,9 @@ in {
     ];
 
     specialisation.light.configuration.dotfiles.theme.polarity = lib.mkForce "light";
+    system.activationScripts.dotfilesThemeBase = lib.mkIf (theme.polarity == "dark") ''
+      ln -sfn "$systemConfig" /run/dotfiles-theme-base
+    '';
 
     security.sudo.extraRules = [
       {
