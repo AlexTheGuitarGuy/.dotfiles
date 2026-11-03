@@ -210,6 +210,6 @@ in {
     ];
 
     services.blueman-applet.enable = true;
-    dconf.settings."org/blueman/general".plugin-list = ["!StatusIcon"];
+    dconf.settings."org/blueman/general".plugin-list = ["!StatusIcon" "!ShowConnected"];
   };
 }
