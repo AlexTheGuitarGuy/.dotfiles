@@ -16,7 +16,7 @@ in {
       programs.spicetify = {
         enable = true;
         theme = spicePkgs.themes.catppuccin;
-        colorScheme = "mocha";
+        colorScheme = config.dotfiles.theme.flavor;
         enabledExtensions = [spicePkgs.extensions.adblock];
       };
     }

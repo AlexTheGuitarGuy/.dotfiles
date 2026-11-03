@@ -4,7 +4,39 @@
   pkgs,
   user,
   ...
-}: {
+}: let
+  theme = config.dotfiles.theme;
+  flavor =
+    if theme.polarity == "light"
+    then "latte"
+    else "mocha";
+  switchDark = "/nix/var/nix/profiles/system/bin/switch-to-configuration";
+  switchLight = "/run/current-system/specialisation/light/bin/switch-to-configuration";
+  themeToggle = pkgs.writeShellApplication {
+    name = "theme-toggle";
+    runtimeInputs = [pkgs.coreutils pkgs.util-linux];
+    text = ''
+      state="''${XDG_STATE_HOME:-$HOME/.local/state}/dotfiles/polarity"
+      if [ "''${1:-}" = restore ]; then
+        want="$(cat "$state" 2>/dev/null || echo dark)"
+      elif [ -e ${switchLight} ]; then
+        want=light
+      else
+        want=dark
+      fi
+      mkdir -p "$(dirname "$state")"
+      echo "$want" > "$state"
+
+      lock=/run/nixos/switch-to-configuration.lock
+      if [ -e "$lock" ]; then flock "$lock" true; fi
+      if [ "$want" = light ] && [ -e ${switchLight} ]; then
+        exec /run/wrappers/bin/sudo -n ${switchLight} test
+      elif [ "$want" = dark ] && [ "''${1:-}" != restore ] && [ ! -e ${switchLight} ]; then
+        exec /run/wrappers/bin/sudo -n ${switchDark} test
+      fi
+    '';
+  };
+in {
   options.dotfiles.hyprland.enable = lib.mkEnableOption "Hyprland desktop";
   options.dotfiles.hyprland.startCommand = lib.mkOption {
     type = lib.types.str;
@@ -13,8 +45,22 @@
   };
 
   config = lib.mkIf config.dotfiles.hyprland.enable {
-    home-manager.users.${user} = {
+    home-manager.users.${user} = {lib, ...}: {
       dotfiles.hyprland.enable = true;
+      systemd.user.services.theme-restore = {
+        Unit = {
+          Description = "Reapply the light theme when it was last chosen";
+          After = ["graphical-session.target"];
+        };
+        Service = {
+          Type = "oneshot";
+          ExecStart = "${lib.getExe themeToggle} restore";
+        };
+        Install.WantedBy = ["graphical-session.target"];
+      };
+      home.activation.themeRestore = lib.hm.dag.entryAfter ["reloadSystemd"] ''
+        run ${pkgs.systemd}/bin/systemctl --user start --no-block theme-restore.service || true
+      '';
       stylix.targets = {
         neovim.enable = false;
         firefox.enable = false;
@@ -58,13 +104,26 @@
     };
     environment.systemPackages = [
       (lib.hiPrio (pkgs.writeShellScriptBin "xdg-open" ''exec ${lib.getExe' pkgs.glib "gio"} open "$@"''))
+      themeToggle
+    ];
+
+    specialisation.light.configuration.dotfiles.theme.polarity = lib.mkForce "light";
+
+    security.sudo.extraRules = [
+      {
+        users = [user];
+        commands = map (command: {
+          command = "${command} test";
+          options = ["NOPASSWD"];
+        }) [switchDark switchLight];
+      }
     ];
 
     stylix = {
       enable = true;
       autoEnable = true;
-      base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-      polarity = "dark";
+      base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-${flavor}.yaml";
+      inherit (theme) polarity;
       fonts = {
         monospace = {
           package = pkgs.nerd-fonts.jetbrains-mono;
@@ -75,8 +134,8 @@
       icons = {
         enable = true;
         package = pkgs.catppuccin-papirus-folders.override {
-          flavor = "mocha";
-          accent = "mauve";
+          inherit flavor;
+          inherit (theme) accent;
         };
         dark = "Papirus-Dark";
         light = "Papirus-Light";

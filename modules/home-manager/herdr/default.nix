@@ -145,8 +145,8 @@ in {
           light_name = "catppuccin-latte";
           dark_name = "catppuccin";
           custom = {
-            light.accent = "#8839ef";
-            dark.accent = "#cba6f7";
+            light.accent = config.dotfiles.theme.latte.accent;
+            dark.accent = config.dotfiles.theme.mocha.accent;
           };
         };
         experimental.pane_history = false;

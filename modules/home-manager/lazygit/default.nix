@@ -3,7 +3,9 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  p = config.dotfiles.theme.palette;
+in {
   options.dotfiles.lazygit.enable = lib.mkEnableOption "lazygit";
 
   config = lib.mkIf config.dotfiles.lazygit.enable {
@@ -61,18 +63,18 @@
         };
         gui = {
           theme = {
-            activeBorderColor = ["#cba6f7" "bold"];
-            cherryPickedCommitBgColor = ["#45475a"];
-            cherryPickedCommitFgColor = ["#cba6f7"];
-            defaultFgColor = ["#cdd6f4"];
-            inactiveBorderColor = ["#a6adc8"];
-            inactiveViewSelectedLineBgColor = ["#6c7086"];
-            markedBaseCommitBgColor = ["#f9e2af"];
-            markedBaseCommitFgColor = ["#cba6f7"];
-            optionsTextColor = ["#cba6f7"];
-            searchingActiveBorderColor = ["#f9e2af"];
-            selectedLineBgColor = ["#313244"];
-            unstagedChangesColor = ["#f38ba8"];
+            activeBorderColor = [p.accent "bold"];
+            cherryPickedCommitBgColor = [p.surface1];
+            cherryPickedCommitFgColor = [p.accent];
+            defaultFgColor = [p.text];
+            inactiveBorderColor = [p.subtext0];
+            inactiveViewSelectedLineBgColor = [p.overlay0];
+            markedBaseCommitBgColor = [p.yellow];
+            markedBaseCommitFgColor = [p.accent];
+            optionsTextColor = [p.accent];
+            searchingActiveBorderColor = [p.yellow];
+            selectedLineBgColor = [p.surface0];
+            unstagedChangesColor = [p.red];
           };
         };
         keybinding = {universal = {suspendApp = "<disabled>";};};

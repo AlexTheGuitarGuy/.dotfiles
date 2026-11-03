@@ -65,5 +65,6 @@ in {
     };
 
     xdg.configFile.nvim.source = cfg.configSource;
+    xdg.dataFile."dotfiles/theme.json".text = builtins.toJSON {inherit (config.dotfiles.theme) accent polarity;};
   };
 }

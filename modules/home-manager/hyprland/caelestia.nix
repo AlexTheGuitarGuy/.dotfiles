@@ -9,31 +9,14 @@
   wallpaperDir = "${config.xdg.dataHome}/caelestia/wallpapers";
   wallpaper = "${wallpaperDir}/wallpaper.png";
 
-  mauveAccent = pkgs.writeShellScript "caelestia-mauve-accent" ''
+  theme = config.dotfiles.theme;
+  accentColours = pkgs.runCommand "caelestia-accent.json" {nativeBuildInputs = [(pkgs.python3.withPackages (p: [p.materialyoucolor]))];} ''
+    python3 -I ${./caelestia-accent.py} ${lib.removePrefix "#" theme.palette.accent} ${theme.polarity} > $out
+  '';
+  applyAccent = pkgs.writeShellScript "caelestia-accent" ''
     scheme="${config.xdg.stateHome}/caelestia/scheme.json"
     tmp="$(${pkgs.coreutils}/bin/mktemp "$scheme.XXXXXX")"
-    ${lib.getExe pkgs.jq} --argjson accent ${lib.escapeShellArg (builtins.toJSON {
-      primary_paletteKeyColor = "8967b3";
-      surfaceTint = "cba6f7";
-      primary = "cba6f7";
-      onPrimary = "3f1f66";
-      primaryContainer = "8967b3";
-      onPrimaryContainer = "ffffff";
-      inversePrimary = "704f99";
-      primaryFixed = "eedbff";
-      primaryFixedDim = "cba6f7";
-      onPrimaryFixed = "290250";
-      onPrimaryFixedVariant = "57377f";
-      secondary_paletteKeyColor = "8a68b3";
-      secondary = "cba6f7";
-      onSecondary = "3f1e66";
-      secondaryContainer = "57377f";
-      onSecondaryContainer = "caa5f6";
-      secondaryFixed = "eedcff";
-      secondaryFixedDim = "cba6f7";
-      onSecondaryFixed = "290250";
-      onSecondaryFixedVariant = "57377f";
-    })} '.colours += $accent' "$scheme" > "$tmp"
+    ${lib.getExe pkgs.jq} --slurpfile accent ${accentColours} '.colours += $accent[0]' "$scheme" > "$tmp"
     ${pkgs.coreutils}/bin/mv "$tmp" "$scheme"
   '';
 in {
@@ -204,8 +187,8 @@ in {
       Wants = ["hyprsunset.service"];
     };
     systemd.user.services.caelestia.Service.ExecStartPre = [
-      "${cli}/bin/caelestia scheme set -n catppuccin -f mocha -m dark"
-      "${mauveAccent}"
+      "${cli}/bin/caelestia scheme set -n catppuccin -f ${theme.flavor} -m ${theme.polarity}"
+      "${applyAccent}"
       "${pkgs.bash}/bin/bash -c '[ -s ${config.xdg.stateHome}/caelestia/wallpaper/path.txt ] || ${cli}/bin/caelestia wallpaper -f ${wallpaper} -N'"
     ];
 

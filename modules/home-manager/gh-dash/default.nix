@@ -3,7 +3,9 @@
   config,
   pkgs,
   ...
-}: {
+}: let
+  p = config.dotfiles.theme.palette;
+in {
   options.dotfiles.gh-dash.enable = lib.mkEnableOption "gh-dash";
 
   config = lib.mkIf config.dotfiles.gh-dash.enable {
@@ -138,20 +140,20 @@
         smartFilteringAtLaunch = true;
         theme = {
           colors = {
-            background = {selected = "#313244";};
+            background = {selected = p.surface0;};
             border = {
-              faint = "#181825";
-              primary = "#cba6f7";
-              secondary = "#585b70";
+              faint = p.mantle;
+              primary = p.accent;
+              secondary = p.surface2;
             };
             text = {
-              actor = "#b4befe";
-              faint = "#6c7086";
-              inverted = "#1e1e2e";
-              primary = "#cdd6f4";
-              secondary = "#a6adc8";
-              success = "#a6e3a1";
-              warning = "#fab387";
+              actor = p.lavender;
+              faint = p.overlay0;
+              inverted = p.base;
+              primary = p.text;
+              secondary = p.subtext0;
+              success = p.green;
+              warning = p.peach;
             };
           };
           ui = {

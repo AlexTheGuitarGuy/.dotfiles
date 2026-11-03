@@ -28,8 +28,8 @@ in {
       // link "agents/"
       // link "plugins/"
       // link "herdr-opencode/"
-      // link "themes/"
       // {
+        "opencode/themes/catppuccin-accent.json".text = builtins.replaceStrings ["8839ef" "cba6f7"] [(lib.removePrefix "#" config.dotfiles.theme.latte.accent) (lib.removePrefix "#" config.dotfiles.theme.mocha.accent)] (builtins.readFile ./catppuccin.json);
         "opencode/plugins/caveman.js".text = ''
           import v1 from "${caveman}/dist/index.js";
 

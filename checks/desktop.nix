@@ -151,9 +151,9 @@ pkgs.testers.runNixOSTest {
     nu("^(open (which playwright-mcp | get path.0) --raw | parse -r '--executable-path (?<p>\\S+)' | get p.0) --version")
 
     lw = "/home/alex/.config/librewolf/librewolf"
-    assert nu("^readlink -m ~/.config/librewolf/librewolf/default/chrome") == "/home/alex/.dotfiles/modules/home-manager/librewolf/config/chrome"
+    machine.succeed("grep -q -i 89b4fa /home/alex/.config/librewolf/librewolf/default/chrome/userContent.css")
     assert nu("^readlink -m ~/.config/librewolf/librewolf/librewolf.overrides.cfg") == "/home/alex/.dotfiles/modules/home-manager/librewolf/config/librewolf.overrides.cfg"
-    assert nu("^readlink -m ~/.config/tridactyl") == "/home/alex/.dotfiles/modules/home-manager/librewolf/tridactyl"
+    assert nu("^readlink -m ~/.config/tridactyl/tridactylrc") == "/home/alex/.dotfiles/modules/home-manager/librewolf/config/tridactylrc"
     hosts = nu("ls ~/.config/librewolf/native-messaging-hosts/ | get name | path basename | sort | str join ,")
     assert hosts == "brotab_mediator.json,com.1password.1password.json,tridactyl.json", hosts
     machine.succeed(f"grep -q 'Path=default' {lw}/profiles.ini")

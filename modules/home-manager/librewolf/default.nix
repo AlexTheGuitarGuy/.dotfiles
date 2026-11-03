@@ -71,14 +71,16 @@ in {
     mozilla.firefoxNativeMessagingHosts = [pkgs.tridactyl-native onePasswordHost brotabHost];
 
     home.file = {
-      "${cfg.profilePath}/chrome".source = live "${repo}/config/chrome";
+      "${cfg.profilePath}/chrome/userChrome.css".text = config.dotfiles.theme.recolor (builtins.readFile ./config/userChrome.css);
+      "${cfg.profilePath}/chrome/userContent.css".text = config.dotfiles.theme.recolor (builtins.readFile ./config/userContent.css);
       "${configPath}/librewolf.overrides.cfg".source = live "${repo}/config/librewolf.overrides.cfg";
       ".config/librewolf/darkreader.json".source = live "${repo}/config/darkreader.json";
       ".config/librewolf/search-shortcuts.html".source = live "${repo}/config/search-shortcuts.html";
       ".config/librewolf/native-messaging-hosts".source = live "${config.home.homeDirectory}/.mozilla/native-messaging-hosts";
     };
 
-    xdg.configFile.tridactyl.source = live "${repo}/tridactyl";
+    xdg.configFile."tridactyl/tridactylrc".source = live "${repo}/config/tridactylrc";
+    xdg.configFile."tridactyl/themes/catppuccin.css".text = config.dotfiles.theme.recolor (builtins.readFile ./config/tridactyl.css);
 
     home.activation.librewolfDefaultBrowser = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run ${pkgs.xdg-utils}/bin/xdg-mime default librewolf.desktop x-scheme-handler/http x-scheme-handler/https text/html application/xhtml+xml

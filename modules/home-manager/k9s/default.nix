@@ -2,7 +2,9 @@
   lib,
   config,
   ...
-}: {
+}: let
+  p = config.dotfiles.theme.palette;
+in {
   options.dotfiles.k9s.enable = lib.mkEnableOption "k9s";
 
   config = lib.mkIf config.dotfiles.k9s.enable {
@@ -62,7 +64,7 @@
             logoless = false;
             noIcons = false;
             reactive = false;
-            skin = "catppuccin-mocha";
+            skin = "catppuccin";
             splashless = false;
             useFullGVRTitle = false;
           };
@@ -78,117 +80,117 @@
         ro = "roles";
         sec = "v1/secrets";
       };
-      skins.catppuccin-mocha = {
+      skins.catppuccin = {
         k9s = {
           body = {
-            bgColor = "#1e1e2e";
-            fgColor = "#cdd6f4";
-            logoColor = "#cba6f7";
+            bgColor = p.base;
+            fgColor = p.text;
+            logoColor = p.accent;
           };
           dialog = {
-            bgColor = "#313244";
-            buttonBgColor = "#7f849c";
-            buttonFgColor = "#1e1e2e";
-            buttonFocusBgColor = "#f5c2e7";
-            buttonFocusFgColor = "#1e1e2e";
-            fgColor = "#f9e2af";
-            fieldFgColor = "#cdd6f4";
-            labelFgColor = "#f5e0dc";
+            bgColor = p.surface0;
+            buttonBgColor = p.overlay1;
+            buttonFgColor = p.base;
+            buttonFocusBgColor = p.pink;
+            buttonFocusFgColor = p.base;
+            fgColor = p.yellow;
+            fieldFgColor = p.text;
+            labelFgColor = p.rosewater;
           };
           frame = {
             border = {
-              fgColor = "#cba6f7";
-              focusColor = "#b4befe";
+              fgColor = p.accent;
+              focusColor = p.lavender;
             };
             crumbs = {
-              activeColor = "#f2cdcd";
-              bgColor = "#eba0ac";
-              fgColor = "#1e1e2e";
+              activeColor = p.flamingo;
+              bgColor = p.maroon;
+              fgColor = p.base;
             };
             menu = {
-              fgColor = "#cdd6f4";
-              keyColor = "#cba6f7";
-              numKeyColor = "#eba0ac";
+              fgColor = p.text;
+              keyColor = p.accent;
+              numKeyColor = p.maroon;
             };
             status = {
-              addColor = "#a6e3a1";
-              completedColor = "#6c7086";
-              errorColor = "#f38ba8";
-              highlightColor = "#89dceb";
-              killColor = "#cba6f7";
-              modifyColor = "#b4befe";
-              newColor = "#cba6f7";
-              pendingColor = "#fab387";
+              addColor = p.green;
+              completedColor = p.overlay0;
+              errorColor = p.red;
+              highlightColor = p.sky;
+              killColor = p.accent;
+              modifyColor = p.lavender;
+              newColor = p.accent;
+              pendingColor = p.peach;
             };
             title = {
-              bgColor = "#1e1e2e";
-              counterColor = "#f9e2af";
-              fgColor = "#94e2d5";
-              filterColor = "#a6e3a1";
-              highlightColor = "#f5c2e7";
+              bgColor = p.base;
+              counterColor = p.yellow;
+              fgColor = p.teal;
+              filterColor = p.green;
+              highlightColor = p.pink;
             };
           };
           help = {
-            bgColor = "#1e1e2e";
-            fgColor = "#cdd6f4";
-            keyColor = "#cba6f7";
-            numKeyColor = "#eba0ac";
-            sectionColor = "#a6e3a1";
+            bgColor = p.base;
+            fgColor = p.text;
+            keyColor = p.accent;
+            numKeyColor = p.maroon;
+            sectionColor = p.green;
           };
           info = {
-            fgColor = "#fab387";
-            sectionColor = "#cdd6f4";
+            fgColor = p.peach;
+            sectionColor = p.text;
           };
           prompt = {
-            bgColor = "#181825";
-            fgColor = "#cdd6f4";
-            suggestColor = "#cba6f7";
+            bgColor = p.mantle;
+            fgColor = p.text;
+            suggestColor = p.accent;
           };
           views = {
             charts = {
-              bgColor = "#1e1e2e";
-              chartBgColor = "#1e1e2e";
-              defaultChartColors = ["#a6e3a1" "#f38ba8"];
-              defaultDialColors = ["#a6e3a1" "#f38ba8"];
-              dialBgColor = "#1e1e2e";
+              bgColor = p.base;
+              chartBgColor = p.base;
+              defaultChartColors = [p.green p.red];
+              defaultDialColors = [p.green p.red];
+              dialBgColor = p.base;
               resourceColors = {
-                cpu = ["#cba6f7" "#cba6f7"];
-                mem = ["#f9e2af" "#fab387"];
+                cpu = [p.accent p.accent];
+                mem = [p.yellow p.peach];
               };
             };
             logs = {
-              bgColor = "#1e1e2e";
-              fgColor = "#cdd6f4";
+              bgColor = p.base;
+              fgColor = p.text;
               indicator = {
-                bgColor = "#1e1e2e";
-                fgColor = "#b4befe";
-                toggleOffColor = "#a6adc8";
-                toggleOnColor = "#a6e3a1";
+                bgColor = p.base;
+                fgColor = p.lavender;
+                toggleOffColor = p.subtext0;
+                toggleOnColor = p.green;
               };
             };
             table = {
-              bgColor = "#1e1e2e";
-              cursorBgColor = "#45475a";
-              cursorFgColor = "#313244";
-              fgColor = "#cdd6f4";
+              bgColor = p.base;
+              cursorBgColor = p.surface1;
+              cursorFgColor = p.surface0;
+              fgColor = p.text;
               header = {
-                bgColor = "#1e1e2e";
-                fgColor = "#f9e2af";
-                sorterColor = "#89dceb";
+                bgColor = p.base;
+                fgColor = p.yellow;
+                sorterColor = p.sky;
               };
-              markColor = "#f5e0dc";
+              markColor = p.rosewater;
             };
             xray = {
-              bgColor = "#1e1e2e";
-              cursorColor = "#45475a";
-              cursorTextColor = "#1e1e2e";
-              fgColor = "#cdd6f4";
-              graphicColor = "#f5c2e7";
+              bgColor = p.base;
+              cursorColor = p.surface1;
+              cursorTextColor = p.base;
+              fgColor = p.text;
+              graphicColor = p.pink;
             };
             yaml = {
-              colonColor = "#a6adc8";
-              keyColor = "#cba6f7";
-              valueColor = "#cdd6f4";
+              colonColor = p.subtext0;
+              keyColor = p.accent;
+              valueColor = p.text;
             };
           };
         };

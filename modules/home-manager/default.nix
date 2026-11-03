@@ -32,6 +32,7 @@
     ./spotify
     ./ssh
     ./starship
+    ./theme
   ];
 
   options.dotfiles.repo = lib.mkOption {

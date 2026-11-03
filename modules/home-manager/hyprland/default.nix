@@ -54,16 +54,19 @@
 
   cfg = config.dotfiles.hyprland;
 
-  mauveAccent = let
-    colors = config.lib.stylix.colors.override {base0D = "cba6f7";};
+  theme = config.dotfiles.theme;
+  hex = lib.removePrefix "#";
+
+  accentColors = let
+    colors = config.lib.stylix.colors.override {base0D = hex theme.palette.accent;};
   in
     colors
     // {
       withHashtag =
         colors.withHashtag
         // {
-          base0D = "#cba6f7";
-          blue = "#cba6f7";
+          base0D = theme.palette.accent;
+          blue = theme.palette.accent;
         };
     };
 in {
@@ -125,6 +128,7 @@ in {
               (bind "SHIFT + Z" ''hl.dsp.exec_cmd("${screenshot}")'')
               (bind "SHIFT + O" ''hl.dsp.exec_cmd("${lib.getExe osk}")'')
               (bind "SHIFT + R" ''hl.dsp.exec_cmd("gpu-screen-recorder-gtk")'')
+              (bind "SHIFT + T" ''hl.dsp.exec_cmd("theme-toggle")'')
               (bind "V" ''hl.dsp.exec_cmd("caelestia clipboard")'')
               (bind "X" ''hl.dsp.exec_cmd("caelestia emoji -p")'')
               (bind "ESCAPE" ''hl.dsp.exec_cmd("caelestia shell lock lock")'')
@@ -151,8 +155,8 @@ in {
               gaps_in = 3;
               gaps_out = gapsOut;
               border_size = borderSize;
-              "col.active_border" = lib.mkForce "rgba(cba6f766)";
-              "col.inactive_border" = lib.mkForce "rgba(31324499)";
+              "col.active_border" = lib.mkForce "rgba(${hex theme.palette.accent}66)";
+              "col.inactive_border" = lib.mkForce "rgba(${hex theme.palette.surface0}99)";
               resize_on_border = false;
               allow_tearing = false;
               layout = "dwindle";
@@ -169,8 +173,8 @@ in {
               };
             };
             group = {
-              "col.border_active" = lib.mkForce "rgba(cba6f766)";
-              "col.border_inactive" = lib.mkForce "rgba(31324499)";
+              "col.border_active" = lib.mkForce "rgba(${hex theme.palette.accent}66)";
+              "col.border_inactive" = lib.mkForce "rgba(${hex theme.palette.surface0}99)";
             };
             animations.enabled = true;
             misc.focus_on_activate = config.dotfiles.hyprland.autostart == [];
@@ -317,12 +321,12 @@ in {
         ];
       };
 
-      dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+      dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-${theme.polarity}";
 
       programs.yazi = {
         enable = true;
         plugins.smart-enter = pkgs.yaziPlugins.smart-enter;
-        theme.icon.dirs = lib.mkForce (map (dir: dir // {fg = mauveAccent.withHashtag.base0D;}) [
+        theme.icon.dirs = lib.mkForce (map (dir: dir // {fg = accentColors.withHashtag.base0D;}) [
           {
             name = ".config";
             text = "";
@@ -437,6 +441,6 @@ in {
       home.packages = with pkgs; [osk ghostty hyprshot satty wl-clipboard pavucontrol brightnessctl brotab gpu-screen-recorder-gtk];
     }
     // lib.optionalAttrs (options ? stylix) {
-      stylix.targets = lib.genAttrs ["hyprland" "gtk" "fuzzel" "yazi"] (_: {colors.override = mauveAccent;});
+      stylix.targets = lib.genAttrs ["hyprland" "gtk" "fuzzel" "yazi"] (_: {colors.override = accentColors;});
     });
 }
