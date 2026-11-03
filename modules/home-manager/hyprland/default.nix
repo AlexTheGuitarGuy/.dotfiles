@@ -50,7 +50,7 @@
   focusOnActivateLater = "sleep 60 && hyprctl eval 'hl.config({ misc = { focus_on_activate = true } })'";
 
   gapsOut = 8;
-  borderSize = 5;
+  borderSize = 3;
 
   cfg = config.dotfiles.hyprland;
 
@@ -150,6 +150,8 @@ in {
               gaps_in = 3;
               gaps_out = gapsOut;
               border_size = borderSize;
+              "col.active_border" = lib.mkForce "rgba(cba6f766)";
+              "col.inactive_border" = lib.mkForce "rgba(31324499)";
               resize_on_border = false;
               allow_tearing = false;
               layout = "dwindle";
@@ -164,6 +166,10 @@ in {
                 passes = 1;
                 vibrancy = 0.1696;
               };
+            };
+            group = {
+              "col.border_active" = lib.mkForce "rgba(cba6f766)";
+              "col.border_inactive" = lib.mkForce "rgba(31324499)";
             };
             animations.enabled = true;
             misc.focus_on_activate = config.dotfiles.hyprland.autostart == [];
