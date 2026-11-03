@@ -13,6 +13,7 @@
   dotfiles.gaming.enable = true;
   dotfiles.laptop.enable = true;
   dotfiles.theme.accent = "blue";
+  dotfiles.theme.tertiary = "lavender";
 
   # Intel UHD 630 drives the desktop and the laptop screen; the RTX 2060 (external HDMI/DP ports)
   # runs apps started with `nvidia-offload`.

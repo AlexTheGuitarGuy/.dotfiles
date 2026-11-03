@@ -11,7 +11,7 @@
 
   theme = config.dotfiles.theme;
   accentColours = pkgs.runCommand "caelestia-accent.json" {nativeBuildInputs = [(pkgs.python3.withPackages (p: [p.materialyoucolor]))];} ''
-    python3 -I ${./caelestia-accent.py} ${lib.removePrefix "#" theme.palette.accent} ${theme.polarity} > $out
+    python3 -I ${./caelestia-accent.py} ${lib.removePrefix "#" theme.palette.accent} ${lib.removePrefix "#" theme.palette.tertiary} ${theme.polarity} > $out
   '';
   applyAccent = pkgs.writeShellScript "caelestia-accent" ''
     scheme="${config.xdg.stateHome}/caelestia/scheme.json"

@@ -12,6 +12,11 @@ in {
       default = "blue";
       description = "Catppuccin accent colour used across all themed apps.";
     };
+    tertiary = lib.mkOption {
+      type = lib.types.enum (import ../../catppuccin.nix).accents;
+      default = "lavender";
+      description = "Second Catppuccin accent, for things that should stand apart from the main accent.";
+    };
     polarity = lib.mkOption {
       type = lib.types.enum ["dark" "light"];
       default = "dark";
@@ -19,5 +24,5 @@ in {
     };
   };
 
-  config.home-manager.users.${user}.dotfiles.theme = {inherit (cfg) accent polarity;};
+  config.home-manager.users.${user}.dotfiles.theme = {inherit (cfg) accent tertiary polarity;};
 }

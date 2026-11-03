@@ -147,11 +147,11 @@ in {
           custom = {
             light = {
               accent = config.dotfiles.theme.latte.accent;
-              mauve = config.dotfiles.theme.latte.accent;
+              mauve = config.dotfiles.theme.latte.tertiary;
             };
             dark = {
               accent = config.dotfiles.theme.mocha.accent;
-              mauve = config.dotfiles.theme.mocha.accent;
+              mauve = config.dotfiles.theme.mocha.tertiary;
             };
           };
         };
