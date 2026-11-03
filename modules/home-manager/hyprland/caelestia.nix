@@ -208,5 +208,7 @@ in {
       "${mauveAccent}"
       "${pkgs.bash}/bin/bash -c '[ -s ${config.xdg.stateHome}/caelestia/wallpaper/path.txt ] || ${cli}/bin/caelestia wallpaper -f ${wallpaper} -N'"
     ];
+
+    services.blueman-applet.enable = true;
   };
 }
