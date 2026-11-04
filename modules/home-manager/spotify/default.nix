@@ -15,8 +15,6 @@ in {
   config = lib.mkIf config.dotfiles.spotify.enable ({
       programs.spicetify = {
         enable = true;
-        theme = spicePkgs.themes.catppuccin;
-        colorScheme = config.dotfiles.theme.flavor;
         enabledExtensions = [spicePkgs.extensions.adblock];
       };
     }
