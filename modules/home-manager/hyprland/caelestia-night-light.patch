@@ -62,16 +62,23 @@ diff -ruN a/modules/osd/Content.qml b/modules/osd/Content.qml
  import Caelestia
  import Caelestia.Config
  import qs.components
-@@ -106,6 +108,50 @@
+@@ -21,6 +23,8 @@
+     required property bool sourceMuted
+     required property real brightness
+ 
++    property int temperature: 6500
++
+     implicitWidth: layout.implicitWidth + Tokens.padding.large + layout.anchors.horizontalCenterOffset * 2
+     implicitHeight: layout.implicitHeight + Tokens.padding.large * 2
+ 
+@@ -106,6 +110,48 @@
                  }
              }
          }
 +
 +        // Night light warmth
 +        WrappedLoader {
-+            readonly property int hour: new Date().getHours()
-+
-+            shouldBeActive: hour >= 20 || hour < 7
++            shouldBeActive: root.temperature < 6000
 +
 +            sourceComponent: CustomMouseArea {
 +                function apply(): void {
@@ -95,20 +102,20 @@ diff -ruN a/modules/osd/Content.qml b/modules/osd/Content.qml
 +                    anchors.fill: parent
 +
 +                    icon: "nightlight"
-+                    from: 6500
++                    from: 5500
 +                    to: 2500
-+                    value: 4000
++                    value: root.temperature
 +                    onMoved: parent.apply()
 +                }
-+
-+                Process {
-+                    running: true
-+                    command: ["hyprctl", "hyprsunset", "temperature"]
-+                    stdout: StdioCollector {
-+                        onStreamFinished: warmth.value = parseInt(text) || 4000
-+                    }
-+                }
 +            }
++        }
++    }
++
++    Process {
++        running: true
++        command: ["hyprctl", "hyprsunset", "temperature"]
++        stdout: StdioCollector {
++            onStreamFinished: root.temperature = parseInt(text) || 6500
 +        }
      }
  
