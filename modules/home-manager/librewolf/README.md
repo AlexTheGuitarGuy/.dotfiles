@@ -33,7 +33,7 @@ It copies:
 
 - `librewolf.overrides.cfg` to `%USERPROFILE%\.librewolf\` (stay logged in, sync on, session restore, title bar, fonts, cookie banners, faster loading)
 - `tridactylrc` and the Catppuccin theme to `%USERPROFILE%\.config\tridactyl\`
-- the CSS (square corners, hidden tab bar, `about:` pages, Sidebery styling) into every profile's `chrome` folder
+- the CSS (hidden tab bar, `about:` pages, Sidebery styling) into every profile's `chrome` folder
 
 It should print "copied chrome to ...". The script copies instead of linking, so after a dotfiles change run `git pull` and the script again.
 
@@ -74,7 +74,7 @@ Start LibreWolf, open the menu, choose Sign in and use the Mozilla account (pass
 
 Restart LibreWolf once (Ctrl+Q, then start it) and check:
 
-- square corners, Sidebery styling with the purple outline
+- Sidebery styling with the purple outline
 - new tabs show the normal LibreWolf page
 - Tridactyl's `:` command line uses the Catppuccin colors
 - tabs come back after a restart

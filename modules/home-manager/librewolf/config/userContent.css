@@ -5,7 +5,6 @@
 	}
 
 	* {
-		border-radius: 0px !important;
 		font-family: "JetBrainsMono Nerd Font", monospace !important;
 	}
 
@@ -43,11 +42,6 @@
 		--tabs-font: 14px "JetBrainsMono Nerd Font", sans-serif !important;
 		--tabs-count-font: 14px "JetBrainsMono Nerd Font", sans-serif !important;
 		--general-margin: 4px !important;
-		--general-border-radius: 0px !important;
-	}
-
-	* {
-		border-radius: 0px !important;
 	}
 
 	.Tab[data-active="true"] .body {
