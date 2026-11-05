@@ -31,8 +31,7 @@
       type = "local";
       command = [s.command] ++ s.args;
       inherit (s) enabled;
-    }
-    // lib.optionalAttrs (s.timeout != null) {inherit (s) timeout;};
+    };
 
   claudeAgent = name: a: ''
     ---
@@ -88,11 +87,6 @@ in {
             type = lib.types.bool;
             default = true;
             description = "OpenCode enabled flag.";
-          };
-          timeout = lib.mkOption {
-            type = lib.types.nullOr lib.types.ints.positive;
-            default = null;
-            description = "OpenCode request timeout in ms.";
           };
           claude = lib.mkOption {
             type = lib.types.nullOr json.type;
@@ -154,7 +148,6 @@ in {
         };
         playwright = {
           command = "playwright-mcp";
-          timeout = 60000;
           args = [
             "--user-data-dir"
             "${config.home.homeDirectory}/.cache/playwright-mcp"
