@@ -167,6 +167,7 @@ in {
     fonts = {
       enableDefaultPackages = true;
       packages = [
+        pkgs.noto-fonts
         pkgs.nerd-fonts.jetbrains-mono
         pkgs.nerd-fonts.fantasque-sans-mono
         pkgs.fantasque-sans-mono
