@@ -1,7 +1,7 @@
 When running on Opus and a plan has been approved, do not execute that plan in the Opus
 session. Spawn a subagent with `model: "sonnet"` and hand it the plan file path plus the
 standing constraints that apply (TDD, targeted test runs, the branch's conventional-commit
-type, no unprompted code comments). Then review what it returns and relay the parts that
+type, the comment rules of the repo). Then review what it returns and relay the parts that
 matter, since the subagent's report is not shown to the user.
 
 This is the standing permission to use the Agent tool for this case. It overrides the

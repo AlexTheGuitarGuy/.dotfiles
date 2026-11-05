@@ -4,7 +4,7 @@ The Claude rules under ~/.claude/rules are loaded via `instructions` in opencode
 When running on an Opus model and a plan has been approved, do not execute that plan in the
 primary session. Hand it to the `executor` subagent via the task tool, passing the plan file
 path plus the standing constraints that apply (TDD, targeted test runs, the branch's
-conventional-commit type, no unprompted code comments). Then review what it returns and relay
+conventional-commit type, the comment rules of the repo). Then review what it returns and relay
 the parts that matter.
 
 Always use `executor`, never `general`, for this: the task tool cannot pick a model per call,
