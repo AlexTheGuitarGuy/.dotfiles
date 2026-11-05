@@ -191,6 +191,7 @@ in {
       After = ["hyprsunset.service"];
       Wants = ["hyprsunset.service"];
     };
+    systemd.user.services.caelestia.Service.Environment = ["QS_ICON_THEME=${config.gtk.iconTheme.name}"];
     systemd.user.services.caelestia.Service.ExecStartPre = [
       "${cli}/bin/caelestia scheme set -n catppuccin -f ${theme.flavor} -m ${theme.polarity}"
       "${applyAccent}"
