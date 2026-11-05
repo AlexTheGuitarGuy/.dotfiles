@@ -62,16 +62,21 @@ diff -ruN a/modules/osd/Content.qml b/modules/osd/Content.qml
  import Caelestia
  import Caelestia.Config
  import qs.components
-@@ -21,6 +23,8 @@
+@@ -21,6 +23,13 @@
      required property bool sourceMuted
      required property real brightness
  
 +    property int temperature: 6500
 +
++    function setTemperature(kelvin: real): void {
++        temperature = CUtils.clamp(Math.round(kelvin), 2500, 5500);
++        Quickshell.execDetached(["hyprctl", "hyprsunset", "temperature", temperature.toString()]);
++    }
++
      implicitWidth: layout.implicitWidth + Tokens.padding.large + layout.anchors.horizontalCenterOffset * 2
      implicitHeight: layout.implicitHeight + Tokens.padding.large * 2
  
-@@ -106,6 +110,48 @@
+@@ -106,6 +115,42 @@
                  }
              }
          }
@@ -81,16 +86,12 @@ diff -ruN a/modules/osd/Content.qml b/modules/osd/Content.qml
 +            shouldBeActive: root.temperature < 6000
 +
 +            sourceComponent: CustomMouseArea {
-+                function apply(): void {
-+                    Quickshell.execDetached(["hyprctl", "hyprsunset", "temperature", Math.round(warmth.value).toString()]);
-+                }
-+
 +                function onWheel(event: WheelEvent) {
 +                    if (event.angleDelta.y > 0)
-+                        warmth.value -= 250;
++                        root.setTemperature(root.temperature - 300);
 +                    else if (event.angleDelta.y < 0)
-+                        warmth.value += 250;
-+                    apply();
++                        root.setTemperature(root.temperature + 300);
++                    warmth.value = (5500 - root.temperature) / 3000;
 +                }
 +
 +                implicitWidth: Tokens.sizes.osd.sliderWidth
@@ -102,10 +103,8 @@ diff -ruN a/modules/osd/Content.qml b/modules/osd/Content.qml
 +                    anchors.fill: parent
 +
 +                    icon: "nightlight"
-+                    from: 5500
-+                    to: 2500
-+                    value: root.temperature
-+                    onMoved: parent.apply()
++                    value: (5500 - root.temperature) / 3000
++                    onMoved: root.setTemperature(5500 - value * 3000)
 +                }
 +            }
 +        }
