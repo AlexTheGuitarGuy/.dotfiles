@@ -4,12 +4,15 @@
   pkgs,
   ...
 }: let
+  mcpVersion = "0.0.84";
   playwright-mcp = pkgs.writeShellApplication {
     name = "playwright-mcp";
     runtimeInputs = [pkgs.nodejs];
     text = ''
-      npx -y -p @playwright/mcp@latest playwright install ffmpeg >&2 || true
-      exec npx -y @playwright/mcp@latest --browser chrome --executable-path ${lib.getExe pkgs.google-chrome} "$@"
+      if ! compgen -G "$HOME/.cache/ms-playwright/ffmpeg-*" >/dev/null; then
+        npx -y --prefer-offline -p @playwright/mcp@${mcpVersion} playwright install ffmpeg >&2 || true
+      fi
+      exec npx -y --prefer-offline @playwright/mcp@${mcpVersion} --browser chrome --executable-path ${lib.getExe pkgs.google-chrome} "$@"
     '';
   };
 in {
