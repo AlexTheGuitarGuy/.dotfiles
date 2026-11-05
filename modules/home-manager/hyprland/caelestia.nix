@@ -26,6 +26,9 @@ in {
     programs.caelestia = {
       enable = true;
       systemd.enable = true;
+      # Hyprland restarts this target after importing its env at login; graphical-session.target
+      # outlives a logout, so a shell restarted in between never sees HYPRLAND_INSTANCE_SIGNATURE.
+      systemd.target = "hyprland-session.target";
       package = inputs.caelestia-shell.packages.${pkgs.stdenv.hostPlatform.system}.with-cli.overrideAttrs (old: {
         postPatch =
           (old.postPatch or "")
