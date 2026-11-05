@@ -50,3 +50,66 @@ diff -ruN a/modules/utilities/cards/Toggles.qml b/modules/utilities/cards/Toggle
                      roleValue: "vpn"
                      delegate: Toggle {
                          icon: "vpn_key"
+diff -ruN a/modules/osd/Content.qml b/modules/osd/Content.qml
+--- a/modules/osd/Content.qml
++++ b/modules/osd/Content.qml
+@@ -2,6 +2,8 @@
+ 
+ import QtQuick
+ import QtQuick.Layouts
++import Quickshell
++import Quickshell.Io
+ import Caelestia
+ import Caelestia.Config
+ import qs.components
+@@ -106,6 +108,50 @@
+                 }
+             }
+         }
++
++        // Night light warmth
++        WrappedLoader {
++            readonly property int hour: new Date().getHours()
++
++            shouldBeActive: hour >= 20 || hour < 7
++
++            sourceComponent: CustomMouseArea {
++                function apply(): void {
++                    Quickshell.execDetached(["hyprctl", "hyprsunset", "temperature", Math.round(warmth.value).toString()]);
++                }
++
++                function onWheel(event: WheelEvent) {
++                    if (event.angleDelta.y > 0)
++                        warmth.value -= 250;
++                    else if (event.angleDelta.y < 0)
++                        warmth.value += 250;
++                    apply();
++                }
++
++                implicitWidth: Tokens.sizes.osd.sliderWidth
++                implicitHeight: Tokens.sizes.osd.sliderHeight
++
++                FilledSlider {
++                    id: warmth
++
++                    anchors.fill: parent
++
++                    icon: "nightlight"
++                    from: 6500
++                    to: 2500
++                    value: 4000
++                    onMoved: parent.apply()
++                }
++
++                Process {
++                    running: true
++                    command: ["hyprctl", "hyprsunset", "temperature"]
++                    stdout: StdioCollector {
++                        onStreamFinished: warmth.value = parseInt(text) || 4000
++                    }
++                }
++            }
++        }
+     }
+ 
+     component WrappedLoader: Loader {
