@@ -27,7 +27,7 @@ in {
     home.packages =
       (with pkgs; [wtype grim slurp imagemagick ffmpeg])
       ++ [
-        (script "term-shot" (with pkgs; [ghostty jq wtype grim]))
+        (script "term-shot" (with pkgs; [ghostty jq wtype grim wl-clipboard procps]))
         (script "k9s-shot" (with pkgs; [ghostty jq grim tmux]))
       ];
   };
