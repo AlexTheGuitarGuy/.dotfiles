@@ -9,7 +9,7 @@
     name = "playwright-mcp";
     runtimeInputs = [pkgs.nodejs];
     text = ''
-      if ! compgen -G "$HOME/.cache/ms-playwright/ffmpeg-*" >/dev/null; then
+      if ! ls -d "$HOME"/.cache/ms-playwright/ffmpeg-* >/dev/null 2>&1; then
         npx -y --prefer-offline -p @playwright/mcp@${mcpVersion} playwright install ffmpeg >&2 || true
       fi
       exec npx -y --prefer-offline @playwright/mcp@${mcpVersion} --browser chrome --executable-path ${lib.getExe pkgs.google-chrome} "$@"
