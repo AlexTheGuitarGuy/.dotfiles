@@ -200,6 +200,17 @@ in {
           }} $out/share/fonts/truetype/GoogleSansFlex.ttf
         '')
       ];
+      # Helvetica falls back to TeX Gyre Heros, whose i blurs into an l at small sizes.
+      fontconfig.localConf = ''
+        <?xml version="1.0"?>
+        <!DOCTYPE fontconfig SYSTEM "urn:fontconfig:fonts.dtd">
+        <fontconfig>
+          <alias binding="same">
+            <family>Helvetica</family>
+            <prefer><family>Liberation Sans</family></prefer>
+          </alias>
+        </fontconfig>
+      '';
     };
   };
 }
