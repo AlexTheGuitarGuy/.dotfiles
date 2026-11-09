@@ -322,6 +322,18 @@ in {
         ];
       };
 
+      services.udiskie = {
+        enable = true;
+        tray = "auto";
+        automount = false;
+        settings = {
+          # caelestia's tray only speaks StatusNotifierItem.
+          program_options.appindicator = true;
+          # 0 keeps the "device added" notification, with its Mount button, until dismissed.
+          notifications.device_added = 0;
+        };
+      };
+
       dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-${theme.polarity}";
 
       programs.yazi = {
