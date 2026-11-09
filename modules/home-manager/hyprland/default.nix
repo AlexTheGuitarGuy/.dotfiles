@@ -180,6 +180,7 @@ in {
             misc.focus_on_activate = config.dotfiles.hyprland.autostart == [];
             input = {
               kb_layout = "us,ru,ro";
+              kb_variant = ",,std";
               kb_options = "grp:alt_shift_toggle";
               touchpad.natural_scroll = true;
             };
