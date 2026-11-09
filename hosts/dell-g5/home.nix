@@ -34,6 +34,7 @@
       autostart = [
         "sleep 5 && ghostty --class=com.mitchellh.ghostty.home -e nu -e herdr"
         "sleep 5 && ghostty --class=com.mitchellh.ghostty.btop -e btop"
+        "sleep 5 && ghostty --class=com.mitchellh.ghostty.nvtop -e nvtop"
         "sleep 5 && librewolf"
         "bruno"
         "podman-desktop"
@@ -55,6 +56,10 @@
         {
           class = "com.mitchellh.ghostty.btop";
           workspace = "12";
+        }
+        {
+          class = "com.mitchellh.ghostty.nvtop";
+          workspace = "11";
         }
         {
           class = "bruno";
