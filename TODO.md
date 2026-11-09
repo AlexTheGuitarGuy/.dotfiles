@@ -7,6 +7,8 @@ Personal open tasks. Work tasks live in the work repo.
 - [ ] After pulling this repo, run `powershell -ExecutionPolicy Bypass -File windows\link-claude.ps1`, so
       Claude Code on Windows gets the rules, skills, plugins and model from this clone. Rerun it after a pull
       that changed `settings.portable.json`.
+- [ ] Move to LibreWolf: follow `modules/home-manager/librewolf/README.md`, section "Windows setup" (install,
+      `windows.ps1`, sync sign-in, Tridactyl without new tab, per-extension settings, set as default browser).
 - [ ] Samsung T7: move game saves into Windows and hook them into Ludusavi (`Games\Saves\<game>`, emulators
       in `Games\Emulators`: BizHawk, PCSX2, PSP). List what else of the Windows setup should take part.
 - [ ] Samsung T7: move music production data into the DAW locations (`Music - song ideas\Ableton User Library`,
