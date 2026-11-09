@@ -4,15 +4,15 @@ Personal open tasks. Work tasks live in the work repo.
 
 ## Windows
 
-- [ ] After pulling this repo, run `powershell -ExecutionPolicy Bypass -File windows\link-claude.ps1` once,
-      so Claude Code on Windows gets the rules and skills from this clone.
+- [ ] After pulling this repo, run `powershell -ExecutionPolicy Bypass -File windows\link-claude.ps1`, so
+      Claude Code on Windows gets the rules, skills, plugins and model from this clone. Rerun it after a pull
+      that changed `settings.portable.json`.
 - [ ] Samsung T7: move game saves into Windows and hook them into Ludusavi (`Games\Saves\<game>`, emulators
       in `Games\Emulators`: BizHawk, PCSX2, PSP). List what else of the Windows setup should take part.
 - [ ] Samsung T7: move music production data into the DAW locations (`Music - song ideas\Ableton User Library`,
       `FL Studio and plugin data`, `muzica mea\Samples`).
 - [ ] Samsung T7: delete `Misc\Old PC\old-windows-configs` or rotate what is in it (`.aws`, `.azure`,
       `.1password`, `.docker` from the old PC).
-- [ ] Optional: set Claude Code plugins and settings by hand (superpowers, caveman, ponytail, model) if missed.
 
 ## Linux
 

@@ -18,12 +18,9 @@
   claude-worktree = script "claude-worktree" [pkgs.git pkgs.jq];
   ai-commit-msgs = script "ai-commit-msgs" [pkgs.git];
 
-  settings = {
+  # Plugins, model and other OS-neutral settings are shared with Windows (windows/link-claude.ps1).
+  settings = lib.recursiveUpdate (lib.importJSON ./settings.portable.json) {
     env.GITNEXUS_HOOK_CLI_PATH = "${pkgs.gitnexus}/lib/node_modules/gitnexus/dist/cli/index.js";
-    attribution = {
-      commit = "";
-      pr = "";
-    };
     hooks = {
       SessionStart = [
         {
@@ -99,42 +96,7 @@
       type = "command";
       command = "bash \"${config.home.homeDirectory}/.claude/hooks/caveman-statusline.sh\"";
     };
-    enabledPlugins = {
-      "typescript-lsp@claude-plugins-official" = true;
-      "superpowers@claude-plugins-official" = true;
-      "code-review@claude-plugins-official" = true;
-      "code-simplifier@claude-plugins-official" = true;
-      "pr-review-toolkit@claude-plugins-official" = true;
-      "context7@claude-plugins-official" = true;
-      "explanatory-output-style@claude-plugins-official" = false;
-      "lua-lsp@claude-plugins-official" = true;
-      "caveman@caveman" = true;
-      "ponytail@ponytail" = true;
-    };
-    extraKnownMarketplaces = {
-      caveman.source = {
-        source = "github";
-        repo = "JuliusBrussee/caveman";
-      };
-      ponytail.source = {
-        source = "github";
-        repo = "DietrichGebert/ponytail";
-      };
-    };
-    tui = "fullscreen";
-    voice = {
-      enabled = true;
-      mode = "hold";
-    };
     preferredNotifChannel = "ghostty";
-    inputNeededNotifEnabled = true;
-    agentPushNotifEnabled = true;
-    autoMode = {
-      allow = ["$defaults"];
-      soft_deny = ["$defaults"];
-    };
-    voiceEnabled = true;
-    model = "opus";
   };
 in {
   options.dotfiles.claude = {

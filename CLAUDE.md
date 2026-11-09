@@ -35,8 +35,10 @@ linked live into this checkout with `mkOutOfStoreSymlink`, so the repo must stay
 Personal open tasks, Windows and Linux, are tracked in `TODO.md`; work tasks never go there.
 
 On Windows the same clone feeds Claude Code: `windows/link-claude.ps1` junctions
-`%USERPROFILE%\.claude\rules` and `skills` to the folders here. Keep rules OS-neutral in wording; Linux
-commands in them are examples only.
+`%USERPROFILE%\.claude\rules` and `skills` to the folders here and merges
+`modules/home-manager/claude/settings.portable.json` (plugins, model) into its settings.json. Linux reads the
+same file as the base of the generated settings; only Linux-specific keys (hooks, statusline) stay in Nix.
+Keep rules OS-neutral in wording; Linux commands in them are examples only.
 
 Checks (VM and specs, run one at a time):
 
