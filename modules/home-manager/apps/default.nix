@@ -85,6 +85,12 @@ in {
       ])
       ++ [apps2samsung tizenbrew-device-manager tizenbrew-installer godot-nvim];
 
+    xdg.userDirs = {
+      enable = true;
+      createDirectories = true;
+      extraConfig.PROJECTS = "${config.home.homeDirectory}/projects";
+    };
+
     xdg.configFile."xdg-terminals.list".text = "com.mitchellh.ghostty.desktop\n";
 
     xdg.dataFile."PrismLauncher/themes/catppuccin".source = "${pkgs.fetchFromGitHub {
