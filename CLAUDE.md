@@ -32,6 +32,10 @@ Nix workflow:
 Files that their apps or the user edit (nvim config, claude rules and skills, opencode config) are
 linked live into this checkout with `mkOutOfStoreSymlink`, so the repo must stay at `~/.dotfiles`.
 
+On Windows the same clone feeds Claude Code: `windows/link-claude.ps1` junctions
+`%USERPROFILE%\.claude\rules` and `skills` to the folders here. Keep rules OS-neutral in wording; Linux
+commands in them are examples only.
+
 Checks (VM and specs, run one at a time):
 
 - `nix build .#checks.x86_64-linux.url-bar`: the Playwright URL bar script test.
