@@ -21,13 +21,14 @@
       url = "https://files.tableplus.com/linux/x64/324/TablePlus-x64.AppImage";
       hash = "sha256-A01o1kdzMsGI5zODYc8rq+ON55AcsGoNjD9iK7eh7QI=";
     };
-    # AppRun limits GIO to its bundled modules, which lack dconf, so the "Auto" theme never sees the system dark mode.
+    # The app loads GIO modules only from its bundled folder, which lacks dconf, so the "Auto" theme never
+    # sees the system dark mode. The dconf module needs a newer glib than the bundled one, so use the system glib
+    # together with the system copies of the libraries it links.
     contents = pkgs.appimageTools.extract {
       inherit pname version src;
       postExtract = ''
-        substituteInPlace $out/AppRun.wrapped \
-          --replace-fail 'export GIO_EXTRA_MODULES="$HERE/usr/lib/x86_64-linux-gnu/gio/modules"' \
-                         'export GIO_EXTRA_MODULES="$HERE/usr/lib/x86_64-linux-gnu/gio/modules:${pkgs.dconf.lib}/lib/gio/modules"'
+        rm $out/usr/lib/lib{glib,gio,gobject,gmodule}-2.0.so* $out/usr/lib/lib{mount,blkid,ffi,pcre2-8,selinux}.so*
+        ln -s ${pkgs.dconf.lib}/lib/gio/modules/libdconfsettings.so $out/usr/lib/x86_64-linux-gnu/gio/modules/
       '';
     };
   in
