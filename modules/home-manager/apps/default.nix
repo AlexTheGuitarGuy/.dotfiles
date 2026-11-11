@@ -21,10 +21,19 @@
       url = "https://files.tableplus.com/linux/x64/324/TablePlus-x64.AppImage";
       hash = "sha256-A01o1kdzMsGI5zODYc8rq+ON55AcsGoNjD9iK7eh7QI=";
     };
-    contents = pkgs.appimageTools.extract {inherit pname version src;};
-  in
-    pkgs.appimageTools.wrapType2 {
+    # AppRun limits GIO to its bundled modules, which lack dconf, so the "Auto" theme never sees the system dark mode.
+    contents = pkgs.appimageTools.extract {
       inherit pname version src;
+      postExtract = ''
+        substituteInPlace $out/AppRun.wrapped \
+          --replace-fail 'export GIO_EXTRA_MODULES="$HERE/usr/lib/x86_64-linux-gnu/gio/modules"' \
+                         'export GIO_EXTRA_MODULES="$HERE/usr/lib/x86_64-linux-gnu/gio/modules:${pkgs.dconf.lib}/lib/gio/modules"'
+      '';
+    };
+  in
+    pkgs.appimageTools.wrapAppImage {
+      inherit pname version;
+      src = contents;
       extraInstallCommands = ''
         install -Dm444 ${contents}/tableplus-appimage.desktop $out/share/applications/tableplus.desktop
         install -Dm444 ${contents}/tableplus.png $out/share/icons/hicolor/256x256/apps/tableplus.png
