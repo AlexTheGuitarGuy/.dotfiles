@@ -4,22 +4,18 @@ Personal open tasks. Work tasks live in the work repo.
 
 ## Windows
 
-- [ ] Earphones (Nothing Ear (a)): Windows' link key was copied to Linux with `sudo bt-sync-windows-key` and
-      the earphones connect on Linux (2026-11-12). Boot Windows and check they connect without re-pairing. If
-      Windows still needs re-pairing, check whether the LE keys need copying too (the script copies only the
-      classic link key).
-- [ ] Clock round trip: Windows treats the hardware clock as UTC (`RealTimeIsUniversal=1`, set 2026-11-12) and
-      Linux was right after it (checked 2026-11-12, RTC in UTC, NTP synced). Boot Windows and check the time
-      there. If it is off by the UTC offset, run `w32tm /resync /force` in an admin shell.
 - [ ] Move to LibreWolf: follow `modules/home-manager/librewolf/README.md`, section "Windows setup" (install,
       `windows.ps1`, sync sign-in, Tridactyl without new tab, per-extension settings, set as default browser).
+- [ ] Finish the app reinstalls from the D: to C: migration (list in `C:\my_files\programs\installed-apps.md`,
+      settings already restored in AppData). Still missing on 2026-11-12: Native Access (needed if Guitar Rig 7
+      opens in demo mode), Cycling '74 Max (only if needed outside Ableton's Max for Live), MAXON Cinema 4D,
+      Canon driver for the exact printer or scanner model. FortiClient: decide whether it is still needed.
 - [ ] Samsung T7: move game saves into Windows and hook them into Ludusavi (`Games\Saves\<game>`, emulators
       in `Games\Emulators`: BizHawk, PCSX2, PSP). List what else of the Windows setup should take part.
 - [ ] Samsung T7: move music production data into the DAW locations (`Music - song ideas\Ableton User Library`,
       `FL Studio and plugin data`, `muzica mea\Samples`).
 - [ ] Samsung T7: delete `Misc\Old PC\old-windows-configs` or rotate what is in it (`.aws`, `.azure`,
       `.1password`, `.docker` from the old PC).
-
 - [ ] Kensington SlimBlade Pro firmware V4.49 (fixes unstable cursor, Windows only): trackball switch to OFF
       (centre), connect with the USB-C cable, run
       https://www.kensington.com/siteassets/product-support/kensington-slimblad-support-page/kensington-slimblade-pro-v4.49_1678403906.exe,
@@ -49,7 +45,8 @@ Personal open tasks. Work tasks live in the work repo.
       `dell-pc` helps. Do not clear BD PROCHOT with `wrmsr`.
 - [ ] Kensington SlimBlade Pro lags or drops (2026-11-11). Kernel log stays silent while it lags, so it is
       the 2.4 GHz radio range, not USB or battery. Kensington's dongle guide says to keep the trackball within
-      20 cm of the dongle; better in the UGREEN hub near the trackball, worse in the laptop. Next: firmware
+      20 cm of the dongle; better in the UGREEN hub near the trackball, worse in the laptop. It lags the same
+      on Windows (2026-11-12), so it is not Linux; the user suspects the laptop hardware. Next: firmware
       update (Windows section), then a short USB 2.0 extension cable that puts the dongle within 20 cm, and
       re-pair the dongle if it still lags (switch on 2.4 GHz, when the left LED flashes green hold upper left
       button + Bluetooth pairing button 3 s until both LEDs flash fast).
