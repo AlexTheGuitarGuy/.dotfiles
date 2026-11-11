@@ -13,6 +13,11 @@ Personal open tasks. Work tasks live in the work repo.
 - [ ] Samsung T7: delete `Misc\Old PC\old-windows-configs` or rotate what is in it (`.aws`, `.azure`,
       `.1password`, `.docker` from the old PC).
 
+- [ ] Kensington SlimBlade Pro firmware V4.49 (fixes unstable cursor, Windows only): trackball switch to OFF
+      (centre), connect with the USB-C cable, run
+      https://www.kensington.com/siteassets/product-support/kensington-slimblad-support-page/kensington-slimblade-pro-v4.49_1678403906.exe,
+      click Update, wait for "Success" (up to 5 min, do not unplug). See the Linux entry for the lag.
+
 ## Linux
 
 - [ ] Clock round trip: Windows now treats the hardware clock as UTC (`RealTimeIsUniversal=1`, set and verified
@@ -39,6 +44,20 @@ Personal open tasks. Work tasks live in the work repo.
 - [ ] Decide whether to switch opencode to Pi.
 - [ ] Node version per repo through a devShell.
 - [ ] ngrok: run `ngrok config add-authtoken <token>`, then test a tunnel.
+- [ ] Lag on battery: unplugged, any load stutters a bit, most visible in Hyprland animations (window and
+      workspace switching), although the power profile is performance. Hyprland renders on the Intel iGPU
+      (no `AQ_DRM_DEVICES` dGPU without an external screen). Seen 2026-11-10 on battery: one busy core
+      only reaches 1.5 GHz (turbo is 4.5), all cores 1.3 GHz, at 58°C, so it is a clamp, not heat. Likely
+      the firmware cap on battery, which may also hold back the iGPU. On AC, same settings: one core
+      4.2 GHz, all cores 3.9 GHz, so the cap is confirmed. Unknown: whether setting the `alienware-wmi` platform profile
+      (`/sys/class/platform-profile/platform-profile-0`, at balanced-performance) to performance like
+      `dell-pc` helps. Do not clear BD PROCHOT with `wrmsr`.
+- [ ] Kensington SlimBlade Pro lags or drops (2026-11-11). Kernel log stays silent while it lags, so it is
+      the 2.4 GHz radio range, not USB or battery. Kensington's dongle guide says to keep the trackball within
+      20 cm of the dongle; better in the UGREEN hub near the trackball, worse in the laptop. Next: firmware
+      update (Windows section), then a short USB 2.0 extension cable that puts the dongle within 20 cm, and
+      re-pair the dongle if it still lags (switch on 2.4 GHz, when the left LED flashes green hold upper left
+      button + Bluetooth pairing button 3 s until both LEDs flash fast).
 
 ## Phone
 
