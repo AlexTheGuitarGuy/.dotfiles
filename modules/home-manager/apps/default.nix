@@ -13,6 +13,24 @@
   apps2samsung = appimage "apps2samsung" "3.0.0" "https://github.com/Apps2Samsung/Apps2Samsung/releases/download/v3.0.0/Apps2Samsung-v3.0.0-linux-x64.AppImage" "sha256-lHzltMTC4UdtU1nmbLjrWyh27i3yJSVwgj/CeKxUhqw=";
   tizenbrew-device-manager = appimage "tizenbrew-device-manager" "1.0.0" "https://github.com/reisxd/tizenbrew-device-manager/releases/download/v1.0.0/tizenbrew-device-manager_1.0.0_amd64.AppImage" "sha256-GQMMsxflW0AQas0pIBGN6A2BNri6vVNz8YHHJNd1ui4=";
 
+  # The unversioned download URL changes with every release; the numbered one stays.
+  tableplus = let
+    pname = "tableplus";
+    version = "2.2.2-324";
+    src = pkgs.fetchurl {
+      url = "https://files.tableplus.com/linux/x64/324/TablePlus-x64.AppImage";
+      hash = "sha256-A01o1kdzMsGI5zODYc8rq+ON55AcsGoNjD9iK7eh7QI=";
+    };
+    contents = pkgs.appimageTools.extract {inherit pname version src;};
+  in
+    pkgs.appimageTools.wrapType2 {
+      inherit pname version src;
+      extraInstallCommands = ''
+        install -Dm444 ${contents}/tableplus-appimage.desktop $out/share/applications/tableplus.desktop
+        install -Dm444 ${contents}/tableplus.png $out/share/icons/hicolor/256x256/apps/tableplus.png
+      '';
+    };
+
   # A Node binary packed with its payload; patchelf would break it, so it runs in an FHS env.
   tizenbrew-installer = pkgs.buildFHSEnv {
     name = "tizenbrew-installer";
@@ -83,7 +101,7 @@ in {
         podman-desktop
         godot_4
       ])
-      ++ [apps2samsung tizenbrew-device-manager tizenbrew-installer godot-nvim];
+      ++ [apps2samsung tizenbrew-device-manager tizenbrew-installer tableplus godot-nvim];
 
     xdg.userDirs = {
       enable = true;
