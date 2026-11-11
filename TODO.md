@@ -4,6 +4,10 @@ Personal open tasks. Work tasks live in the work repo.
 
 ## Windows
 
+- [ ] Earphones (Nothing Ear (a)): Windows' link key was copied to Linux with `sudo bt-sync-windows-key` and
+      the earphones connect on Linux (2026-11-12). Boot Windows and check they connect without re-pairing. If
+      Windows still needs re-pairing, check whether the LE keys need copying too (the script copies only the
+      classic link key).
 - [ ] Clock round trip: Windows treats the hardware clock as UTC (`RealTimeIsUniversal=1`, set 2026-11-12) and
       Linux was right after it (checked 2026-11-12, RTC in UTC, NTP synced). Boot Windows and check the time
       there. If it is off by the UTC offset, run `w32tm /resync /force` in an admin shell.
@@ -23,14 +27,6 @@ Personal open tasks. Work tasks live in the work repo.
 
 ## Linux
 
-- [ ] Earphones (Nothing Ear (a), `3C:B0:ED:BA:2F:26`): Windows still needed re-pairing after booting Linux
-      (checked 2026-11-11). Both systems share one adapter address, so the earphones keep one link key and
-      every new pairing breaks the other system. Windows holds the newest pairing. On Linux, do not pair again:
-      check with `lsblk` that the Windows partition (870 EVO, partition 2) is `/dev/sda2`, then run
-      `sudo bt-sync-windows-key` (`PART=/dev/<partition>` if it differs). Confirm the earphones connect on Linux,
-      then boot Windows and confirm they connect there without re-pairing. If the mount fails, disable Fast
-      Startup in Windows. If Windows still needs re-pairing, check whether the LE keys need copying too (the
-      script copies only the classic link key).
 - [ ] Delete the full T7 copy `~/t7-backup-2026-11-09` (368 GB) and `~/t7-cleanup` once nothing is missing
       on the reorganized drive.
 - [ ] Monitor profiles for laptop and docked, plus closing the lid turns off the laptop screen (kanshi);
