@@ -4,6 +4,9 @@ Personal open tasks. Work tasks live in the work repo.
 
 ## Windows
 
+- [ ] Clock round trip: Windows treats the hardware clock as UTC (`RealTimeIsUniversal=1`, set 2026-11-12) and
+      Linux was right after it (checked 2026-11-12, RTC in UTC, NTP synced). Boot Windows and check the time
+      there. If it is off by the UTC offset, run `w32tm /resync /force` in an admin shell.
 - [ ] Move to LibreWolf: follow `modules/home-manager/librewolf/README.md`, section "Windows setup" (install,
       `windows.ps1`, sync sign-in, Tridactyl without new tab, per-extension settings, set as default browser).
 - [ ] Samsung T7: move game saves into Windows and hook them into Ludusavi (`Games\Saves\<game>`, emulators
@@ -20,10 +23,6 @@ Personal open tasks. Work tasks live in the work repo.
 
 ## Linux
 
-- [ ] Clock round trip: Windows now treats the hardware clock as UTC (`RealTimeIsUniversal=1`, set and verified
-      2026-11-12, offset to `time.windows.com` under 0.1 s). Nothing left to do on Windows. Check the time is
-      right on Linux, then boot Windows once more and check it there. If Windows is off by the UTC offset, run
-      `w32tm /resync /force` in an admin shell.
 - [ ] Earphones (Nothing Ear (a), `3C:B0:ED:BA:2F:26`): Windows still needed re-pairing after booting Linux
       (checked 2026-11-11). Both systems share one adapter address, so the earphones keep one link key and
       every new pairing breaks the other system. Windows holds the newest pairing. On Linux, do not pair again:
