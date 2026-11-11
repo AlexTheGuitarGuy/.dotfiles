@@ -4,13 +4,8 @@ Personal open tasks. Work tasks live in the work repo.
 
 ## Windows
 
-- [ ] After pulling this repo, run `powershell -ExecutionPolicy Bypass -File windows\link-claude.ps1`, so
-      Claude Code on Windows gets the rules, skills, plugins and model from this clone. Rerun it after a pull
-      that changed `settings.portable.json`.
 - [ ] Move to LibreWolf: follow `modules/home-manager/librewolf/README.md`, section "Windows setup" (install,
       `windows.ps1`, sync sign-in, Tridactyl without new tab, per-extension settings, set as default browser).
-- [ ] Check the earphones connect in Windows without removing them first (dual-boot pairing fix from
-      2026-11-05, never checked on the Windows side).
 - [ ] Check the clock fix: Windows should treat the hardware clock as UTC (registry change given 2026-11-01;
       unknown whether it was applied). Symptom if not: wrong time in Windows after booting Linux.
 - [ ] Samsung T7: move game saves into Windows and hook them into Ludusavi (`Games\Saves\<game>`, emulators
