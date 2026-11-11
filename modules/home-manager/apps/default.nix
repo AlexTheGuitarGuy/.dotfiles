@@ -96,7 +96,6 @@ in {
       ++ (with pkgs.unstable; [
         vscode
         jetbrains.idea
-        jetbrains.datagrip
         mongodb-compass
         podman-desktop
         godot_4
