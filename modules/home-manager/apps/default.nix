@@ -35,6 +35,8 @@
     pkgs.appimageTools.wrapAppImage {
       inherit pname version;
       src = contents;
+      # Its default text is small and only some panes have a font size setting; this scales all GTK text.
+      profile = "export GDK_DPI_SCALE=1.25";
       extraInstallCommands = ''
         install -Dm444 ${contents}/tableplus-appimage.desktop $out/share/applications/tableplus.desktop
         install -Dm444 ${contents}/tableplus.png $out/share/icons/hicolor/256x256/apps/tableplus.png
