@@ -35,8 +35,6 @@
     pkgs.appimageTools.wrapAppImage {
       inherit pname version;
       src = contents;
-      # Its default text is small and only some panes have a font size setting; this scales all GTK text.
-      profile = "export GDK_DPI_SCALE=1.25";
       extraInstallCommands = ''
         install -Dm444 ${contents}/tableplus-appimage.desktop $out/share/applications/tableplus.desktop
         install -Dm444 ${contents}/tableplus.png $out/share/icons/hicolor/256x256/apps/tableplus.png
@@ -152,6 +150,18 @@ in {
 
     home.activation.godotNvim = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run ${lib.getExe godot-nvim} setup || true
+    '';
+
+    # TablePlus rewrites settings.json, so merge only the content font sizes (data grid, structure, row view,
+    # SQL/DDL editor); the sidebar and the rest of the UI keep their default size. Quit TablePlus before
+    # rebuilding, or it writes its in-memory settings back on exit.
+    home.activation.tableplusFontSizes = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      tp_settings=${config.home.homeDirectory}/.tableplus/settings/settings.json
+      run mkdir -p "$(dirname "$tp_settings")"
+      [ -e "$tp_settings" ] || run sh -c 'echo "{}" > "$1"' _ "$tp_settings"
+      tmp=$(mktemp "$tp_settings.XXXXXX")
+      run ${lib.getExe pkgs.jq} -c '. + {"data-table-font-size": 13, "editor-font-size": 13}' "$tp_settings" > "$tmp"
+      run mv "$tmp" "$tp_settings"
     '';
   };
 }
