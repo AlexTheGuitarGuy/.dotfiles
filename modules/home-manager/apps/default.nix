@@ -160,7 +160,7 @@ in {
       run mkdir -p "$(dirname "$tp_settings")"
       [ -e "$tp_settings" ] || run sh -c 'echo "{}" > "$1"' _ "$tp_settings"
       tmp=$(mktemp "$tp_settings.XXXXXX")
-      run ${lib.getExe pkgs.jq} -c '. + {"data-table-font-size": 13, "editor-font-size": 13}' "$tp_settings" > "$tmp"
+      run ${lib.getExe pkgs.jq} -c '. + {"data-table-font-size": 20, "editor-font-size": 20}' "$tp_settings" > "$tmp"
       run mv "$tmp" "$tp_settings"
     '';
   };
