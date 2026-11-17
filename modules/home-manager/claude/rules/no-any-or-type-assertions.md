@@ -11,6 +11,9 @@ untouched unless the user asks; only the code you add or change must be free of 
 Never switch off `no-explicit-any` or similar lint rules (in the eslint config or with
 `eslint-disable` comments) to get code through. Passing lint is not proof: many repos do not
 lint for assertions, so check your own diff (`git diff <base>... | grep -E ' as |: any|<any>'`).
+Lint the whole affected project (for example `nx run <project>:lint`), not only the changed
+files: rules that span files (module boundaries, lazy-loaded libraries) only fail in the files
+that did not change.
 
 Before writing code in a repo, read its instruction files and follow them: `AGENTS.md`,
 `CLAUDE.md`, `.github/copilot-instructions.md`, `.github/instructions/*.md`, `CONTRIBUTING.md`.
