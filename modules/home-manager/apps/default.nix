@@ -76,7 +76,6 @@ in {
     home.packages =
       (with pkgs; [
         telegram-desktop
-        slack
         teams-for-linux
         viber
 

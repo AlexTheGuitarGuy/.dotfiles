@@ -40,7 +40,6 @@
         "podman-desktop"
         "tableplus"
         "teams-for-linux"
-        "slack"
         "Telegram"
         "spotify"
         "1password --silent"
@@ -77,10 +76,6 @@
         {
           class = "TablePlus";
           workspace = "9";
-        }
-        {
-          class = "slack";
-          workspace = "18";
         }
         {
           class = "spotify";
