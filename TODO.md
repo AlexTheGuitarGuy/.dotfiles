@@ -32,6 +32,10 @@ Personal open tasks. Work tasks live in the work repo.
 - [ ] Backups with restic onto the old Kubuntu 970 EVO (wipes that disk).
 - [ ] Tailscale and mosh for phone access, ssh only over tailscale0.
 - [ ] Sunshine and Moonlight to stream to the TV.
+- [ ] Pick a phone link app: KDE Connect (favoured; `programs.kdeconnect.enable` opens ports 1714-1764,
+      plus HM `services.kdeconnect` with `indicator = true`, F-Droid app on the phone) or Valent (GTK,
+      same protocol, lighter, less mature). Unknown: whether phone-as-mouse works on Hyprland (needs the
+      RemoteDesktop portal). Over Tailscale, add the PC's tailnet IP by hand in the app.
 - [ ] Decide whether to switch opencode to Pi.
 - [ ] Node version per repo through a devShell.
 - [ ] ngrok: run `ngrok config add-authtoken <token>`, then test a tunnel.
