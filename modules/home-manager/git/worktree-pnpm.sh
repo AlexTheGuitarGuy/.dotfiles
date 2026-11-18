@@ -1,4 +1,5 @@
 [ "${1:-}" = 0000000000000000000000000000000000000000 ] || exit 0
+[ -z "${WORKTREE_PNPM_SKIP:-}" ] || exit 0
 
 here="$(git rev-parse --show-toplevel)"
 [ -f "$here/pnpm-lock.yaml" ] || grep -q '"packageManager": *"pnpm@' "$here/package.json" 2>/dev/null || exit 0
