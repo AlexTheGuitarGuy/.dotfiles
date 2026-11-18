@@ -112,7 +112,7 @@ in {
     programs.gpu-screen-recorder.enable = true;
 
     services.gnome.gnome-keyring.enable = true;
-    services.gnome.gcr-ssh-agent.enable = true;
+    services.gnome.gcr-ssh-agent.enable = false;
     programs.ssh.startAgent = false;
     security.pam.services.greetd.enableGnomeKeyring = true;
     services.fwupd.enable = true;
