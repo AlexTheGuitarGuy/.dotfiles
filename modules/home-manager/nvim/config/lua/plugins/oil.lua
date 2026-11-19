@@ -5,6 +5,11 @@ return {
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
     vim.keymap.set('n', '-', ':Oil<CR>', { noremap = true, silent = true })
+    require('nvim-web-devicons').set_icon_by_filetype({ renpy = 'rpy' })
+    require('nvim-web-devicons').set_icon({
+      rpy = { icon = '󰗚', color = '#ff7f7f', name = 'renpy' },
+      rpym = { icon = '󰗚', color = '#ff7f7f', name = 'renpy' },
+    })
     local oil = require('oil')
     oil.setup({
       win_options = {

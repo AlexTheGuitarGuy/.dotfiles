@@ -43,6 +43,13 @@ M.servers = {
   helm_ls = {},
   terraformls = {},
   gdscript = {},
+  -- Not in nvim-lspconfig. Semantic tokens give the highlighting, since there is no tree-sitter parser.
+  renpy = {
+    cmd = { 'renpy-language-server' },
+    filetypes = { 'renpy' },
+    root_markers = { 'game', '.git' },
+    init_options = { renpyLanguageServer = { semantic_tokens = true } },
+  },
   buf_ls = {},
   sqls = {
     settings = {

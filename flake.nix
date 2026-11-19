@@ -54,6 +54,7 @@
 
     packages.x86_64-linux.evidence = pkgs.callPackage ./packages/evidence {};
     packages.x86_64-linux.gitnexus = pkgs.callPackage ./packages/gitnexus {};
+    packages.x86_64-linux.renpy-language-server = pkgs.callPackage ./packages/renpy-language-server {};
 
     checks.x86_64-linux.url-bar = pkgs.runCommand "url-bar-test" {nativeBuildInputs = [pkgs.nodejs];} ''
       node --test ${./modules/home-manager/playwright/config}/url-bar.test.mjs

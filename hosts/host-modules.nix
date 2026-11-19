@@ -15,6 +15,7 @@ in
         (final: prev: {
           evidence = final.callPackage ../packages/evidence {};
           gitnexus = final.callPackage ../packages/gitnexus {};
+          renpy-language-server = final.callPackage ../packages/renpy-language-server {};
           unstable = import inputs.nixpkgs-unstable {
             inherit (prev.stdenv.hostPlatform) system;
             inherit (prev) config;

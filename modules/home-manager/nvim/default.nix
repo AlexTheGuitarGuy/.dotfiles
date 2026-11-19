@@ -61,6 +61,7 @@ in {
           hadolint
           statix
           terraform
+          renpy-language-server
         ]);
     };
 

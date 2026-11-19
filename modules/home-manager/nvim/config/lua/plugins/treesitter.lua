@@ -3,6 +3,8 @@ local config = function()
     extension = {
       prisma = 'prisma',
       bru = 'bruno',
+      rpy = 'renpy',
+      rpym = 'renpy',
     },
     pattern = {
       ['%.env%..+'] = 'sh',
