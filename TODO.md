@@ -25,7 +25,6 @@ Personal open tasks. Work tasks live in the work repo.
 - [ ] Sunshine and Moonlight to stream to the TV.
 - [ ] Decide whether to switch opencode to Pi.
 - [ ] Node version per repo through a devShell.
-- [ ] ngrok: run `ngrok config add-authtoken <token>`, then test a tunnel.
 - [ ] Lag on battery: unplugged, any load stutters a bit, most visible in Hyprland animations (window and
       workspace switching), although the power profile is performance. Hyprland renders on the Intel iGPU
       (no `AQ_DRM_DEVICES` dGPU without an external screen). Seen 2026-11-10 on battery: one busy core
