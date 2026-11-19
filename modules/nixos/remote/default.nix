@@ -8,7 +8,7 @@
   cfg = config.dotfiles.remote;
 in {
   options.dotfiles.remote = {
-    enable = lib.mkEnableOption "ssh and mosh access over Tailscale only";
+    enable = lib.mkEnableOption "ssh, mosh and KDE Connect over Tailscale only";
     authorizedKeys = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [];
@@ -18,7 +18,7 @@ in {
 
   config = lib.mkIf cfg.enable {
     services.tailscale.enable = true;
-    # sshd and mosh-server stay closed on every other interface.
+    # sshd, mosh-server and KDE Connect stay closed on every other interface.
     networking.firewall.trustedInterfaces = ["tailscale0"];
 
     services.openssh = {
@@ -34,5 +34,11 @@ in {
     users.users.${user}.openssh.authorizedKeys.keys = cfg.authorizedKeys;
 
     environment.systemPackages = [pkgs.mosh];
+
+    # Not programs.kdeconnect: it opens its ports on every interface.
+    home-manager.users.${user}.services.kdeconnect = {
+      enable = true;
+      indicator = true;
+    };
   };
 }
