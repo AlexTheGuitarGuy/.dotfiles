@@ -1,25 +1,19 @@
 {
   lib,
   buildGoModule,
-  fetchFromGitLab,
   makeWrapper,
   mermaid-cli,
   chafa,
 }:
-# Terminal viewer for the investigate-code skill, from Daniel Snetcov's dotfiles.nix.
+# Terminal viewer for the investigate-code skill, copied from Daniel Snetcov's dotfiles.nix
+# (commit 4fbb72b, since removed there).
 buildGoModule {
   pname = "evidence";
   version = "0.1.0";
 
-  src = fetchFromGitLab {
-    owner = "Daniel-Snetcov";
-    repo = "dotfiles.nix";
-    rev = "4fbb72b996454dbd8a77c571ac48c00a4952839d";
-    hash = "sha256-DGzBZJrE+2/6r/ptgEigFxPBuXEmd4zIC+zNTuDUSwA=";
-  };
-  sourceRoot = "source/packages/evidence";
+  src = ./src;
 
-  vendorHash = null;
+  vendorHash = "sha256-H35pwUB0i0Q8uqvdaoIOslCIl888hPlt1AU5oSqBCYU=";
   env.CGO_ENABLED = 0;
 
   nativeBuildInputs = [makeWrapper];
