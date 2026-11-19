@@ -41,7 +41,8 @@ Personal open tasks. Work tasks live in the work repo.
 - [ ] ssh-agent starts empty since the switch from the gcr agent to plain ssh-agent (commit "replace the gcr
       SSH agent with plain ssh-agent"): git over ssh fails with "Permission denied (publickey)" in shells that
       cannot ask for the passphrase (agents, scripts). Plain `ssh-add` loads nothing, since the keys are not
-      named `id_*`; `ssh-add ~/.ssh/github-personal ~/.ssh/gitlab-professional` works by hand. Fix so the keys
+      named `id_*`; `ssh-add ~/.ssh/github-personal ~/.ssh/gitlab-professional` works by hand, but only in a real
+      terminal: from an agent shell without a terminal it fails with "ssh_askpass: exec(): No such file or directory". Fix so the keys
       get loaded on their own (for example `AddKeysToAgent yes` in the ssh config, or a login step).
 
 ## Phone
