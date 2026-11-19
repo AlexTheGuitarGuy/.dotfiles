@@ -13,6 +13,7 @@
   dotfiles.gaming.enable = true;
   dotfiles.laptop.enable = true;
   dotfiles.remote.enable = true;
+  dotfiles.remote.authorizedKeys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJX31IbVY/gixop0bAYn8diuiyxwDINd3jbRsLakqJml pixel-8"];
   dotfiles.theme.accent = "blue";
   dotfiles.theme.tertiary = "lavender";
 
