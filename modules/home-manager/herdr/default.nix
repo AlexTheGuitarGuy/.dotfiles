@@ -119,7 +119,6 @@ in {
           ];
         };
         ui = {
-          mouse_capture = false;
           sidebar_width = 32;
           tab_bar_right = [
             {
@@ -152,6 +151,8 @@ in {
             dark = {
               accent = config.dotfiles.theme.mocha.accent;
               mauve = config.dotfiles.theme.mocha.tertiary;
+              # herdr's Mocha draws sidebar borders in surface_dim, which equals the background.
+              surface_dim = config.dotfiles.theme.mocha.surface0;
             };
           };
         };
