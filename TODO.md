@@ -2,6 +2,11 @@
 
 Personal open tasks. Work tasks live in the work repo.
 
+## General
+
+- [ ] Hand the old tasks from the board (from a while back) over, so they get sorted into this list or the
+      work list. Which board and which tasks is not written down yet.
+
 ## Windows
 
 - [ ] Move to LibreWolf: follow `modules/home-manager/librewolf/README.md`, section "Windows setup" (install,
