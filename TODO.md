@@ -2,11 +2,6 @@
 
 Personal open tasks. Work tasks live in the work repo.
 
-## General
-
-- [ ] Hand the old tasks from the board (from a while back) over, so they get sorted into this list or the
-      work list. Which board and which tasks is not written down yet.
-
 ## Windows
 
 - [ ] Move to LibreWolf: follow `modules/home-manager/librewolf/README.md`, section "Windows setup" (install,
@@ -29,6 +24,9 @@ Personal open tasks. Work tasks live in the work repo.
 - [ ] Backups with restic onto the old Kubuntu 970 EVO (wipes that disk).
 - [ ] Sunshine and Moonlight to stream to the TV.
 - [ ] Decide whether to switch opencode to Pi.
+- [ ] Try `pass` (the standard Unix password manager, gpg-encrypted files in a git repo) instead of Proton Pass
+      (from the old Trello board).
+- [ ] Try Emacs (from the old Trello board).
 - [ ] Node version per repo through a devShell.
 - [ ] Lag on battery: unplugged, any load stutters a bit, most visible in Hyprland animations (window and
       workspace switching), although the power profile is performance. Hyprland renders on the Intel iGPU
