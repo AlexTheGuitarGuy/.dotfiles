@@ -27,7 +27,6 @@ Personal open tasks. Work tasks live in the work repo.
 - [ ] Try `pass` (the standard Unix password manager, gpg-encrypted files in a git repo) instead of Proton Pass
       (from the old Trello board).
 - [ ] Try Emacs (from the old Trello board).
-- [ ] Node version per repo through a devShell.
 - [ ] Lag on battery: unplugged, any load stutters a bit, most visible in Hyprland animations (window and
       workspace switching), although the power profile is performance. Hyprland renders on the Intel iGPU
       (no `AQ_DRM_DEVICES` dGPU without an external screen). Seen 2026-11-10 on battery: one busy core
@@ -36,7 +35,9 @@ Personal open tasks. Work tasks live in the work repo.
       4.2 GHz, all cores 3.9 GHz, so the cap is confirmed. Unknown: whether setting the `alienware-wmi` platform profile
       (`/sys/class/platform-profile/platform-profile-0`, at balanced-performance) to performance like
       `dell-pc` helps. Do not clear BD PROCHOT with `wrmsr`.
+- [ ] Thesis app (`~/projects/univer/asociatie-app`): check keyboard navigation and contrast by hand (NFR-10, "verificare manuală"), and fill the `[DE COMPLETAT]` lines in `docs/contributia-ia.md` with what you checked yourself.
 
 ## Phone
 
+- [ ] Thesis app: test it on a real phone at 360 px (NFR-11 asks for a real device, not only emulation); needs the app reachable from the phone (dev server on the LAN).
 - [ ] IronFox uBlock filters: push from desktop LibreWolf to the cloud, pull on IronFox (may already be done).
