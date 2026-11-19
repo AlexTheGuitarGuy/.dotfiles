@@ -34,12 +34,6 @@ Personal open tasks. Work tasks live in the work repo.
       4.2 GHz, all cores 3.9 GHz, so the cap is confirmed. Unknown: whether setting the `alienware-wmi` platform profile
       (`/sys/class/platform-profile/platform-profile-0`, at balanced-performance) to performance like
       `dell-pc` helps. Do not clear BD PROCHOT with `wrmsr`.
-- [ ] ssh-agent starts empty since the switch from the gcr agent to plain ssh-agent (commit "replace the gcr
-      SSH agent with plain ssh-agent"): git over ssh fails with "Permission denied (publickey)" in shells that
-      cannot ask for the passphrase (agents, scripts). Plain `ssh-add` loads nothing, since the keys are not
-      named `id_*`; `ssh-add ~/.ssh/github-personal ~/.ssh/gitlab-professional` works by hand, but only in a real
-      terminal: from an agent shell without a terminal it fails with "ssh_askpass: exec(): No such file or directory". Fix so the keys
-      get loaded on their own (for example `AddKeysToAgent yes` in the ssh config, or a login step).
 
 ## Phone
 
