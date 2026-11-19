@@ -16,8 +16,8 @@ modules).
 
 Nix workflow:
 
-1. Edit, then `git add -A` here. Flakes only see tracked files, so a new file that is not staged is
-   invisible to the build.
+1. Edit, then `git add <path>` for every new file here. Flakes only see tracked files, so a new file
+   that is not added is invisible to the build. Never `git add -A` (see commit-own-changes.md).
 2. Build through the work flake, which is what gets switched to:
    `cd $NH_FLAKE && nixos-rebuild build --flake .#dell-g5 --override-input dotfiles git+file:///home/alex/.dotfiles`.
 3. When Hyprland or caelestia changed, verify the generated config: find `hm_hyprhyprland.lua` in
