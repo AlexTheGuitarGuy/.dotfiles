@@ -1,3 +1,3 @@
 {
-  imports = [./apps ./docker ./gaming ./hyprland ./laptop ./nix ./theme];
+  imports = [./apps ./docker ./gaming ./hyprland ./laptop ./nix ./remote ./theme];
 }

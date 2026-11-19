@@ -12,6 +12,7 @@
   dotfiles.docker.enable = true;
   dotfiles.gaming.enable = true;
   dotfiles.laptop.enable = true;
+  dotfiles.remote.enable = true;
   dotfiles.theme.accent = "blue";
   dotfiles.theme.tertiary = "lavender";
 
