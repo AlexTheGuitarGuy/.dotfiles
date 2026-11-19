@@ -114,6 +114,9 @@ in {
     services.gnome.gnome-keyring.enable = true;
     services.gnome.gcr-ssh-agent.enable = false;
     programs.ssh.startAgent = false;
+    # Shells without a terminal (agents, scripts) ask for a key passphrase in a window; AddKeysToAgent keeps it.
+    programs.ssh.enableAskPassword = true;
+    programs.ssh.askPassword = "${pkgs.kdePackages.ksshaskpass}/bin/ksshaskpass";
     security.pam.services.greetd.enableGnomeKeyring = true;
     services.fwupd.enable = true;
 
