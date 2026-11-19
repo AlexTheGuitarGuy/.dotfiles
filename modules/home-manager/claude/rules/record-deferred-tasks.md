@@ -3,8 +3,11 @@ deferred when the user says later or not now, when a check can only happen on an
 reboot ("next time you boot Windows..."), or when a step is handed to the user and they have not
 confirmed it was done.
 
-Personal tasks go into `~/.dotfiles/TODO.md`, under the system they belong to (Windows, Linux, Phone).
-Work tasks go into the work task list, never into that file. Write the entry so it stands on its own:
+Personal tasks about the machines and devices themselves (system config, apps, hardware, backups) go
+into `~/.dotfiles/TODO.md`, under the system they belong to (Windows, Linux, Phone). Tasks of a project
+(an app, a thesis, a game) go into that project's own list: its tracked TODO file if it has one,
+otherwise `.excluded/todos.md` in its worktree. Work tasks go into the work task list. Neither goes
+into `~/.dotfiles/TODO.md`. Write the entry so it stands on its own:
 what to do, where the steps or files are, and what is unknown.
 
 Never offer to add a task ("if you want, I can add it to the list") and wait for an answer: add it,
