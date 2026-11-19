@@ -22,7 +22,6 @@ Personal open tasks. Work tasks live in the work repo.
 - [ ] Delete the full T7 copy `~/t7-backup-2026-11-09` (368 GB) and `~/t7-cleanup` once nothing is missing
       on the reorganized drive.
 - [ ] Backups with restic onto the old Kubuntu 970 EVO (wipes that disk).
-- [ ] Tailscale and mosh for phone access, ssh only over tailscale0.
 - [ ] Sunshine and Moonlight to stream to the TV.
 - [ ] Pick a phone link app: KDE Connect (favoured; `programs.kdeconnect.enable` opens ports 1714-1764,
       plus HM `services.kdeconnect` with `indicator = true`, F-Droid app on the phone) or Valent (GTK,
