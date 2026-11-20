@@ -49,7 +49,8 @@ Personal open tasks. Work tasks live in the work repo.
       throttles). Battery is at 82% of design capacity. So the firmware or EC clamps on battery; on Dell this
       is by design and not reachable from Linux. Same stutter on the laptop screen and on the external one;
       blur and shadows off made no difference. Only unblocks if the BIOS setup (F2) has a battery or turbo
-      option, or Dell ships a BIOS newer than 1.27.0 (check on dell.com with the service tag, from Windows).
+      option, or Dell ships a BIOS newer than 1.27.0. Checked 2026-11-20 with `fwupdmgr get-updates` (LVFS,
+      Dell publishes there): none; the newest Dell advisories name 1.26.0 (2023), so the model looks done.
       Do not clear BD PROCHOT with `wrmsr`.
 
 ## Phone
