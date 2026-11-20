@@ -32,9 +32,12 @@ Personal open tasks. Work tasks live in the work repo.
       (no `AQ_DRM_DEVICES` dGPU without an external screen). Seen 2026-11-10 on battery: one busy core
       only reaches 1.5 GHz (turbo is 4.5), all cores 1.3 GHz, at 58°C, so it is a clamp, not heat. Likely
       the firmware cap on battery, which may also hold back the iGPU. On AC, same settings: one core
-      4.2 GHz, all cores 3.9 GHz, so the cap is confirmed. Unknown: whether setting the `alienware-wmi` platform profile
-      (`/sys/class/platform-profile/platform-profile-0`, at balanced-performance) to performance like
-      `dell-pc` helps. Do not clear BD PROCHOT with `wrmsr`.
+      4.2 GHz, all cores 3.9 GHz, so the cap is confirmed. Tested 2026-11-20: setting the `alienware-wmi`
+      platform profile to performance changes nothing (still 1.6 GHz flat on every core at 61°C), and every
+      software limit is open (scaling_max 4.5 GHz, turbo on, max_perf_pct 100, PL1 90 W, no thermal
+      throttles). Battery is at 82% of design capacity. So the firmware or EC clamps on battery. Next: look
+      in the BIOS setup for a battery or thermal performance option, and check for a newer BIOS. Do not clear
+      BD PROCHOT with `wrmsr`.
 
 ## Phone
 
