@@ -27,7 +27,10 @@
   services.udev.extraRules = ''
     SUBSYSTEM=="drm", KERNEL=="card*", KERNELS=="0000:01:00.0", DRIVERS=="nvidia", SYMLINK+="dri/dgpu"
     SUBSYSTEM=="drm", KERNEL=="card*", KERNELS=="0000:00:02.0", DRIVERS=="i915", SYMLINK+="dri/igpu"
+    SUBSYSTEM=="drm", KERNEL=="renderD*", KERNELS=="0000:00:02.0", DRIVERS=="i915", SYMLINK+="dri/igpu-render"
   '';
+  # The NVIDIA render node comes first and only offers NVDEC (decode), so Sunshine fell back to x264.
+  services.sunshine.settings.adapter_name = "/dev/dri/igpu-render";
   dotfiles.hyprland.startCommand = lib.getExe (pkgs.writeShellApplication {
     name = "start-hyprland-gpu";
     text = ''
