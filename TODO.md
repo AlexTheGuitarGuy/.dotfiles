@@ -28,7 +28,11 @@ Personal open tasks. Work tasks live in the work repo.
       has no Tailscale, so Sunshine's ports are open in the firewall (gaming module) and Sunshine starts only by
       hand. Steps: `systemctl --user start sunshine`, set the web UI login at https://localhost:47990, install
       Moonlight with Apps2Samsung, add the PC by its home IP, enter the PIN in the web UI, stream "Desktop".
-      Older TV: a Google TV stick or HDMI.
+      Older TV: a Google TV stick or HDMI. Test 2026-11-20 with the external monitor (Hyprland renders on the
+      NVIDIA dGPU then): black screen, "[wayland] Frame capture failed", since frames from the dGPU cannot be
+      encoded on the iGPU (VA-API). Untested on the laptop screen alone (iGPU renders and encodes), which is the
+      home setup: test that, phone over Tailscale is enough. The external monitor is not needed (it would need
+      NVENC: `pkgs.sunshine.override {cudaSupport = true;}`, a local build, plus `adapter_name` on the NVIDIA node).
 - [ ] Decide whether to switch opencode to Pi.
 - [ ] Try `pass` (the standard Unix password manager, gpg-encrypted files in a git repo) instead of Proton Pass
       (from the old Trello board).
