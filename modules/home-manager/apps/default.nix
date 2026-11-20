@@ -11,6 +11,8 @@
   in
     pkgs.appimageTools.wrapType2 {
       inherit pname version src;
+      # .NET AppImages (Apps2Samsung) abort without ICU.
+      extraPkgs = p: [p.icu];
       extraInstallCommands = ''
         install -Dm444 ${contents}/*.desktop -t $out/share/applications
         sed -i 's|^Exec=[^ ]*|Exec=${pname}|' $out/share/applications/*.desktop
