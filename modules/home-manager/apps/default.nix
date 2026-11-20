@@ -4,10 +4,18 @@
   pkgs,
   ...
 }: let
-  appimage = pname: version: url: hash:
+  # wrapType2 drops the AppImage's desktop entry and icons, so the launcher would not list the app.
+  appimage = pname: version: url: hash: let
+    src = pkgs.fetchurl {inherit url hash;};
+    contents = pkgs.appimageTools.extract {inherit pname version src;};
+  in
     pkgs.appimageTools.wrapType2 {
-      inherit pname version;
-      src = pkgs.fetchurl {inherit url hash;};
+      inherit pname version src;
+      extraInstallCommands = ''
+        install -Dm444 ${contents}/*.desktop -t $out/share/applications
+        sed -i 's|^Exec=[^ ]*|Exec=${pname}|' $out/share/applications/*.desktop
+        cp -r ${contents}/usr/share/icons $out/share
+      '';
     };
 
   apps2samsung = appimage "apps2samsung" "3.0.0" "https://github.com/Apps2Samsung/Apps2Samsung/releases/download/v3.0.0/Apps2Samsung-v3.0.0-linux-x64.AppImage" "sha256-lHzltMTC4UdtU1nmbLjrWyh27i3yJSVwgj/CeKxUhqw=";
