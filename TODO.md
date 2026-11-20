@@ -21,7 +21,8 @@ Personal open tasks. Work tasks live in the work repo.
 
 - [ ] Delete the full T7 copy `~/t7-backup-2026-11-09` (368 GB) and `~/t7-cleanup` once nothing is missing
       on the reorganized drive.
-- [ ] Backups with restic onto the old Kubuntu 970 EVO (wipes that disk).
+- [ ] Backups with restic onto the old Kubuntu 970 EVO (wipes that disk). The disk is not in the laptop and not
+      at hand (2026-11-20); continue once it is connected. Alternative: a cloud repo (offsite, works without it).
 - [ ] Sunshine and Moonlight to mirror the PC screen on the Samsung TV (PC on Wi-Fi, TV on Ethernet). At home:
       find the TV model and Tizen version (Settings, Support, About This TV). Moonlight for Tizen needs Tizen 5.5+
       (about 2020+ models) and a sideload in Developer Mode (Samsung-Jellyfin-Installer, Moonlight.wgt). Tizen
