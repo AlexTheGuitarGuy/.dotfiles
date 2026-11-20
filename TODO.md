@@ -22,7 +22,13 @@ Personal open tasks. Work tasks live in the work repo.
 - [ ] Delete the full T7 copy `~/t7-backup-2026-11-09` (368 GB) and `~/t7-cleanup` once nothing is missing
       on the reorganized drive.
 - [ ] Backups with restic onto the old Kubuntu 970 EVO (wipes that disk).
-- [ ] Sunshine and Moonlight to stream to the TV.
+- [ ] Sunshine and Moonlight to mirror the PC screen on the Samsung TV (PC on Wi-Fi, TV on Ethernet). At home:
+      find the TV model and Tizen version (Settings, Support, About This TV). Moonlight for Tizen needs Tizen 5.5+
+      (about 2020+ models) and a sideload in Developer Mode (Samsung-Jellyfin-Installer, Moonlight.wgt). Tizen
+      has no Tailscale, so Sunshine's ports are open in the firewall (gaming module) and Sunshine starts only by
+      hand. Steps: `systemctl --user start sunshine`, set the web UI login at https://localhost:47990, install
+      Moonlight with Apps2Samsung, add the PC by its home IP, enter the PIN in the web UI, stream "Desktop".
+      Older TV: a Google TV stick or HDMI.
 - [ ] Decide whether to switch opencode to Pi.
 - [ ] Try `pass` (the standard Unix password manager, gpg-encrypted files in a git repo) instead of Proton Pass
       (from the old Trello board).
