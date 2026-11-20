@@ -27,7 +27,7 @@ Personal open tasks. Work tasks live in the work repo.
 - [ ] Try `pass` (the standard Unix password manager, gpg-encrypted files in a git repo) instead of Proton Pass
       (from the old Trello board).
 - [ ] Try Emacs (from the old Trello board).
-- [ ] Lag on battery: unplugged, any load stutters a bit, most visible in Hyprland animations (window and
+- [ ] Blocked (firmware): lag on battery: unplugged, any load stutters a bit, most visible in Hyprland animations (window and
       workspace switching), although the power profile is performance. Hyprland renders on the Intel iGPU
       (no `AQ_DRM_DEVICES` dGPU without an external screen). Seen 2026-11-10 on battery: one busy core
       only reaches 1.5 GHz (turbo is 4.5), all cores 1.3 GHz, at 58°C, so it is a clamp, not heat. Likely
@@ -35,9 +35,11 @@ Personal open tasks. Work tasks live in the work repo.
       4.2 GHz, all cores 3.9 GHz, so the cap is confirmed. Tested 2026-11-20: setting the `alienware-wmi`
       platform profile to performance changes nothing (still 1.6 GHz flat on every core at 61°C), and every
       software limit is open (scaling_max 4.5 GHz, turbo on, max_perf_pct 100, PL1 90 W, no thermal
-      throttles). Battery is at 82% of design capacity. So the firmware or EC clamps on battery. Next: look
-      in the BIOS setup for a battery or thermal performance option, and check for a newer BIOS. Do not clear
-      BD PROCHOT with `wrmsr`.
+      throttles). Battery is at 82% of design capacity. So the firmware or EC clamps on battery; on Dell this
+      is by design and not reachable from Linux. Same stutter on the laptop screen and on the external one;
+      blur and shadows off made no difference. Only unblocks if the BIOS setup (F2) has a battery or turbo
+      option, or Dell ships a BIOS newer than 1.27.0 (check on dell.com with the service tag, from Windows).
+      Do not clear BD PROCHOT with `wrmsr`.
 
 ## Phone
 
