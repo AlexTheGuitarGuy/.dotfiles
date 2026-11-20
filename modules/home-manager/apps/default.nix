@@ -20,7 +20,7 @@
       '';
     };
 
-  apps2samsung = appimage "apps2samsung" "3.0.0" "https://github.com/Apps2Samsung/Apps2Samsung/releases/download/v3.0.0/Apps2Samsung-v3.0.0-linux-x64.AppImage" "sha256-lHzltMTC4UdtU1nmbLjrWyh27i3yJSVwgj/CeKxUhqw=";
+  apps2samsung = appimage "apps2samsung" "3.3.1" "https://github.com/Apps2Samsung/Apps2Samsung/releases/download/v3.3.1/Apps2Samsung-v3.3.1-linux-x64.AppImage" "sha256-Hpkc1rr4hJcPIyhbvpNLP89jirg89t1ch8MHBYy0nPA=";
   tizenbrew-device-manager = appimage "tizenbrew-device-manager" "1.0.0" "https://github.com/reisxd/tizenbrew-device-manager/releases/download/v1.0.0/tizenbrew-device-manager_1.0.0_amd64.AppImage" "sha256-GQMMsxflW0AQas0pIBGN6A2BNri6vVNz8YHHJNd1ui4=";
 
   # The unversioned download URL changes with every release; the numbered one stays.
